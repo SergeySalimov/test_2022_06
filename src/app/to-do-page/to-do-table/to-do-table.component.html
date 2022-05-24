@@ -1,1 +1,20 @@
-<p>to-do-table works!</p>
+<ng-container *ngIf="{ todoList: (todoList$ | async) ?? [] } as data">
+  <table *ngIf="$any(data.todoList.length) > 0; else noData" class="todo-table">
+    <tr>
+      <th *ngFor="let header of tableHeader">{{ header }}</th>
+    </tr>
+    <tr *ngFor="let todoItem of ($any(data.todoList)); let i = index">
+      <td>{{ todoItem.createdAt | date:'dd-MM-yy HH:mm' }}</td>
+      <td>
+        <span truncate>{{ todoItem.description }}</span>
+      </td>
+      <td>
+        <button (click)="onDeleteItem(i)">X</button>
+      </td>
+    </tr>
+  </table>
+  <ng-template #noData>
+    <span class="no-data">{{ textField.todo.noDataInTable }}</span>
+  </ng-template>
+</ng-container>
+

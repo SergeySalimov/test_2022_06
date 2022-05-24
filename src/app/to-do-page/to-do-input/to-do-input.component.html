@@ -1,1 +1,11 @@
-<p>to-do-input works!</p>
+<div class="container">
+  <label for="input-to-do" class="input-to-do-label">{{ textField.todo.addToDo }}</label>
+  <input
+    [(ngModel)]="newToDo"
+    [placeholder]="textField.todo.inputPlaceholder"
+    type="text"
+    id="input-to-do"
+    class="input-to-do"
+  >
+  <button [disabled]="!newToDo" (click)="onAddTodo()"  class="add-button">{{ textField.common.add }}</button>
+</div>

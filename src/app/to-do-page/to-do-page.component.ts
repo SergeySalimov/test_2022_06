@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import textField from '../../assets/textField.json';
 
 @Component({
   selector: 'app-to-do-page',
@@ -6,11 +7,6 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   styleUrls: ['./to-do-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToDoPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ToDoPageComponent {
+  textField: any = textField;
 }

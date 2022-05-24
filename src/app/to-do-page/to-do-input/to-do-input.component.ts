@@ -1,16 +1,22 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import textFiled from '../../../assets/textField.json';
+import { ToDoService } from "../../service/to-do.service";
 
 @Component({
   selector: 'app-to-do-input',
   templateUrl: './to-do-input.component.html',
   styleUrls: ['./to-do-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToDoInputComponent implements OnInit {
+export class ToDoInputComponent {
+  textField: any = textFiled;
+  newToDo = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private readonly todoService: ToDoService) {
   }
 
+  onAddTodo(): void {
+    this.todoService.addTodoItem(this.newToDo);
+    this.newToDo = '';
+  }
 }

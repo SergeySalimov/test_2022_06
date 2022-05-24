@@ -1,0 +1,74 @@
+@import "src/styles";
+
+:host {
+  width: 90%;
+  height: 90vh;
+  overflow-y: auto;
+
+  .todo-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .todo-table {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    .todo-table {
+      font-size: 8px;
+    }
+  }
+
+  .todo-table td, .todo-table th {
+    border: 1px solid $appGray;
+    padding: 0.5rem;
+  }
+
+  .todo-table tr:nth-child(even){
+    background-color: $appLightGray;
+  }
+
+  .todo-table tr:hover {
+    background-color: $appGray;
+  }
+
+  .todo-table th {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    text-align: left;
+    background-color: $appGreen;
+    color: $appWhite;
+  }
+
+  $tableWidths: 25%, 65%, 10%;
+  $i: 0; @each $tableWidth in $tableWidths {
+    $i: $i + 1;
+    .todo-table th:nth-child(#{$i}) {
+      width: $tableWidth;
+    }
+  }
+
+  // description block
+  .todo-table td:nth-child(2) span {
+    // should be any fix width on start
+    width: 400px;
+  }
+
+  // actions block
+  .todo-table td:nth-child(3) {
+    text-align: center;
+  }
+
+  .no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

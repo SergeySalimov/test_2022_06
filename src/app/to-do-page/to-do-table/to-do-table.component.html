@@ -4,7 +4,7 @@
       <th *ngFor="let header of tableHeader">{{ header }}</th>
     </tr>
     <tr *ngFor="let todoItem of ($any(data.todoList)); let i = index">
-      <td>{{ todoItem.createdAt | date:'dd-MM-yy HH:mm' }}</td>
+      <td>{{ todoItem.createdAt | date:dateTimeFormat }}</td>
       <td>
         <span truncate>{{ todoItem.description }}</span>
       </td>

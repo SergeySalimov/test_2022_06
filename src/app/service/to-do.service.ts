@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from "rxjs";
-import { TodoListItem } from "../shared/interface/to-do-page.interface";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { TodoListItem } from '../shared/interface/to-do-page.interface';
 
 @Injectable()
 export class ToDoService {
@@ -8,7 +8,7 @@ export class ToDoService {
   public todoList$: Observable<Array<TodoListItem>> = this._todoList$.asObservable();
 
   addTodoItem(description: string): void {
-    if (!!description && typeof description !== 'string') {
+    if (!description || typeof description !== 'string') {
       return;
     }
 

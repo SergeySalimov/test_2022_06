@@ -33,7 +33,7 @@ export class TruncateDirective implements AfterViewInit {
   @HostListener('window:resize', ['$event.target'])
   setTooltipFixWidth(): void {
     this.el.offsetWidth < this.el.scrollWidth
-      ? this.renderer.setAttribute(this.el, 'title', this.el.textContent ?? '')
+      ? this.renderer.setAttribute(this.el, 'title', this.el.textContent as string)
       : this.renderer.removeAttribute(this.el, 'title');
 
     const widthOfEllipsis: number = 24;

@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {ToDoPageModule} from "./to-do-page/to-do-page.module";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ToDoPageModule } from './to-do-page/to-do-page.module';
 
 @NgModule({
   declarations: [
@@ -17,4 +17,4 @@ import {ToDoPageModule} from "./to-do-page/to-do-page.module";
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

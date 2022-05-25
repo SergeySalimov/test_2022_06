@@ -2,14 +2,14 @@
 
 :host {
   width: 90%;
-  height: 90vh;
+  height: 72vh;
   overflow-y: auto;
 
   .todo-table {
     table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
     font-size: 1rem;
   }
 

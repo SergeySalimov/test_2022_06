@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import textField from '../../assets/textField.json';
+import textField from '../../../assets/textField.json';
 
 @Component({
   selector: 'app-to-do-page',
@@ -8,5 +8,5 @@ import textField from '../../assets/textField.json';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoPageComponent {
-  textField: any = textField;
+  textField = textField;
 }

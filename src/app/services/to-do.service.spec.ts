@@ -7,16 +7,16 @@ const mockDate = new Date(2022, 2, 22);
 const mockDescription = 'mockDescription';
 
 const resultBeforeRemoveIndex2: Array<TodoListItem> = [
-  { description: 'mock0', createdAt: mockDate },
-  { description: 'mock1', createdAt: mockDate },
-  { description: 'mock2', createdAt: mockDate },
-  { description: 'mock3', createdAt: mockDate },
+  { description: 'mock0', createdAt: mockDate, id: '0' },
+  { description: 'mock1', createdAt: mockDate, id: '1' },
+  { description: 'mock2', createdAt: mockDate, id: '2' },
+  { description: 'mock3', createdAt: mockDate, id: '3' },
 ];
 
 const expectedResult: Array<TodoListItem> = [
-  { description: 'mock0', createdAt: mockDate },
-  { description: 'mock1', createdAt: mockDate },
-  { description: 'mock3', createdAt: mockDate },
+  { description: 'mock0', createdAt: mockDate, id: '0' },
+  { description: 'mock1', createdAt: mockDate, id: '1' },
+  { description: 'mock3', createdAt: mockDate, id: '3' },
 ];
 
 describe('ToDoService', () => {

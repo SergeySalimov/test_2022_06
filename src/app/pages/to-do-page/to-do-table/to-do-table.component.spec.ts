@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoTableComponent } from './to-do-table.component';
-import { ToDoService } from '../../service/to-do.service';
-import { dateTimeFormatToken } from '../../shared/shared.module';
-import { mockTodoService } from '../../shared/test-shared/mock.service';
+import { ToDoService } from '../../../services/to-do.service';
+import { dateTimeFormatToken } from '../../../shared/shared.module';
+import { mockTodoService } from '../../../shared/test-shared/mock.service';
 
 describe('ToDoTableComponent', () => {
   let component: ToDoTableComponent;
@@ -13,9 +13,8 @@ describe('ToDoTableComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ToDoTableComponent],
       providers: [
-        {provide: ToDoService, useValue: mockTodoService},
-        // {provide: ToDoService, useClass: MockTodoService},
-        {provide: dateTimeFormatToken, useValue: 'MOCK_DATE_TIME_FORMAT'}
+        { provide: ToDoService, useValue: mockTodoService },
+        { provide: dateTimeFormatToken, useValue: 'MOCK_DATE_TIME_FORMAT' }
       ],
     })
       .compileComponents();

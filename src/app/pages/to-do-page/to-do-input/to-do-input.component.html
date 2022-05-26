@@ -3,6 +3,7 @@
   <input
     [(ngModel)]="newToDo"
     [placeholder]="textField.todo.inputPlaceholder"
+    (keydown.enter)="onAddTodo()"
     type="text"
     id="input-to-do"
     class="input-to-do"

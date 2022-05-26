@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoInputComponent } from './to-do-input.component';
-import { ToDoService } from '../../service/to-do.service';
-import { mockTodoService } from '../../shared/test-shared/mock.service';
+import { ToDoService } from '../../../services/to-do.service';
+import { mockTodoService } from '../../../shared/test-shared/mock.service';
 import { ToDoPageModule } from '../to-do-page.module';
 
 describe('ToDoInputComponent', () => {

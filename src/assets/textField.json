@@ -1,6 +1,15 @@
 {
   "common": {
-    "add": "add"
+    "add": "add",
+    "surname": "surname",
+    "name": "name",
+    "patronymic": "patronymic",
+    "city": "city",
+    "phone": "phone",
+    "zipCode": "zip code",
+    "email": "e-mail",
+    "address": "address",
+    "notes": "notes"
   },
   "todo": {
     "logo": "To do app",
@@ -10,5 +19,10 @@
     "tableDate": "Date",
     "tableDescription": "Description",
     "tableAction": "Actions"
+  },
+  "card": {
+    "cardHeaderText": "Card",
+    "noCardText": "Sorry, no card found",
+    "createdAt": "created at"
   }
 }

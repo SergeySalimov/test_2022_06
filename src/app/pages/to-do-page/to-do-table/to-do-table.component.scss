@@ -1,4 +1,4 @@
-@import "src/styles";
+@import "../../../../styles";
 
 :host {
   width: 90%;
@@ -63,12 +63,5 @@
   // actions block
   .todo-table td:nth-child(3) {
     text-align: center;
-  }
-
-  .no-data {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
 }

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TodoListItem } from '../shared/interface/to-do-page.interface';
+import { Helper } from '../shared/util/helper';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ToDoService {
   private _todoList$: BehaviorSubject<Array<TodoListItem>> = new BehaviorSubject<Array<TodoListItem>>([]);
   public todoList$: Observable<Array<TodoListItem>> = this._todoList$.asObservable();
@@ -13,7 +16,7 @@ export class ToDoService {
     }
 
     const todoList: Array<TodoListItem> = this._todoList$.getValue();
-    todoList.push({description, createdAt: new Date()});
+    todoList.push({ description, id: Helper.makeId(), createdAt: new Date() });
 
     this._todoList$.next(todoList);
   }
@@ -27,5 +30,11 @@ export class ToDoService {
 
     todoList.splice(index, 1);
     this._todoList$.next(todoList);
+  }
+
+  getItemById(id: string): TodoListItem | null {
+    const todoList: Array<TodoListItem> = this._todoList$.getValue();
+
+    return todoList.find((todo) => todo.id === id) ?? null;
   }
 }

@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { ToDoService } from '../../service/to-do.service';
+import { ChangeDetectionStrategy, Component, Inject, TrackByFunction } from '@angular/core';
+import { ToDoService } from '../../../services/to-do.service';
 import { Observable } from 'rxjs';
-import textField from '../../../assets/textField.json';
-import { TodoListItem } from '../../shared/interface/to-do-page.interface';
-import { dateTimeFormatToken } from '../../shared/shared.module';
+import textField from '../../../../assets/textField.json';
+import { TodoListItem } from '../../../shared/interface/to-do-page.interface';
+import { dateTimeFormatToken } from '../../../shared/shared.module';
+import { trackById } from '../../../shared/util/function';
+import { RouteEnum } from '../../../shared/constant/route.enum';
 
 @Component({
   selector: 'app-to-do-table',
@@ -12,7 +14,10 @@ import { dateTimeFormatToken } from '../../shared/shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoTableComponent {
-  textField: any = textField;
+  textField = textField;
+  trackByFunction: TrackByFunction<any> = trackById;
+  route: typeof RouteEnum = RouteEnum;
+
   todoList$: Observable<Array<TodoListItem>> = this.todoService.todoList$;
   tableHeader: string[] = [
     this.textField.todo.tableDate,

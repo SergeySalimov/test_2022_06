@@ -1,0 +1,3 @@
+<ng-container *ngIf="{ card: cardData$ | async } as data">
+  <app-card-profile [todoItem]="data.card"></app-card-profile>
+</ng-container>

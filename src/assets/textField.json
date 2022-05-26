@@ -1,15 +1,6 @@
 {
   "common": {
-    "add": "add",
-    "surname": "surname",
-    "name": "name",
-    "patronymic": "patronymic",
-    "city": "city",
-    "phone": "phone",
-    "zipCode": "zip code",
-    "email": "e-mail",
-    "address": "address",
-    "notes": "notes"
+    "add": "add"
   },
   "todo": {
     "logo": "To do app",
@@ -23,6 +14,15 @@
   "card": {
     "cardHeaderText": "Card",
     "noCardText": "Sorry, no card found",
-    "createdAt": "created at"
+    "createdAt": "Created at",
+    "surname": "Surname",
+    "name": "Name",
+    "patronymic": "Patronymic",
+    "city": "City",
+    "phone": "Phone",
+    "zipCode": "Zip code",
+    "email": "E-mail",
+    "address": "Address",
+    "notes": "Notes"
   }
 }

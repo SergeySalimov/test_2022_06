@@ -5,7 +5,7 @@ import textField from '../../../../assets/textField.json';
 import { TodoListItem } from '../../../shared/interface/to-do-page.interface';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
 import { trackById } from '../../../shared/util/function';
-import { RouteEnum } from '../../../shared/constant/route.enum';
+import { AppRoutes } from '../../../app-routing.helper';
 
 @Component({
   selector: 'app-to-do-table',
@@ -16,7 +16,6 @@ import { RouteEnum } from '../../../shared/constant/route.enum';
 export class ToDoTableComponent {
   textField = textField;
   trackByFunction: TrackByFunction<any> = trackById;
-  route: typeof RouteEnum = RouteEnum;
 
   todoList$: Observable<Array<TodoListItem>> = this.todoService.todoList$;
   tableHeader: string[] = [
@@ -29,6 +28,10 @@ export class ToDoTableComponent {
     @Inject(dateTimeFormatToken) public dateTimeFormat: string,
     private readonly todoService: ToDoService
   ) {
+  }
+
+  getCardRoute(id: string): string {
+    return `${AppRoutes.CARD('full')}/${id}`;
   }
 
   onDeleteItem(index: number): void {

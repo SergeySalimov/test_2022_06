@@ -1,26 +1,28 @@
 <div class="container">
   <ng-container *ngIf="todoItem; else noCard">
     <div class="row">
-      <h2 class="header col-12">{{ textField.card.cardHeaderText }}# {{ todoItem.id }}</h2>
+      <h2 class="header col-12">
+        {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
+      </h2>
       <h4 class="sub-header col-12">{{ todoItem.description }}</h4>
       <div class="left-block-text col-6">
-        <p>{{ textField.card.createdAt | titlecase }}: {{ todoItem.createdAt | date: dateTimeFormat }}</p>
-        <p>{{ textField.common.name | titlecase }}: {{ todoItem.name ?? '&#8213;' }}</p>
-        <p>{{ textField.common.surname | titlecase }}: {{ todoItem.surname ?? '&#8213;' }}</p>
-        <p>{{ textField.common.patronymic | titlecase }}: {{ todoItem.patronymic ?? '&#8213;' }}</p>
-        <p>{{ textField.common.email | titlecase }}: {{ todoItem.email ?? '&#8213;' }}</p>
+        <p>{{ textField.card.createdAt }}: {{ todoItem.createdAt | date: dateTimeFormat }}</p>
+        <p>{{ textField.card.name }}: {{ todoItem.name ?? '&#8213;' }}</p>
+        <p>{{ textField.card.surname }}: {{ todoItem.surname ?? '&#8213;' }}</p>
+        <p>{{ textField.card.patronymic }}: {{ todoItem.patronymic ?? '&#8213;' }}</p>
+        <p>{{ textField.card.email }}: {{ todoItem.email ?? '&#8213;' }}</p>
       </div>
       <div class="right-block-text col-6">
-        <p>{{ textField.common.phone | titlecase }}: {{ todoItem.phone ?? '&#8213;' }}</p>
-        <p>{{ textField.common.zipCode | titlecase }}: {{ todoItem.zipCode ?? '&#8213;' }}</p>
-        <p>{{ textField.common.city | titlecase }}: {{ todoItem.city ?? '&#8213;' }}</p>
-        <p>{{ textField.common.address | titlecase }}: {{ todoItem.address ?? '&#8213;' }}</p>
-        <p>{{ textField.common.notes | titlecase }}: {{ todoItem.notes ?? '&#8213;' }}</p>
+        <p>{{ textField.card.phone }}: {{ todoItem.phone ?? '&#8213;' }}</p>
+        <p>{{ textField.card.zipCode }}: {{ todoItem.zipCode ?? '&#8213;' }}</p>
+        <p>{{ textField.card.city }}: {{ todoItem.city ?? '&#8213;' }}</p>
+        <p>{{ textField.card.address }}: {{ todoItem.address ?? '&#8213;' }}</p>
+        <p>{{ textField.card.notes }}: {{ todoItem.notes ?? '&#8213;' }}</p>
       </div>
     </div>
   </ng-container>
   <ng-template #noCard>
     <span class="no-data">{{ textField.card.noCardText }}</span>
   </ng-template>
-  <button class="button-close" [routerLink]="'/' + route.TODO"></button>
+  <button class="button-close" [routerLink]="route.TODO('full')"></button>
 </div>

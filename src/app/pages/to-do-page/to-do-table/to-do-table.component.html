@@ -4,7 +4,7 @@
       <th *ngFor="let header of tableHeader">{{ header }}</th>
     </tr>
     <tr *ngFor="let todoItem of ($any(data.todoList)); let i = index; trackBy: trackByFunction"
-        [routerLink]="'/' + route.CARD + '/' + todoItem.id"
+        [routerLink]="getCardRoute(todoItem.id)"
     >
       <td>{{ todoItem.createdAt | date:dateTimeFormat }}</td>
       <td>

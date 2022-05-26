@@ -1,19 +1,19 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { RouteEnum } from '../shared/constant/route.enum';
+import { AppRoutes } from '../app-routing.helper';
 
 const pagesRoutes: Routes = [
   {
     path: '',
-    redirectTo: RouteEnum.TODO,
+    redirectTo: AppRoutes.TODO(),
     pathMatch: 'full',
   },
   {
-    path: RouteEnum.TODO,
+    path: AppRoutes.TODO(),
     loadChildren: () => import('./to-do-page/to-do-page.module').then(m => m.ToDoPageModule),
   },
   {
-    path: RouteEnum.CARD + '/:cardId',
+    path: AppRoutes.CARD('cardId'),
     loadChildren: () => import('./card-page/card-page.module').then(m => m.CardPageModule),
   },
 ];

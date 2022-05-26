@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angu
 import { TodoListItem } from '../../../shared/interface/to-do-page.interface';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
 import textField from '../../../../assets/textField.json';
-import { RouteEnum } from '../../../shared/constant/route.enum';
+import { AppRoutes } from '../../../app-routing.helper';
 
 @Component({
   selector: 'app-card-profile',
@@ -12,7 +12,7 @@ import { RouteEnum } from '../../../shared/constant/route.enum';
 })
 export class CardProfileComponent implements OnInit {
   textField = textField;
-  route: typeof RouteEnum = RouteEnum;
+  route: typeof AppRoutes = AppRoutes;
   @Input() todoItem!: TodoListItem | null;
 
   constructor(@Inject(dateTimeFormatToken) public dateTimeFormat: string) {

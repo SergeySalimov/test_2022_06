@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, Inject, TrackByFunction } from '@an
 import { ToDoService } from '../../../services/to-do.service';
 import { Observable } from 'rxjs';
 import textField from '../../../../assets/textField.json';
-import { TodoListItem } from '../../../shared/interface/to-do-page.interface';
+import { TodoListItem } from '../../../shared/interfaces/to-do-page.interface';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
-import { trackById } from '../../../shared/util/function';
+import { trackById } from '../../../shared/utils/function';
 import { AppRoutes } from '../../../app-routing.helper';
 
 @Component({

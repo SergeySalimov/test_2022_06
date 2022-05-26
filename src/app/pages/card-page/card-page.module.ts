@@ -4,11 +4,13 @@ import { CardPageComponent } from './card-page.component';
 import { CardPageRoutingModule } from './card-page-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CardProfileComponent } from './card-profile/card-profile.component';
+import { CardInputComponent } from './card-input/card-input.component';
 
 @NgModule({
   declarations: [
     CardPageComponent,
     CardProfileComponent,
+    CardInputComponent,
   ],
   imports: [
     CommonModule,

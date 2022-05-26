@@ -1,6 +1,8 @@
 {
   "common": {
-    "add": "add"
+    "add": "add",
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "todo": {
     "logo": "To do app",

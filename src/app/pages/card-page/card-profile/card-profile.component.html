@@ -5,24 +5,38 @@
         {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
       </h2>
       <h4 class="sub-header col-12">{{ todoItem.description }}</h4>
-      <div class="left-block-text col-6">
-        <p>{{ textField.card.createdAt }}: {{ todoItem.createdAt | date: dateTimeFormat }}</p>
-        <p>{{ textField.card.name }}: {{ todoItem.name ?? '&#8213;' }}</p>
-        <p>{{ textField.card.surname }}: {{ todoItem.surname ?? '&#8213;' }}</p>
-        <p>{{ textField.card.patronymic }}: {{ todoItem.patronymic ?? '&#8213;' }}</p>
-        <p>{{ textField.card.email }}: {{ todoItem.email ?? '&#8213;' }}</p>
+      <div class="col-6">
+        <ng-container *ngFor="let leftConfig of inputsConfigForLeft">
+          <app-card-input
+            [config]="leftConfig"
+            [value]="getTodoItemValue(todoItem, leftConfig)"
+            [disable]="!editMode"
+          ></app-card-input>
+        </ng-container>
       </div>
-      <div class="right-block-text col-6">
-        <p>{{ textField.card.phone }}: {{ todoItem.phone ?? '&#8213;' }}</p>
-        <p>{{ textField.card.zipCode }}: {{ todoItem.zipCode ?? '&#8213;' }}</p>
-        <p>{{ textField.card.city }}: {{ todoItem.city ?? '&#8213;' }}</p>
-        <p>{{ textField.card.address }}: {{ todoItem.address ?? '&#8213;' }}</p>
-        <p>{{ textField.card.notes }}: {{ todoItem.notes ?? '&#8213;' }}</p>
+      <div class="col-6">
+        <ng-container *ngFor="let rightConfig of inputsConfigForRight">
+          <app-card-input
+            [config]="rightConfig"
+            [value]="getTodoItemValue(todoItem, rightConfig)"
+            [disable]="!editMode"
+          ></app-card-input>
+        </ng-container>
       </div>
+      <div class="col-12"></div>
+      <ng-container *ngIf="editMode">
+      <div class="col-6 action-button">
+        <button class="app-success">{{ textField.common.save }}</button>
+      </div>
+      <div class="col-6 action-button">
+        <button class="app-danger" (click)="editMode = false">{{ textField.common.cancel }}</button>
+      </div>
+      </ng-container>
     </div>
   </ng-container>
   <ng-template #noCard>
     <span class="no-data">{{ textField.card.noCardText }}</span>
   </ng-template>
   <button class="button-close" [routerLink]="route.TODO('full')"></button>
+  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="editMode = true"></button>
 </div>

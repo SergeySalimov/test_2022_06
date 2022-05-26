@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ToDoService } from './to-do.service';
-import { TodoListItem } from '../shared/interface/to-do-page.interface';
+import { TodoListItem } from '../shared/interfaces/to-do-page.interface';
 
 const mockDate = new Date(2022, 2, 22);
 const mockDescription = 'mockDescription';

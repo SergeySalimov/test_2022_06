@@ -1,0 +1,29 @@
+<ng-container *ngIf="!disable; else disableInput">
+  <div class="input-group">
+    <input
+      *ngIf="config.inputType !== 'textArea'; else textArea"
+      [type]="config.inputType"
+      [disabled]="!config.editable"
+      [class.app-disabled]="!config.editable"
+      [class.disabledAndNotEmpty]="!config.editable && value"
+      [value]="config.pipe !== 'date' ? value : value | date: dateTimeFormat"
+      required="required"
+    >
+    <ng-template #textArea>
+      <textarea
+        [disabled]="!config.editable"
+        [class.app-disabled]="!config.editable"
+        [class.disabledAndNotEmpty]="!config.editable && value"
+        rows="1"
+        required="required"
+      ></textarea>
+    </ng-template>
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>{{ config.name }}</label>
+  </div>
+</ng-container>
+<ng-template #disableInput>
+  <p *ngIf="!config.pipe">{{ config.name }}: {{ value ?? '&#8213;' }}</p>
+  <p *ngIf="config.pipe === 'date'">{{ config.name }}: {{ value | date: dateTimeFormat ?? '&#8213;' }}</p>
+</ng-template>

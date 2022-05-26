@@ -1,7 +1,7 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TruncateDirective } from './directive/truncate.directive';
-import { DATE_TIME_FORMAT } from './constant/date-time.constant';
+import { TruncateDirective } from './directives/truncate.directive';
+import { DATE_TIME_FORMAT } from './constants/date-time.constant';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 

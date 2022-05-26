@@ -5,10 +5,28 @@ $smallDeviceBreakpoint: 350px;
 
 $appGray: #ddd;
 $appLightGray: #f2f2f2;
+$appDarkGray: #757575;
 $appGreen: #04AA6D;
+$appDarkGreen: #005005;
 $appWhite: white;
+$appBlack: black;
 $appRed: #9b0000;
+$appLightRed: #ffa4a2;
 $appYellow: #c7b800;
+$appDarkBlue: #001970;
+$appBlue: #303f9f;
+
+.app-success {
+  background-color: $appGreen;
+}
+
+.app-danger {
+  background-color: $appLightRed;
+}
+
+.app-disabled {
+  background-color: $appLightGray;
+}
 
 body {
   font-family: Roboto, sans-serif;
@@ -33,7 +51,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 10rem;
-    content: "\2622";
+    content: "\26A0";
     color: $appRed;
   }
 }

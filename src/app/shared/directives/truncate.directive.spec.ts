@@ -43,18 +43,18 @@ describe('TruncateDirective', () => {
   });
 
   describe('constructor', () => {
-    it('should assign on directive.el element with directive applied', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+    it('should assign on directives.el element with directives applied', () => {
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
       expect(directive.el).toEqual(targetEl);
     });
 
-    it('should assign on directive.tableRowEl parent tr', () => {
+    it('should assign on directives.tableRowEl parent tr', () => {
       const targetEl: HTMLElement = fixture.debugElement.query(By.css('.parent')).nativeElement;
       expect(directive.tableRowEl).toEqual(targetEl);
     });
 
     it('should apply all styles on target element', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
       const { textOverflow, whiteSpace, overflow, display } = targetEl.style;
 
       expect(textOverflow).toEqual('ellipsis');
@@ -70,7 +70,7 @@ describe('TruncateDirective', () => {
     });
 
     it('should call set 1 to scrollTop value', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
       spyOn<any>(directive['renderer'], 'setProperty');
 
       directive.ngAfterViewInit();
@@ -92,7 +92,7 @@ describe('TruncateDirective', () => {
     let parentEl: HTMLElement;
 
     beforeEach(() => {
-      targetEl = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+      targetEl = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
       parentEl = fixture.debugElement.query(By.css('.parent')).nativeElement;
     });
 

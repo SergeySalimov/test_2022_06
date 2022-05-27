@@ -16,6 +16,7 @@ export class CardInputComponent {
     return {
       'notEmpty': !!this.formControlForInput.value,
       'app-disabled': this.formControlForInput.disabled,
+      'input-invalid': this.formControlForInput.invalid && this.formControlForInput.untouched,
     };
   }
 }

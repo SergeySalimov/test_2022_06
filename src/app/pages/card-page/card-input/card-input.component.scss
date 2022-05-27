@@ -20,6 +20,10 @@ input, textarea {
   border-bottom: 1px solid $appGray;
 }
 
+input.ng-invalid, textarea.ng-invalid {
+  border-bottom: 2px solid $appRed;
+}
+
 input:focus, textarea:focus {
   outline: none;
 }
@@ -40,9 +44,15 @@ textarea:disabled {
 input:focus ~ .bar:before, textarea:focus ~ .bar:before {
   width: 103%;
 }
+
+input.ng-invalid ~ .bar:before, textarea.ng-invalid ~ .bar:before {
+  background: $appRed;
+}
+
 input[type="password"] {
   letter-spacing: 0.3em;
 }
+
 label {
   color: $appDarkGray;
   font-size: 1.25rem;

@@ -6,6 +6,7 @@ import { TodoListItem } from '../../../shared/interfaces/to-do-page.interface';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
 import { trackById } from '../../../shared/utils/function';
 import { AppRoutes } from '../../../app-routing.helper';
+import { TextFieldInterface } from '../../../shared/interfaces/text-field.interface';
 
 @Component({
   selector: 'app-to-do-table',
@@ -14,7 +15,7 @@ import { AppRoutes } from '../../../app-routing.helper';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoTableComponent {
-  textField = textField;
+  textField: TextFieldInterface = textField;
   trackByFunction: TrackByFunction<any> = trackById;
 
   todoList$: Observable<Array<TodoListItem>> = this.todoService.todoList$;

@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { ToDoService } from '../../services/to-do.service';
 import { TodoListItem } from '../../shared/interfaces/to-do-page.interface';
 import { inputConfig } from './card-page-input.config';
+import { InputPositionEnum } from '../../shared/interfaces/input-config.interface';
 
 @Component({
   selector: 'app-card-page',
@@ -11,12 +12,12 @@ import { inputConfig } from './card-page-input.config';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardPageComponent {
-  cardData$: Observable<TodoListItem | null> = this.route.params.pipe(
-    map(({ cardId }) => cardId ? this.todoService.getItemById(cardId) : null),
+  cardData$: Observable<TodoListItem | null> = this.todoService.todoList$.pipe(
+    map((todos: Array<TodoListItem>) => todos.find(todo => todo.id === this.route.snapshot.params['cardId']) || null),
   );
 
-  inputForLeft = inputConfig.filter(config => config.position === 'left');
-  inputForRight = inputConfig.filter(config => config.position === 'right');
+  inputForLeft = inputConfig.filter(config => config.position === InputPositionEnum.LEFT);
+  inputForRight = inputConfig.filter(config => config.position === InputPositionEnum.RIGHT);
 
   constructor(
     private readonly route: ActivatedRoute,

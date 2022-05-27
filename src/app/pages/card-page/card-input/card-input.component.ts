@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject, Input } from '@angular/core';
-import { dateTimeFormatToken } from '../../../shared/shared.module';
-import { InputConfigInterface, PossibleInputType } from '../../../shared/interfaces/input-config.interface';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { InputConfigInterface } from '../../../shared/interfaces/input-config.interface';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-card-input',
@@ -8,15 +8,14 @@ import { InputConfigInterface, PossibleInputType } from '../../../shared/interfa
   styleUrls: ['./card-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CardInputComponent implements OnInit {
+export class CardInputComponent {
   @Input() config!: InputConfigInterface;
-  @Input() value!: PossibleInputType;
-  @Input() disable: boolean = true;
+  @Input() formControlForInput!: FormControl;
 
-  constructor(@Inject(dateTimeFormatToken) public dateTimeFormat: string) {
+  getClasses(): Record<string, boolean> {
+    return {
+      'notEmpty': !!this.formControlForInput.value,
+      'app-disabled': this.formControlForInput.disabled,
+    };
   }
-
-  ngOnInit(): void {
-  }
-
 }

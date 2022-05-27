@@ -24,12 +24,10 @@ input:focus, textarea:focus {
   outline: none;
 }
 
-input.disabledAndNotEmpty ~ label,
+input.notEmpty ~ label,
 input:focus ~ label,
-textarea.disabledAndNotEmpty ~ label,
-textarea:focus ~ label,
-input:valid ~ label,
-textarea:valid ~ label {
+textarea.notEmpty ~ label,
+textarea:focus ~ label {
   top: -1rem;
   font-size: 1rem;
   color: $appDarkGreen;

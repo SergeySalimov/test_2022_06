@@ -1,32 +1,40 @@
 <div class="container">
   <ng-container *ngIf="todoItem; else noCard">
-    <div class="row">
+    <div [formGroup]="cardForm" class="row">
       <h2 class="header col-12">
         {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
       </h2>
       <h4 class="sub-header col-12">{{ todoItem.description }}</h4>
       <div class="col-6">
-        <ng-container *ngFor="let leftConfig of inputsConfigForLeft">
+        <ng-container *ngFor="let config of inputsConfigForLeft">
           <app-card-input
-            [config]="leftConfig"
-            [value]="getTodoItemValue(todoItem, leftConfig)"
-            [disable]="!editMode"
+            *ngIf="editMode; else readOnly"
+            [config]="config"
+            [formControlForInput]="getFormControl(config.keyForValue)"
           ></app-card-input>
+          <ng-template #readOnly>
+            <app-readonly-input [config]="config" [value]="getTodoValue(todoItem, config)"></app-readonly-input>
+          </ng-template>
         </ng-container>
       </div>
       <div class="col-6">
-        <ng-container *ngFor="let rightConfig of inputsConfigForRight">
+        <ng-container *ngFor="let config of inputsConfigForRight">
           <app-card-input
-            [config]="rightConfig"
-            [value]="getTodoItemValue(todoItem, rightConfig)"
-            [disable]="!editMode"
+            *ngIf="editMode; else readOnly"
+            [config]="config"
+            [formControlForInput]="getFormControl(config.keyForValue)"
           ></app-card-input>
+          <ng-template #readOnly>
+            <app-readonly-input [config]="config" [value]="getTodoValue(todoItem, config)"></app-readonly-input>
+          </ng-template>
         </ng-container>
       </div>
       <div class="col-12"></div>
       <ng-container *ngIf="editMode">
       <div class="col-6 action-button">
-        <button class="app-success">{{ textField.common.save }}</button>
+        <button [disabled]="cardForm.pristine || cardForm.invalid" (click)="onSaveForm()" class="app-success">
+          {{ textField.common.save }}
+        </button>
       </div>
       <div class="col-6 action-button">
         <button class="app-danger" (click)="editMode = false">{{ textField.common.cancel }}</button>

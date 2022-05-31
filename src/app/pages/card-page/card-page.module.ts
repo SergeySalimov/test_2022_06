@@ -6,14 +6,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { CardProfileComponent } from './card-profile/card-profile.component';
 import { CardInputComponent } from './card-input/card-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardInputReadonlyComponent } from './card-input-readonly/card-input-readonly.component';
 
 @NgModule({
   declarations: [
     CardPageComponent,
     CardProfileComponent,
     CardInputComponent,
-    CardInputReadonlyComponent,
   ],
   imports: [
     CommonModule,

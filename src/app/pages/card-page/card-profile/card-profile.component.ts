@@ -21,7 +21,7 @@ export class CardProfileComponent implements OnInit {
 
   cardForm!: FormGroup;
   textField: TextFieldInterface = textField;
-  editMode = true;
+  editMode = false;
   route: typeof AppRoutes = AppRoutes;
   formSubmitted = false;
 
@@ -45,13 +45,16 @@ export class CardProfileComponent implements OnInit {
     return this.cardForm?.controls[controlName] as FormControl;
   }
 
+  cancelEditing(): void {
+    this.cardForm.reset();
+    this.cardForm.patchValue(this.todoItem!);
+    this.changeEditMode(false);
+
+  }
+
   changeEditMode(status: boolean): void {
     this.editMode = status;
-
-    if (!status) {
-      this.cardForm.reset();
-      this.cardForm.patchValue(this.todoItem!);
-    }
+    this.changeFormStatus(status);
   }
 
   onSubmitForm(): void {
@@ -63,8 +66,11 @@ export class CardProfileComponent implements OnInit {
 
     const formValue: Partial<TodoListItem> = this.cardForm.getRawValue();
     this.todoService.updateTodoItem({ ...this.todoItem, ...formValue } as TodoListItem);
-    this.editMode = false;
-    this.cardForm.markAsPristine();
+    this.changeEditMode(false);
+  }
+
+  private changeFormStatus(status: boolean): void {
+    status ? this.cardForm.enable() : this.cardForm.disable();
   }
 
   private getValueForFormControl(config: InputConfigInterface): PossibleInputType {
@@ -93,5 +99,7 @@ export class CardProfileComponent implements OnInit {
           ),
         }), {} as Record<keyof TodoListItem, FormControl>)
     );
+
+    this.changeFormStatus(this.editMode);
   }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { ToDoService } from '../../services/to-do.service';
 import { TodoListItem } from '../../shared/interfaces/to-do-page.interface';
-import { inputConfig } from './card-page-input.config';
+import { inputConfig } from './card-page.config';
 import { InputPositionEnum } from '../../shared/interfaces/input-config.interface';
 
 @Component({
@@ -22,6 +22,5 @@ export class CardPageComponent {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly todoService: ToDoService,
-  ) {
-  }
+  ) {}
 }

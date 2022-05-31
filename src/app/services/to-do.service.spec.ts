@@ -54,6 +54,7 @@ describe('ToDoService', () => {
         expect(result).toEqual([{
           description: mockDescription,
           createdAt: mockDate,
+          id: 'mock',
         }]);
         done();
       });

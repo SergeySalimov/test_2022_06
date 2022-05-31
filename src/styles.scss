@@ -28,11 +28,6 @@ $appBlue: #303f9f;
   background-color: $appLightGray;
 }
 
-.input-invalid {
-  border: 2px solid $appRed;
-  border-radius: 5px;
-}
-
 body {
   font-family: Roboto, sans-serif;
   box-sizing: border-box;
@@ -126,3 +121,6 @@ body {
     width: 100%;
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

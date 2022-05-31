@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import textField from '../../../../assets/textField.json';
 import { TodoListItem } from '../../../shared/interfaces/to-do-page.interface';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
-import { trackById } from '../../../shared/utils/function';
+import { trackById } from '../../../shared/utils/track-by-id';
 import { AppRoutes } from '../../../app-routing.helper';
 import { TextFieldInterface } from '../../../shared/interfaces/text-field.interface';
 

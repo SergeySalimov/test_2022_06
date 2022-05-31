@@ -11,9 +11,11 @@ export const inputConfig: Array<InputConfigInterface> = [
   {
     name: textField.card.createdAt,
     keyForValue: 'createdAt',
-    editable: false,
+    editable: true,
     position: InputPositionEnum.LEFT,
+    inputType: InputTypeEnum.DATE_TIME,
     pipe: PipeTypeEnum.DATE,
+    // validators: Validators.required,
   },
   {
     name: textField.card.name,
@@ -26,7 +28,7 @@ export const inputConfig: Array<InputConfigInterface> = [
   {
     name: textField.card.surname,
     keyForValue: 'surname',
-    editable: true,
+    editable: false,
     position: InputPositionEnum.LEFT,
     inputType: InputTypeEnum.TEXT,
   },
@@ -43,6 +45,7 @@ export const inputConfig: Array<InputConfigInterface> = [
     editable: true,
     position: InputPositionEnum.LEFT,
     inputType: InputTypeEnum.TEXT,
+    validators: [Validators.required, Validators.email],
   },
   {
     name: textField.card.phone,
@@ -50,6 +53,7 @@ export const inputConfig: Array<InputConfigInterface> = [
     editable: true,
     position: InputPositionEnum.RIGHT,
     inputType: InputTypeEnum.PHONE,
+    pipe: PipeTypeEnum.PHONE,
   },
   {
     name: textField.card.zipCode,

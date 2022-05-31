@@ -3,6 +3,11 @@ export interface TextFieldInterface {
     add: string;
     save: string;
     cancel: string;
+    noData: string;
+  },
+  inputErrors: {
+    required: string;
+    email: string;
   },
   todo: {
     logo: string;

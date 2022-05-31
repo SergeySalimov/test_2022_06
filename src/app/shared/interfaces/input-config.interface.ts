@@ -12,10 +12,12 @@ export enum InputTypeEnum {
   NUMBER = 'number',
   PHONE = 'phone',
   DATE = 'date',
+  DATE_TIME = 'date-time',
 }
 
 export enum PipeTypeEnum {
   DATE = 'date',
+  PHONE = 'phone',
 }
 
 export interface InputConfigInterface {

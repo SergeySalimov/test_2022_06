@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { CardPageComponent } from './card-page.component';
 import { CardPageRoutingModule } from './card-page-routing.module';
 import { SharedModule } from '../../shared/shared.module';
@@ -22,8 +22,6 @@ import { CardInputReadonlyComponent } from './card-input-readonly/card-input-rea
     ReactiveFormsModule,
     SharedModule,
   ],
-  providers: [
-    DatePipe,
-  ],
+  providers: [],
 })
 export class CardPageModule {}

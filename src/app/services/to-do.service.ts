@@ -1,29 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TodoListItem } from '../shared/interfaces/to-do-page.interface';
-import { Helper } from '../shared/utils/helper';
-
-//ToDO delete after end of the work
-const mock: TodoListItem = {
-  id: '1',
-  createdAt: new Date(),
-  description: 'Some Description',
-};
+import { SharedHelper } from '../shared/utils/shared.helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToDoService {
-  private _todoList$: BehaviorSubject<Array<TodoListItem>> = new BehaviorSubject<Array<TodoListItem>>([mock]);
+  private _todoList$: BehaviorSubject<Array<TodoListItem>> = new BehaviorSubject<Array<TodoListItem>>([]);
   public todoList$: Observable<Array<TodoListItem>> = this._todoList$.asObservable();
 
   addTodoItem(description: string): void {
-    if (!description || typeof description !== 'string') {
+    if (!description) {
       return;
     }
 
     const todoList: Array<TodoListItem> = this._todoList$.getValue();
-    todoList.push({ description, id: Helper.makeId(), createdAt: new Date() });
+    todoList.push({ description, id: SharedHelper.makeId(), createdAt: new Date() });
 
     this._todoList$.next(todoList);
   }

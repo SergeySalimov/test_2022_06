@@ -1,6 +1,6 @@
 <div class="container">
   <ng-container *ngIf="todoItem; else noCard">
-    <div [formGroup]="cardForm" class="row">
+    <form #form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
       <h2 class="header col-12">
         {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
       </h2>
@@ -8,43 +8,37 @@
       <div class="col-6">
         <ng-container *ngFor="let config of inputsConfigForLeft">
           <app-card-input
-            *ngIf="editMode; else readOnly"
             [config]="config"
             [formControlForInput]="getFormControl(config.keyForValue)"
+            [formSubmitted]="formSubmitted"
           ></app-card-input>
-          <ng-template #readOnly>
-            <app-readonly-input [config]="config" [value]="getTodoValue(todoItem, config)"></app-readonly-input>
-          </ng-template>
         </ng-container>
       </div>
       <div class="col-6">
         <ng-container *ngFor="let config of inputsConfigForRight">
           <app-card-input
-            *ngIf="editMode; else readOnly"
             [config]="config"
             [formControlForInput]="getFormControl(config.keyForValue)"
+            [formSubmitted]="formSubmitted"
           ></app-card-input>
-          <ng-template #readOnly>
-            <app-readonly-input [config]="config" [value]="getTodoValue(todoItem, config)"></app-readonly-input>
-          </ng-template>
         </ng-container>
       </div>
       <div class="col-12"></div>
       <ng-container *ngIf="editMode">
       <div class="col-6 action-button">
-        <button [disabled]="cardForm.pristine || cardForm.invalid" (click)="onSaveForm()" class="app-success">
+        <button type="submit" class="app-success">
           {{ textField.common.save }}
         </button>
       </div>
       <div class="col-6 action-button">
-        <button class="app-danger" (click)="editMode = false">{{ textField.common.cancel }}</button>
+        <button class="app-danger" (click)="changeEditMode(false)">{{ textField.common.cancel }}</button>
       </div>
       </ng-container>
-    </div>
+    </form>
   </ng-container>
   <ng-template #noCard>
     <span class="no-data">{{ textField.card.noCardText }}</span>
   </ng-template>
   <button class="button-close" [routerLink]="route.TODO('full')"></button>
-  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="editMode = true"></button>
+  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="changeEditMode(true)"></button>
 </div>

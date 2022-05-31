@@ -1,4 +1,4 @@
-export class Helper {
+export class SharedHelper {
   static makeId(): string {
     let id = '';
     let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

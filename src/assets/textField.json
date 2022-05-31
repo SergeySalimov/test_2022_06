@@ -2,7 +2,12 @@
   "common": {
     "add": "add",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "noData": "no data"
+  },
+  "inputErrors": {
+    "required": "This field is required",
+    "email": "Email is invalid"
   },
   "todo": {
     "logo": "To do app",

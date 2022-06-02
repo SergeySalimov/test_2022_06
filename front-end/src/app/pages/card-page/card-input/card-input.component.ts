@@ -3,15 +3,15 @@ import {
   ErrorTypeEnum,
   InputConfigInterface,
   InputErrorConfigInterface,
-  InputTypeEnum
-} from '../../../core/interfaces/input-config.interface';
+  InputTypeEnum,
+  TextFieldInterface
+} from '@core/interfaces';
 import { FormControl } from '@angular/forms';
-import { dateTimeFormatToken, phoneMaskFormatToken, zipcodeMaskFormatToken } from '../../../shared/shared.module';
-import { MaskInterface } from '../../../core/constants/masks.constant';
+import { dateTimeFormatToken, phoneMaskFormatToken, zipcodeMaskFormatToken } from '@shared/shared.module';
+import { MaskInterface } from '@core/constants';
 import { inputErrorMap } from '../card-page.config';
 import { MaskPipe } from 'ngx-mask';
-import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
-import textField from '../../../../assets/textField.json';
+import textField from '@textField';
 
 @Component({
   selector: 'app-card-input',

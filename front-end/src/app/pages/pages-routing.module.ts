@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AppRoutes } from '../app-routing.helper';
+import { AppRoutes } from '@core/services';
 
 const pagesRoutes: Routes = [
   {

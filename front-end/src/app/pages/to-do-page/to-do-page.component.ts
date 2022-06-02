@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import textField from '../../../assets/textField.json';
-import { TextFieldInterface } from '../../core/interfaces/text-field.interface';
-import { ToDoService } from '../../core/services/to-do.service';
+import textField from '@textField';
+import { TextFieldInterface } from '@core/interfaces';
+import { ToDoService } from '@core/services';
 
 @Component({
   selector: 'app-to-do-page',

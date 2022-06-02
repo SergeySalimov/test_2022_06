@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import textFiled from '../../../../assets/textField.json';
-import { ToDoService } from '../../../core/services/to-do.service';
+import textFiled from '@textField';
+import { ToDoService } from '@core/services';
 
 @Component({
   selector: 'app-to-do-input',

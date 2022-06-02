@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { CommonService } from '../services/common.service';
-import { MessageTypeEnum } from '../interfaces/message.interface';
+import { CommonService } from '@core/services';
+import { MessageTypeEnum } from '@core/interfaces';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

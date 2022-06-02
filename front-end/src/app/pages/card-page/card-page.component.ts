@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ToDoService } from '../../core/services/to-do.service';
-import { TodoListItem } from '../../core/interfaces/to-do-page.interface';
+import { ToDoService } from '@core/services';
+import { InputPositionEnum, TodoListItem } from '@core/interfaces';
 import { inputConfig } from './card-page.config';
-import { InputPositionEnum } from '../../core/interfaces/input-config.interface';
 
 @Component({
   selector: 'app-card-page',

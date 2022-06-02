@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, TrackByFunction } from '@angular/core';
-import { ToDoService } from '../../../core/services/to-do.service';
+import { AppRoutes, ToDoService } from '@core/services';
 import { Observable } from 'rxjs';
-import textField from '../../../../assets/textField.json';
-import { TodoListItem } from '../../../core/interfaces/to-do-page.interface';
-import { dateTimeFormatToken } from '../../../shared/shared.module';
-import { trackById } from '../../../shared/utils/track-by-id';
-import { AppRoutes } from '../../../app-routing.helper';
-import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
+import textField from '@textField';
+import { TextFieldInterface, TodoListItem } from '@core/interfaces';
+import { dateTimeFormatToken } from '@shared/shared.module';
+import { trackById } from '@shared/utils';
 
 @Component({
   selector: 'app-to-do-table',

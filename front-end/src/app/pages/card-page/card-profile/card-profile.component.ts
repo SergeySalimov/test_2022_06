@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { TodoListItem } from '../../../core/interfaces/to-do-page.interface';
-import textField from '../../../../assets/textField.json';
-import { AppRoutes } from '../../../app-routing.helper';
-import { InputConfigInterface, PossibleInputType } from '../../../core/interfaces/input-config.interface';
-import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
+import { InputConfigInterface, PossibleInputType, TextFieldInterface, TodoListItem } from '@core/interfaces';
+import textField from '@textField';
+import { AppRoutes, ToDoService } from '@core/services';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ToDoService } from '../../../core/services/to-do.service';
 import { take } from 'rxjs';
 
 @Component({

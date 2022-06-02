@@ -1,7 +1,7 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TruncateDirective } from './directives/truncate.directive';
-import { DATE_TIME_FORMAT, DATE_TIME_FORMAT_NGX } from '../core/constants/date-time.constant';
+import { DATE_TIME_FORMAT, DATE_TIME_FORMAT_NGX, MaskInterface, PHONE_MASK, ZIPCODE_MASK } from '@core/constants';
 import {
   NGX_MAT_DATE_FORMATS,
   NgxMatDateAdapter,
@@ -10,10 +10,9 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { CustomNgxDatetimeAdapter } from './utils/custom-ngx-datetime.adapter';
+import { CustomNgxDatetimeAdapter } from '@shared/utils';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
-import { PHONE_MASK, MaskInterface, ZIPCODE_MASK } from '../core/constants/masks.constant';
 import { MaskPipe, NgxMaskModule } from 'ngx-mask';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoaderComponent } from './components/loader/loader.component';

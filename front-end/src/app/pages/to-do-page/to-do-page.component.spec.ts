@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoPageComponent } from './to-do-page.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import textField from '../../../assets/textField.json';
+import textField from '@textField';
 
 describe('ToDoPageComponent', () => {
   let component: ToDoPageComponent;

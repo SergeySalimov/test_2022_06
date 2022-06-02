@@ -4,8 +4,8 @@ import {
   InputErrorConfigInterface,
   InputPositionEnum,
   InputTypeEnum
-} from '../../core/interfaces/input-config.interface';
-import textField from '../../../assets/textField.json';
+} from '@core/interfaces';
+import textField from '@textField';
 import { Validators } from '@angular/forms';
 
 const MAX_LENGTH = 30;

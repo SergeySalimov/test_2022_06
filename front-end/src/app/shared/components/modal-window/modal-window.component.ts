@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonService } from '../../../core/services/common.service';
+import { CommonService } from '@core/services';
 import { Observable } from 'rxjs';
-import { MessageType, MessageTypeEnum } from '../../../core/interfaces/message.interface';
-import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
-import textField from '../../../../assets/textField.json';
+import { MessageType, MessageTypeEnum, TextFieldInterface } from '@core/interfaces';
+import textField from '@textField';
 
 @Component({
   selector: 'app-modal-window',

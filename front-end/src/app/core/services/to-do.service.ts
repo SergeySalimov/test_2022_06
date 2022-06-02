@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
-import { TodoListItem } from '../interfaces/to-do-page.interface';
+import { TodoListItem } from '@core/interfaces';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -5,9 +5,13 @@
     "cancel": "Cancel",
     "noData": "no data"
   },
-  "inputErrors": {
-    "required": "This field is required",
-    "email": "Email is invalid"
+  "errors": {
+    "serverErrorTitle": "A server error occurred !",
+    "inputErrors": {
+      "required": "This field is required",
+      "email": "Email is invalid",
+      "maxLength": "Maximum length is exceeded"
+    }
   },
   "todo": {
     "logo": "To do app",

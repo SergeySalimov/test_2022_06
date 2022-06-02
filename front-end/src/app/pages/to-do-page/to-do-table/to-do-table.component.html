@@ -7,12 +7,14 @@
       *ngFor="let todoItem of ($any(data.todoList)); let i = index; trackBy: trackByFunction"
       [routerLink]="getCardRoute(todoItem.id)"
     >
-      <td>{{ todoItem.createdAt | date:dateTimeFormat }}</td>
+      <td>{{ todoItem['createdAt'] | date:dateTimeFormat }}</td>
       <td>
         <span truncate>{{ todoItem.description }}</span>
       </td>
       <td>
-        <button (click)="onDeleteItem(i)">X</button>
+        <button class="delete-todo-button" (click)="onDeleteItem($event, todoItem.id)">
+          <strong>X</strong>
+        </button>
       </td>
     </tr>
   </table>

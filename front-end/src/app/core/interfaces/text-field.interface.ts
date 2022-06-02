@@ -5,9 +5,13 @@ export interface TextFieldInterface {
     cancel: string;
     noData: string;
   },
-  inputErrors: {
-    required: string;
-    email: string;
+  errors: {
+    serverErrorTitle: string;
+    inputErrors: {
+      required: string;
+      email: string;
+      maxLength: string;
+    },
   },
   todo: {
     logo: string;

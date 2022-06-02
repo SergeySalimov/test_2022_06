@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoTableComponent } from './to-do-table.component';
-import { ToDoService } from '../../../services/to-do.service';
+import { ToDoService } from '../../../core/services/to-do.service';
 import { dateTimeFormatToken } from '../../../shared/shared.module';
 import { mockTodoService } from '../../../shared/test-shared/mock.service';
 

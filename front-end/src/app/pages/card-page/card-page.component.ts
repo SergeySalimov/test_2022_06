@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { ToDoService } from '../../services/to-do.service';
-import { TodoListItem } from '../../shared/interfaces/to-do-page.interface';
+import { Observable } from 'rxjs';
+import { ToDoService } from '../../core/services/to-do.service';
+import { TodoListItem } from '../../core/interfaces/to-do-page.interface';
 import { inputConfig } from './card-page.config';
-import { InputPositionEnum } from '../../shared/interfaces/input-config.interface';
+import { InputPositionEnum } from '../../core/interfaces/input-config.interface';
 
 @Component({
   selector: 'app-card-page',
@@ -12,9 +12,7 @@ import { InputPositionEnum } from '../../shared/interfaces/input-config.interfac
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardPageComponent {
-  cardData$: Observable<TodoListItem | null> = this.todoService.todoList$.pipe(
-    map((todos: Array<TodoListItem>) => todos.find(todo => todo.id === this.route.snapshot.params['cardId']) || null),
-  );
+  cardData$: Observable<TodoListItem | null> = this.todoService.getItemById(this.route.snapshot.params['cardId']);
 
   inputForLeft = inputConfig.filter(config => config.position === InputPositionEnum.LEFT);
   inputForRight = inputConfig.filter(config => config.position === InputPositionEnum.RIGHT);

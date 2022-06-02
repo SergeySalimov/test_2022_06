@@ -17,7 +17,12 @@ export enum InputTypeEnum {
 
 export enum PipeTypeEnum {
   DATE = 'date',
-  PHONE = 'phone',
+}
+
+export enum ErrorTypeEnum {
+  REQUIRED = 'required',
+  EMAIL = 'email',
+  MAX_LENGTH = 'maxlength',
 }
 
 export interface InputConfigInterface {
@@ -28,6 +33,11 @@ export interface InputConfigInterface {
   inputType?: InputTypeEnum;
   validators?: Array<ValidatorFn> | ValidatorFn;
   pipe?: PipeTypeEnum;
+}
+
+export interface InputErrorConfigInterface {
+  type: ErrorTypeEnum,
+  text: string,
 }
 
 export type PossibleInputType = string | number | Date | null;

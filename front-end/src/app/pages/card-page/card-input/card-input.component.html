@@ -2,7 +2,7 @@
   <textarea
     *ngSwitchCase="inputType.TEXT_AREA"
     [formControl]="formControlForInput"
-    [class.notEmpty]="formControlForInput.value"
+    [class.not-empty]="formControlForInput.value"
     [class.app-disabled]="!config.editable"
     rows="2"
   ></textarea>
@@ -11,7 +11,7 @@
       [ngxMatDatetimePicker]="picker"
       [formControl]="formControlForInput"
       [class.app-disabled]="!config.editable"
-      [class.notEmpty]="formControlForInput.value"
+      [class.not-empty]="formControlForInput.value"
       class="date-time-picker"
     >
     <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
@@ -20,27 +20,26 @@
   <input
     *ngSwitchCase="inputType.PHONE"
     [formControl]="formControlForInput"
-    [class.notEmpty]="formControlForInput.value"
+    [class.not-empty]="editMode || formControlForInput.value"
     [class.app-disabled]="!config.editable"
-    [showMaskTyped]="true"
+    [showMaskTyped]="formControlForInput.enabled"
     [mask]="phoneMask.data"
-    [prefix]="phoneMask.prefix"
+    [prefix]="editMode || formControlForInput.value ? phoneMask.prefix : ''"
     type="phone"
   >
   <input
     *ngSwitchDefault
     [formControl]="formControlForInput"
     [type]="$any(config).inputType"
-    [class.notEmpty]="formControlForInput.value"
+    [class.not-empty]="formControlForInput.value"
     [class.app-disabled]="!config.editable"
   >
   <span class="highlight"></span>
   <span class="bar"></span>
   <label>{{ config.name }}</label>
-  <span *ngIf="isRequired(formControlForInput)" class="error-text">
-    <small>{{ textField.inputErrors.required }}</small>
+  <ng-container *ngFor="let error of errorMap">
+    <span *ngIf="isErrorOnInput(formControlForInput, error.type)" class="error-text">
+    <small>{{ error.text }}</small>
   </span>
-  <span *ngIf="isEmailValid(formControlForInput)" class="error-text">
-    <small>{{ textField.inputErrors.email }}</small>
-  </span>
+  </ng-container>
 </div>

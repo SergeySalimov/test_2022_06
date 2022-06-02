@@ -63,5 +63,10 @@
   // actions block
   .todo-table td:nth-child(3) {
     text-align: center;
+
+    .delete-todo-button {
+      font-size: 1.5rem;
+      width: 4rem;
+    }
   }
 }

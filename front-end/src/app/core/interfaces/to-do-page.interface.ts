@@ -1,7 +1,7 @@
 export interface TodoListItem {
-  id: string;
   createdAt: Date;
   description: string;
+  id?: string;
   name?: string;
   surname?: string;
   patronymic?: string;

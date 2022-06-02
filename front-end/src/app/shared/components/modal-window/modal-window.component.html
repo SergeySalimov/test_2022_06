@@ -1,0 +1,8 @@
+<div *ngIf="(message$ | async) as message" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" (click)="hideModal()">&times;</span>
+    <h2><strong>{{ textField.errors.serverErrorTitle }}</strong></h2>
+    <p>{{ message.text }}</p>
+  </div>
+</div>

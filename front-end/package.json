@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test-coverage": "ng test --no-watch --code-coverage",
-    "parse-text-interface": "node parser.js src/assets/textField.json src/app/shared/interfaces/text-field.interface.ts TextFieldInterface"
+    "parse-text-interface": "node parser.js src/assets/textField.json src/app/core/interfaces/text-field.interface.ts TextFieldInterface"
   },
   "private": true,
   "dependencies": {

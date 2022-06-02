@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import { InputConfigInterface, InputTypeEnum } from '../../../shared/interfaces/input-config.interface';
+import {
+  ErrorTypeEnum,
+  InputConfigInterface,
+  InputErrorConfigInterface,
+  InputTypeEnum
+} from '../../../core/interfaces/input-config.interface';
 import { FormControl } from '@angular/forms';
-import textField from '../../../../assets/textField.json';
-import { TextFieldInterface } from '../../../shared/interfaces/text-field.interface';
 import { phoneMaskFormatToken } from '../../../shared/shared.module';
-import { PhoneMaskInterface } from '../../../shared/constants/phone-mask.constant';
+import { MaskInterface } from '../../../core/constants/phone-mask.constant';
+import { inputErrorMap } from '../card-page.config';
 
 @Component({
   selector: 'app-card-input',
@@ -16,18 +20,14 @@ export class CardInputComponent {
   @Input() config!: InputConfigInterface;
   @Input() formControlForInput!: FormControl;
   @Input() formSubmitted = false;
+  @Input() editMode!: boolean;
   inputType: typeof InputTypeEnum = InputTypeEnum;
-  textField: TextFieldInterface = textField;
+  errorMap: Array<InputErrorConfigInterface> = inputErrorMap;
 
-  constructor(@Inject(phoneMaskFormatToken) public phoneMask: PhoneMaskInterface) {
-  }
+  constructor(@Inject(phoneMaskFormatToken) public phoneMask: MaskInterface) {}
 
-  isRequired(formControl: FormControl): boolean {
-    return (formControl.touched || this.formSubmitted) && formControl.invalid && formControl.hasError('required');
-  }
-
-  isEmailValid(formControl: FormControl): boolean {
-  return (this.formSubmitted || formControl.touched) && formControl.invalid && formControl.hasError('email');
+  isErrorOnInput(formControl: FormControl, errorCode: ErrorTypeEnum): boolean {
+    return (formControl.touched || this.formSubmitted) && formControl.invalid && formControl.hasError(errorCode) && this.editMode;
   }
 }
 

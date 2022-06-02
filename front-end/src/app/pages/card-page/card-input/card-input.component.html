@@ -58,9 +58,15 @@
 <ng-template #readOnlyMode>
   <p *ngIf="$any(textField.card)[config.keyForValue] as inputName">
     <ng-container [ngSwitch]="config.inputType">
-      <span *ngSwitchCase="inputType.PHONE">{{ inputName }} : {{ getPhone(formControlForInput.value) }}</span>
-      <span *ngSwitchCase="inputType.ZIPCODE">{{ inputName }} : {{ getZipcode(formControlForInput.value) }}</span>
-      <span *ngSwitchCase="inputType.DATE_TIME">{{ inputName }} : {{ formControlForInput.value | date: dateTimeFormat }}</span>
+      <span *ngSwitchCase="inputType.PHONE">
+        {{ inputName }} : {{ getMaskedInputValue(formControlForInput.value, phoneMask) }}
+      </span>
+      <span *ngSwitchCase="inputType.ZIPCODE">
+        {{ inputName }} : {{ getMaskedInputValue(formControlForInput.value, zipcodeMask) }}
+      </span>
+      <span *ngSwitchCase="inputType.DATE_TIME">
+        {{ inputName }} : {{ formControlForInput.value | date: dateTimeFormat }}
+      </span>
       <span *ngSwitchDefault truncate>{{ inputName }} : {{ formControlForInput.value }}</span>
     </ng-container>
   </p>

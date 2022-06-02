@@ -39,12 +39,8 @@ export class CardInputComponent {
     return (formControl.touched || this.formSubmitted) && formControl.invalid && formControl.hasError(errorCode) && this.editMode;
   }
 
-  getPhone(value: string | null): string {
-    return value ? `${this.phoneMask.prefix} ${this.maskPipe.transform(value, this.phoneMask.data)}` : '';
-  }
-
-  getZipcode(value: string | null): string {
-    return value ? `${this.zipcodeMask.prefix} ${this.maskPipe.transform(value, this.zipcodeMask.data)}` : '';
+  getMaskedInputValue(value: string | null, mask: MaskInterface): string {
+    return value ? `${mask.prefix} ${this.maskPipe.transform(value, mask.data)}` : '';
   }
 }
 

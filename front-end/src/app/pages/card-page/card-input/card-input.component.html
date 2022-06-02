@@ -1,12 +1,12 @@
 <ng-container *ngIf="editMode; else readOnlyMode">
   <div class="input-group" [ngSwitch]="config.inputType">
-  <textarea
-    *ngSwitchCase="inputType.TEXT_AREA"
-    [formControl]="formControlForInput"
-    [class.not-empty]="formControlForInput.value"
-    [class.app-disabled]="!config.editable"
-    rows="2"
-  ></textarea>
+    <textarea
+      *ngSwitchCase="inputType.TEXT_AREA"
+      [formControl]="formControlForInput"
+      [class.not-empty]="formControlForInput.value"
+      [class.app-disabled]="!config.editable"
+      rows="2"
+    ></textarea>
     <ng-container *ngSwitchCase="inputType.DATE_TIME">
       <input
         [ngxMatDatetimePicker]="picker"

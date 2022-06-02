@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonService } from '../../../core/services/common.service';
 import { Observable } from 'rxjs';
-import { MessageType } from '../../../core/interfaces/message.interface';
+import { MessageType, MessageTypeEnum } from '../../../core/interfaces/message.interface';
 import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
 import textField from '../../../../assets/textField.json';
 
@@ -14,6 +14,7 @@ import textField from '../../../../assets/textField.json';
 export class ModalWindowComponent {
   message$: Observable<MessageType> = this.commonService.message$;
   textField: TextFieldInterface = textField;
+  messageTypeEnum: typeof MessageTypeEnum = MessageTypeEnum;
   constructor(private readonly commonService: CommonService) {}
   hideModal(): void {
     this.commonService.removeMessage();

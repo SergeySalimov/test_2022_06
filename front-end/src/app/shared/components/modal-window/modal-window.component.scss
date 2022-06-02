@@ -20,12 +20,28 @@
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid $appDarkGray;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 55%; /* Could be more or less, depending on screen size */
+    color: $appBlue;
+  }
+
+  .modal-title:before {
+    content: "\261B";
+    padding-right: 0.5rem;
+    font-size: 2rem;
+    color: $appRed;
+  }
+
+  .modal-content-error {
+    background-color: $appLightGray;
+  }
+
+  .modal-text {
+    white-space: normal !important;
   }
 
   /* The Close Button */
   .close {
-    color: $appGray;
+    color: $appRed;
     float: right;
     font-size: 28px;
     font-weight: bold;

@@ -10,5 +10,5 @@ export const PHONE_MASK: MaskInterface = {
 
 export const ZIPCODE_MASK: MaskInterface = {
   prefix: '',
-  data: '000000'
+  data: '0 0 0 0 0 0'
 }

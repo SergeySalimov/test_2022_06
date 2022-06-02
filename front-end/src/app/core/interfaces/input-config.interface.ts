@@ -10,13 +10,10 @@ export enum InputTypeEnum {
   TEXT = 'text',
   TEXT_AREA = 'textArea',
   NUMBER = 'number',
+  ZIPCODE = 'zipcode',
   PHONE = 'phone',
   DATE = 'date',
   DATE_TIME = 'date-time',
-}
-
-export enum PipeTypeEnum {
-  DATE = 'date',
 }
 
 export enum ErrorTypeEnum {
@@ -32,7 +29,6 @@ export interface InputConfigInterface {
   position: InputPositionEnum;
   inputType?: InputTypeEnum;
   validators?: Array<ValidatorFn> | ValidatorFn;
-  pipe?: PipeTypeEnum;
 }
 
 export interface InputErrorConfigInterface {

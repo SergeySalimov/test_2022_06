@@ -3,8 +3,7 @@ import {
   InputConfigInterface,
   InputErrorConfigInterface,
   InputPositionEnum,
-  InputTypeEnum,
-  PipeTypeEnum
+  InputTypeEnum
 } from '../../core/interfaces/input-config.interface';
 import textField from '../../../assets/textField.json';
 import { Validators } from '@angular/forms';
@@ -25,7 +24,6 @@ export const inputConfig: Array<InputConfigInterface> = [
     editable: true,
     position: InputPositionEnum.LEFT,
     inputType: InputTypeEnum.DATE_TIME,
-    pipe: PipeTypeEnum.DATE,
     validators: Validators.required,
   },
   {
@@ -72,7 +70,7 @@ export const inputConfig: Array<InputConfigInterface> = [
     keyForValue: 'zipCode',
     editable: true,
     position: InputPositionEnum.RIGHT,
-    inputType: InputTypeEnum.NUMBER,
+    inputType: InputTypeEnum.ZIPCODE,
     validators: [Validators.maxLength(6)],
   },
   {

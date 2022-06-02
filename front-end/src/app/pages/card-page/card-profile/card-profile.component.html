@@ -1,6 +1,6 @@
 <div class="container">
   <ng-container *ngIf="todoItem; else noCard">
-    <form #form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
+    <form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
       <h2 class="header col-12">
         {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
       </h2>
@@ -42,5 +42,5 @@
     <span class="no-data">{{ textField.card.noCardText }}</span>
   </ng-template>
   <button class="button-close" [routerLink]="route.TODO('full')"></button>
-  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="changeEditMode(true)"></button>
+  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="editMode = true"></button>
 </div>

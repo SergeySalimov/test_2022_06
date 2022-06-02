@@ -1,4 +1,5 @@
-<div class="input-group" [ngSwitch]="config.inputType">
+<ng-container *ngIf="editMode; else readOnlyMode">
+  <div class="input-group" [ngSwitch]="config.inputType">
   <textarea
     *ngSwitchCase="inputType.TEXT_AREA"
     [formControl]="formControlForInput"
@@ -6,40 +7,62 @@
     [class.app-disabled]="!config.editable"
     rows="2"
   ></textarea>
-  <ng-container *ngSwitchCase="inputType.DATE_TIME">
+    <ng-container *ngSwitchCase="inputType.DATE_TIME">
+      <input
+        [ngxMatDatetimePicker]="picker"
+        [formControl]="formControlForInput"
+        [class.app-disabled]="!config.editable"
+        [class.not-empty]="formControlForInput.value"
+        class="date-time-picker"
+      >
+      <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [showSeconds]="true"></ngx-mat-datetime-picker>
+    </ng-container>
     <input
-      [ngxMatDatetimePicker]="picker"
+      *ngSwitchCase="inputType.PHONE"
       [formControl]="formControlForInput"
+      [class.not-empty]="editMode || formControlForInput.value"
       [class.app-disabled]="!config.editable"
-      [class.not-empty]="formControlForInput.value"
-      class="date-time-picker"
+      [showMaskTyped]="formControlForInput.enabled"
+      [mask]="phoneMask.data"
+      [prefix]="editMode || formControlForInput.value ? phoneMask.prefix : ''"
+      type="phone"
     >
-    <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
-    <ngx-mat-datetime-picker #picker [showSeconds]="true"></ngx-mat-datetime-picker>
-  </ng-container>
-  <input
-    *ngSwitchCase="inputType.PHONE"
-    [formControl]="formControlForInput"
-    [class.not-empty]="editMode || formControlForInput.value"
-    [class.app-disabled]="!config.editable"
-    [showMaskTyped]="formControlForInput.enabled"
-    [mask]="phoneMask.data"
-    [prefix]="editMode || formControlForInput.value ? phoneMask.prefix : ''"
-    type="phone"
-  >
-  <input
-    *ngSwitchDefault
-    [formControl]="formControlForInput"
-    [type]="$any(config).inputType"
-    [class.not-empty]="formControlForInput.value"
-    [class.app-disabled]="!config.editable"
-  >
-  <span class="highlight"></span>
-  <span class="bar"></span>
-  <label>{{ config.name }}</label>
-  <ng-container *ngFor="let error of errorMap">
+    <input
+      *ngSwitchCase="inputType.ZIPCODE"
+      [formControl]="formControlForInput"
+      [class.not-empty]="editMode || formControlForInput.value"
+      [class.app-disabled]="!config.editable"
+      [showMaskTyped]="formControlForInput.enabled"
+      [mask]="zipcodeMask.data"
+      [prefix]="editMode || formControlForInput.value ? zipcodeMask.prefix : ''"
+      type="phone"
+    >
+    <input
+      *ngSwitchDefault
+      [formControl]="formControlForInput"
+      [type]="$any(config).inputType"
+      [class.not-empty]="formControlForInput.value"
+      [class.app-disabled]="!config.editable"
+    >
+    <span class="highlight"></span>
+    <span class="bar"></span>
+    <label>{{ config.name }}</label>
+    <ng-container *ngFor="let error of errorMap">
     <span *ngIf="isErrorOnInput(formControlForInput, error.type)" class="error-text">
     <small>{{ error.text }}</small>
   </span>
-  </ng-container>
-</div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #readOnlyMode>
+  <p>
+    <span>{{ $any(textField.card)[config.keyForValue] }} : </span>
+    <ng-container [ngSwitch]="config.inputType">
+      <span *ngSwitchCase="inputType.PHONE">{{ getPhone(formControlForInput.value) }}</span>
+      <span *ngSwitchCase="inputType.ZIPCODE">{{ getZipcode(formControlForInput.value) }}</span>
+      <span *ngSwitchCase="inputType.DATE_TIME">{{ formControlForInput.value | date: dateTimeFormat }}</span>
+      <span *ngSwitchDefault>{{ formControlForInput.value }}</span>
+    </ng-container>
+  </p>
+</ng-template>

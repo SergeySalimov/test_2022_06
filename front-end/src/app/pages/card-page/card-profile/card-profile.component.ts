@@ -1,24 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TodoListItem } from '../../../core/interfaces/to-do-page.interface';
 import textField from '../../../../assets/textField.json';
 import { AppRoutes } from '../../../app-routing.helper';
 import { InputConfigInterface, PossibleInputType } from '../../../core/interfaces/input-config.interface';
 import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
 import { FormControl, FormGroup } from '@angular/forms';
-import { dateTimeFormatToken } from '../../../shared/shared.module';
 import { ToDoService } from '../../../core/services/to-do.service';
-import { inputConfig } from '../card-page.config';
 import { take } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-profile',
@@ -37,14 +25,7 @@ export class CardProfileComponent implements OnChanges {
   route: typeof AppRoutes = AppRoutes;
   formSubmitted = false;
 
-  @ViewChild('form') formRef!: ElementRef;
-
-  constructor(
-    @Inject(dateTimeFormatToken) public dateTimeFormat: string,
-    private readonly todoService: ToDoService,
-    private readonly router: Router,
-  ) {
-  }
+  constructor(private readonly todoService: ToDoService, private readonly cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['todoItem'].firstChange && 'todoItem' in changes && changes['todoItem'].currentValue) {
@@ -62,12 +43,7 @@ export class CardProfileComponent implements OnChanges {
 
   cancelEditing(): void {
     this.cardForm.patchValue(this.todoItem!);
-    this.changeEditMode(false);
-  }
-
-  changeEditMode(status: boolean): void {
-    this.editMode = status;
-    status ? this.enableForm() : this.disableForm();
+    this.editMode = false;
   }
 
   onSubmitForm(): void {
@@ -83,39 +59,11 @@ export class CardProfileComponent implements OnChanges {
     ).subscribe({
       next: (data: TodoListItem) => {
         this.todoItem = data;
-        this.changeEditMode(false);
+        this.editMode = false;
+        this.cdr.detectChanges();
       },
-      error: () => this.changeEditMode(true),
+      error: () => this.editMode = true,
     });
-  }
-
-  private disableForm(): void {
-    for (const key in this.cardForm.controls) {
-      const index: number = inputConfig.findIndex(config => config.keyForValue === key);
-      this.cardForm.controls[key].value?.trim();
-
-      // if (index >=0 && inputConfig[index].inputType === InputTypeEnum.NUMBER) {
-      //   let value = this.cardForm.controls[key].value.replace(/\D+/g, '');
-      //   this.cardForm.controls[key].setValue(value);
-      //   continue;
-      // }
-
-      if (!this.cardForm.controls[key].value) {
-        this.cardForm.controls[key].setValue(null);
-      }
-    }
-
-    this.cardForm.disable();
-  }
-
-  private enableForm(): void {
-    for (const key in this.cardForm.controls) {
-      const index: number = inputConfig.findIndex(config => config.keyForValue === key);
-
-      if (index >= 0 && inputConfig[index].editable) {
-        this.cardForm.controls[key].enable();
-      }
-    }
   }
 
   private getValueForFormControl(config: InputConfigInterface): PossibleInputType {
@@ -144,7 +92,5 @@ export class CardProfileComponent implements OnChanges {
           ),
         }), {} as Record<keyof TodoListItem, FormControl>)
     );
-
-    this.editMode ? this.enableForm() : this.disableForm();
   }
 }

@@ -6,9 +6,12 @@ import {
   InputTypeEnum
 } from '../../../core/interfaces/input-config.interface';
 import { FormControl } from '@angular/forms';
-import { phoneMaskFormatToken } from '../../../shared/shared.module';
-import { MaskInterface } from '../../../core/constants/phone-mask.constant';
+import { dateTimeFormatToken, phoneMaskFormatToken, zipcodeMaskFormatToken } from '../../../shared/shared.module';
+import { MaskInterface } from '../../../core/constants/masks.constant';
 import { inputErrorMap } from '../card-page.config';
+import { MaskPipe } from 'ngx-mask';
+import { TextFieldInterface } from '../../../core/interfaces/text-field.interface';
+import textField from '../../../../assets/textField.json';
 
 @Component({
   selector: 'app-card-input',
@@ -23,11 +26,25 @@ export class CardInputComponent {
   @Input() editMode!: boolean;
   inputType: typeof InputTypeEnum = InputTypeEnum;
   errorMap: Array<InputErrorConfigInterface> = inputErrorMap;
+  textField: TextFieldInterface = textField;
 
-  constructor(@Inject(phoneMaskFormatToken) public phoneMask: MaskInterface) {}
+  constructor(
+    @Inject(phoneMaskFormatToken) public phoneMask: MaskInterface,
+    @Inject(zipcodeMaskFormatToken) public zipcodeMask: MaskInterface,
+    @Inject(dateTimeFormatToken) public dateTimeFormat: string,
+    private readonly maskPipe: MaskPipe,
+    ) {}
 
   isErrorOnInput(formControl: FormControl, errorCode: ErrorTypeEnum): boolean {
     return (formControl.touched || this.formSubmitted) && formControl.invalid && formControl.hasError(errorCode) && this.editMode;
+  }
+
+  getPhone(value: string | null): string {
+    return value ? `${this.phoneMask.prefix} ${this.maskPipe.transform(value, this.phoneMask.data)}` : '';
+  }
+
+  getZipcode(value: string | null): string {
+    return value ? `${this.zipcodeMask.prefix} ${this.maskPipe.transform(value, this.zipcodeMask.data)}` : '';
   }
 }
 

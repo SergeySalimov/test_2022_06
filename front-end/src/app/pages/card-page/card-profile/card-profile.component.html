@@ -4,7 +4,7 @@
       <h2 class="header col-12">
         {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
       </h2>
-      <h4 class="sub-header col-12">{{ todoItem.description }}</h4>
+      <h4 truncate class="sub-header col-12">{{ todoItem.description }}</h4>
       <div class="col-6">
         <ng-container *ngFor="let config of inputsConfigForLeft">
           <app-card-input

@@ -56,8 +56,7 @@
 
   // description block
   .todo-table td:nth-child(2) span {
-    // should be any fix width on start
-    width: 400px;
+    width: 100%;
   }
 
   // actions block

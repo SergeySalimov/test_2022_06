@@ -24,11 +24,11 @@ input.ng-invalid.ng-dirty, textarea.ng-invalid.ng-dirty {
   border-bottom: 2px solid $appRed;
 }
 
-.error-text {
+input ~ .error-text, textarea ~ .error-text {
   color: $appRed;
   font-size: 1rem;
-  position: absolute;
-  top: 2.85rem;
+  position: relative;
+  top: -0.5rem;
   left: 0.4rem;
 }
 

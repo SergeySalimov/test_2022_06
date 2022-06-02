@@ -1,7 +1,5 @@
-<ng-container *ngIf="{ card: cardData$ | async } as data">
-  <app-card-profile
-    [todoItem]="data.card"
-    [inputsConfigForLeft]="inputForLeft"
-    [inputsConfigForRight]="inputForRight"
-  ></app-card-profile>
-</ng-container>
+<app-card-profile
+  [todoItem]="cardData$ | async"
+  [inputsConfigForLeft]="inputForLeft"
+  [inputsConfigForRight]="inputForRight"
+></app-card-profile>

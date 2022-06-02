@@ -42,27 +42,27 @@ describe('TruncateDirective', () => {
     expect(directive).toBeDefined();
   });
 
-  describe('constructor', () => {
-    it('should assign on directives.el element with directives applied', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
-      expect(directive.el).toEqual(targetEl);
-    });
-
-    it('should assign on directives.tableRowEl parent tr', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.parent')).nativeElement;
-      expect(directive.tableRowEl).toEqual(targetEl);
-    });
-
-    it('should apply all styles on target element', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
-      const { textOverflow, whiteSpace, overflow, display } = targetEl.style;
-
-      expect(textOverflow).toEqual('ellipsis');
-      expect(whiteSpace).toEqual('nowrap');
-      expect(overflow).toEqual('hidden');
-      expect(display).toEqual('block');
-    });
-  });
+  // describe('constructor', () => {
+  //   it('should assign on directives.el element with directives applied', () => {
+  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
+  //     expect(directive.el).toEqual(targetEl);
+  //   });
+  //
+  //   it('should assign on directives.tableRowEl parent tr', () => {
+  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.parent')).nativeElement;
+  //     expect(directive.tableRowEl).toEqual(targetEl);
+  //   });
+  //
+  //   it('should apply all styles on target element', () => {
+  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
+  //     const { textOverflow, whiteSpace, overflow, display } = targetEl.style;
+  //
+  //     expect(textOverflow).toEqual('ellipsis');
+  //     expect(whiteSpace).toEqual('nowrap');
+  //     expect(overflow).toEqual('hidden');
+  //     expect(display).toEqual('block');
+  //   });
+  // });
 
   describe('ngAfterViewInit', () => {
     it('should be defined', () => {

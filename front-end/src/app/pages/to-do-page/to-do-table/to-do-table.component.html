@@ -9,7 +9,7 @@
     >
       <td>{{ todoItem['createdAt'] | date:dateTimeFormat }}</td>
       <td>
-        <span truncate>{{ todoItem.description }}</span>
+        <span truncate fix-width>{{ todoItem.description }}</span>
       </td>
       <td>
         <button class="delete-todo-button" (click)="onDeleteItem($event, todoItem.id)">

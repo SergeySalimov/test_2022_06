@@ -8,6 +8,12 @@ function makeId() {
     return id;
 }
 
+function sendError(response, errorText, errorCode) {
+    console.log(errorText);
+    return response.status(errorCode).send(errorText).end();
+}
+
 export {
     makeId,
+    sendError,
 }

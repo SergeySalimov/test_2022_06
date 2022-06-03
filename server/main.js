@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { makeId } from './helper/helper';
+import { makeId, sendError } from './helper/helper';
 import messages from './shared/messages';
 
 const app = express();
@@ -31,9 +31,7 @@ app.get(`${API}/cards/:id`, (req, res) => {
     const { id } = req.params;
 
     if (!id) {
-        let errorText = messages.errorsText.badRequest;
-        console.log(errorText);
-        return res.status(400).send(errorText).end();
+        return sendError(res, messages.errorsText.badRequest, 400)
     }
 
     const indexOfTodo = todos.findIndex(todo => todo.id === id);
@@ -52,9 +50,7 @@ app.post(`${API}/cards`, (req, res) => {
     const { description, createdAt } = req.body;
 
     if (!description || !createdAt) {
-        let errorText = messages.errorsText.badRequest;
-        console.log(errorText);
-        return res.status(400).send(errorText).end();
+        return sendError(res, messages.errorsText.badRequest, 400);
     }
 
     const id = makeId();
@@ -69,17 +65,14 @@ app.put(`${API}/cards/:id`, (req, res) => {
     const { body, params: { id } } = req;
 
     if (!id || !body || !('description' in body)) {
-        let errorText = messages.errorsText.badRequest;
-        console.log(errorText);
-        return res.status(400).send(errorText).end();
+        return sendError(res, messages.errorsText.badRequest, 400);
     }
 
     const indexOfTodo = todos.findIndex(todo => todo.id === id);
 
     if (indexOfTodo < 0) {
         let errorText = messages.errorsText.notFound.replaceAll('$1', 'Todos');
-        console.log(errorText);
-        return res.status(404).send(errorText).end();
+        return sendError(res, errorText, 404);
     }
 
     todos[indexOfTodo] = { ...body };
@@ -91,17 +84,14 @@ app.delete(`${API}/cards/:id`, (req, res) => {
     const { id } = req.params;
 
     if (!id) {
-        let errorText = messages.errorsText.badData;
-        console.log(errorText);
-        return res.status(400).send(errorText).end();
+        return sendError(res, messages.errorsText.badData, 404);
     }
 
     const indexOfTodo = todos.findIndex(todo => todo.id === id);
 
     if (indexOfTodo < 0) {
         let errorText = messages.errorsText.notFound.replaceAll('$1', 'Todos');
-        console.log(errorText);
-        return res.status(404).send(errorText).end();
+        return sendError(res, errorText, 404);
     }
 
     todos.splice(indexOfTodo, 1);

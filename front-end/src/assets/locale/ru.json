@@ -1,0 +1,40 @@
+{
+  "common": {
+    "add": "add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "noData": "no data",
+    "chooseLanguage": "Выберите язык"
+  },
+  "errors": {
+    "serverErrorTitle": "A server error occurred !",
+    "inputErrors": {
+      "required": "This field is required",
+      "email": "Email is invalid",
+      "maxLength": "Maximum length is exceeded"
+    }
+  },
+  "todo": {
+    "logo": "Список",
+    "inputPlaceholder": "Пожалуйста введите новый элемент списка",
+    "addToDo": "Добавить элемент",
+    "noDataInTable": "Нет добавленных элементов",
+    "tableDate": "Дата",
+    "tableDescription": "Описание",
+    "tableAction": "Действия"
+  },
+  "card": {
+    "cardHeaderText": "Card",
+    "noCardText": "Sorry, no card found",
+    "createdAt": "Created at",
+    "surname": "Surname",
+    "name": "Name",
+    "patronymic": "Patronymic",
+    "city": "City",
+    "phone": "Phone",
+    "zipCode": "Zip code",
+    "email": "E-mail",
+    "address": "Address",
+    "notes": "Notes"
+  }
+}

@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ModalWindowComponent } from './components/modal-window/modal-window.component';
 import { FixWidthDirective } from './directives/fix-width.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 export const phoneMaskFormatToken: InjectionToken<MaskInterface> = new InjectionToken('phone-mask-format');
@@ -38,6 +39,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     MatDatepickerModule,
     MatFormFieldModule,
     NgxMaskModule,
+    TranslateModule.forChild(),
   ],
   exports: [
     TruncateDirective,
@@ -50,6 +52,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     NgxMaskModule,
     LoaderComponent,
     ModalWindowComponent,
+    TranslateModule,
   ],
   providers: [
     { provide: dateTimeFormatToken, useValue: DATE_TIME_FORMAT },

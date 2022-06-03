@@ -5,14 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '@shared/shared.module';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
+
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslateHttpLoader(http, './assets/locale/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -24,8 +30,17 @@ const maskConfig: Partial<IConfig> = {
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxMaskModule.forRoot(maskConfig),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      useDefaultLang: false,
+    }),
     SharedModule,
-  ], providers: [
+  ],
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,

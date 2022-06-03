@@ -1,0 +1,40 @@
+{
+  "common": {
+    "add": "add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "noData": "no data",
+    "chooseLanguage": "Choose language"
+  },
+  "errors": {
+    "serverErrorTitle": "A server error occurred !",
+    "inputErrors": {
+      "required": "This field is required",
+      "email": "Email is invalid",
+      "maxLength": "Maximum length is exceeded"
+    }
+  },
+  "todo": {
+    "logo": "To do app",
+    "inputPlaceholder": "Please enter new todo item",
+    "addToDo": "Add todo",
+    "noDataInTable": "No added todos",
+    "tableDate": "Date",
+    "tableDescription": "Description",
+    "tableAction": "Actions"
+  },
+  "card": {
+    "cardHeaderText": "Card",
+    "noCardText": "Sorry, no card found",
+    "createdAt": "Created at",
+    "surname": "Surname",
+    "name": "Name",
+    "patronymic": "Patronymic",
+    "city": "City",
+    "phone": "Phone",
+    "zipCode": "Zip code",
+    "email": "E-mail",
+    "address": "Address",
+    "notes": "Notes"
+  }
+}

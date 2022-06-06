@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LanguageEnum } from '@core/constants';
 import { Router } from '@angular/router';
 import { AppRoutes, RouteEnum } from './routing.helper';
-import { translateConfigToken } from '../../app.module';
+import { translateConfigToken } from '@app/app.module';
 import { TranslateConfigInterface } from '@core/interfaces';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class TranslateService {
 
   changeLanguage(to: LanguageEnum): void {
     this._selectedLanguage$.next(to);
-    this.softReloadPage();
+    // this.softReloadPage();
   }
 
   getCurrentLanguage(): LanguageEnum {

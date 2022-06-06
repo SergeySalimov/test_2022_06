@@ -115,11 +115,35 @@
   .button-close, .button-edit {
     position: absolute;
     top: 1rem;
+    width: 3rem;
 
     &:before {
       font-size: 2rem;
       vertical-align: 20%;
       color: $appGreen;
+    }
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .button-close, .button-edit {
+      top: 0;
+    }
+
+    button.button-close {
+      right: 1rem;
+    }
+    button.button-edit {
+      right: 4rem;
+    }
+  }
+
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    button.button-close {
+      right: 0;
+    }
+    button.button-edit {
+      right: 3rem;
     }
   }
 

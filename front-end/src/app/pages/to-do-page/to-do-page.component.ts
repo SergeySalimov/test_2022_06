@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ToDoService } from '@core/services';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-to-do-page',
@@ -7,9 +6,4 @@ import { ToDoService } from '@core/services';
   styleUrls: ['./to-do-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToDoPageComponent implements OnInit {
-  constructor(private readonly todoService: ToDoService) {}
-  ngOnInit(): void {
-    this.todoService.getAllTodos();
-  }
-}
+export class ToDoPageComponent {}

@@ -28,7 +28,7 @@ export class CardProfileComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['todoItem'].firstChange && 'todoItem' in changes && changes['todoItem'].currentValue) {
+    if ('todoItem' in changes && changes['todoItem'].currentValue) {
       this.createCardForm();
     }
   }
@@ -53,7 +53,7 @@ export class CardProfileComponent implements OnChanges {
   changeEditMode(editMode: boolean): void {
     this.router.navigate(
       [],
-      { queryParams: { editMode }, relativeTo: this.route, queryParamsHandling: 'merge', });
+      { queryParams: { editMode }, relativeTo: this.route });
   }
 
   onSubmitForm(): void {
@@ -69,8 +69,9 @@ export class CardProfileComponent implements OnChanges {
     ).subscribe({
       next: (data: TodoListItem) => {
         this.todoItem = data;
+        this.todoService.updateCurrentTodos(data);
         this.changeEditMode(false);
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       },
       error: () => this.changeEditMode(true),
     });

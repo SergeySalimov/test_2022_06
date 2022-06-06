@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { TranslateService } from '@core/services';
 import { LanguageEnum } from '@core/constants';
-import { translateConfigToken } from '../../../app.module';
+import { translateConfigToken } from '@app/app.module';
 import { TranslateConfigInterface } from '@core/interfaces';
 
 @Component({

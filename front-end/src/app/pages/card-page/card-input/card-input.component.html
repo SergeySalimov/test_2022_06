@@ -59,15 +59,15 @@
   <p>
     <ng-container [ngSwitch]="config.inputType">
       <span *ngSwitchCase="inputType.PHONE">
-        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput.value, phoneMask) }}
+        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput?.value, phoneMask) }}
       </span>
       <span *ngSwitchCase="inputType.ZIPCODE">
-        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput.value, zipcodeMask) }}
+        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput?.value, zipcodeMask) }}
       </span>
       <span *ngSwitchCase="inputType.DATE_TIME">
-        {{ getInputLabel(config) }} : {{ formControlForInput.value | date: dateTimeFormat }}
+        {{ getInputLabel(config) }} : {{ formControlForInput?.value | date: dateTimeFormat }}
       </span>
-      <span *ngSwitchDefault truncate>{{ getInputLabel(config) }} : {{ formControlForInput.value }}</span>
+      <span *ngSwitchDefault truncate>{{ getInputLabel(config) }} : {{ formControlForInput?.value }}</span>
     </ng-container>
   </p>
 </ng-template>

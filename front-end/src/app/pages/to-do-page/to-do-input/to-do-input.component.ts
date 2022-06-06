@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import textFiled from '@textField';
 import { ToDoService } from '@core/services';
 
 @Component({
@@ -9,11 +8,9 @@ import { ToDoService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoInputComponent {
-  textField = textFiled;
   newToDo = '';
 
-  constructor(private readonly todoService: ToDoService) {
-  }
+  constructor(private readonly todoService: ToDoService) {}
 
   onAddTodo(): void {
     this.todoService.addTodoItem(this.newToDo);

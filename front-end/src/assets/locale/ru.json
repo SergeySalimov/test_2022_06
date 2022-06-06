@@ -1,0 +1,40 @@
+{
+  "common": {
+    "add": "добавить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "noData": "нет данных",
+    "chooseLanguage": "Выберите язык"
+  },
+  "errors": {
+    "serverErrorTitle": "Произошла ошибка на сервере !",
+    "inputErrors": {
+      "required": "Обязательное поле",
+      "email": "Не валидная почта",
+      "maxLength": "Слишком много символов"
+    }
+  },
+  "todo": {
+    "logo": "Список",
+    "inputPlaceholder": "Пожалуйста введите новый элемент списка",
+    "addToDo": "Добавить элемент",
+    "noDataInTable": "Нет добавленных элементов",
+    "tableDate": "Дата",
+    "tableDescription": "Описание",
+    "tableAction": "Действия"
+  },
+  "card": {
+    "cardHeaderText": "Карточка",
+    "noCardText": "Извините, карта не найдена",
+    "createdAt": "Создано",
+    "surname": "Фамилия",
+    "name": "Имя",
+    "patronymic": "Отчество",
+    "city": "Город",
+    "phone": "Телефон",
+    "zipCode": "Индекс",
+    "email": "E-mail",
+    "address": "Адрес",
+    "notes": "Заметки"
+  }
+}

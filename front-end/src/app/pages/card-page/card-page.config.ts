@@ -12,9 +12,18 @@ const MAX_LENGTH = 30;
 const MAX_LENGTH_TEXTAREA = 100;
 
 export const inputErrorMap: Array<InputErrorConfigInterface> = [
-  { type: ErrorTypeEnum.REQUIRED, text: textField.errors.inputErrors.required },
-  { type: ErrorTypeEnum.EMAIL, text: textField.errors.inputErrors.email },
-  { type: ErrorTypeEnum.MAX_LENGTH, text: textField.errors.inputErrors.maxLength },
+  {
+    type: ErrorTypeEnum.REQUIRED,
+    translateCode: 'errors.inputErrors.required',
+  },
+  {
+    type: ErrorTypeEnum.EMAIL,
+    translateCode: 'errors.inputErrors.email',
+  },
+  {
+    type: ErrorTypeEnum.MAX_LENGTH,
+    translateCode: 'errors.inputErrors.maxLength',
+  },
 ];
 
 export const inputConfig: Array<InputConfigInterface> = [

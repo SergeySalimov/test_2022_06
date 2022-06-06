@@ -1,12 +1,12 @@
 <div class="container">
-  <label for="input-to-do" class="input-to-do-label">{{ textField.todo.addToDo }}</label>
+  <label for="input-to-do" class="input-to-do-label">{{ 'todo.addToDo' | translate }}</label>
   <input
     [(ngModel)]="newToDo"
-    [placeholder]="textField.todo.inputPlaceholder"
+    [placeholder]="'todo.inputPlaceholder' | translate"
     (keydown.enter)="onAddTodo()"
     type="text"
     id="input-to-do"
     class="input-to-do"
   >
-  <button [disabled]="!newToDo" (click)="onAddTodo()" class="add-button">{{ textField.common.add }}</button>
+  <button [disabled]="!newToDo" (click)="onAddTodo()" class="add-button">{{ 'common.add' | translate }}</button>
 </div>

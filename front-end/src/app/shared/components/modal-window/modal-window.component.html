@@ -4,7 +4,7 @@
     [class.modal-content-error]="message.type === messageTypeEnum.SERVER_ERROR"
     class="modal-content">
     <span class="close" (click)="hideModal()">&times;</span>
-    <h2 class="modal-title"><strong>{{ textField.errors.serverErrorTitle }}</strong></h2>
+    <h2 class="modal-title"><strong>{{ 'errors.serverErrorTitle' | translate }}</strong></h2>
     <p class="modal-text" truncate>{{ message.text }}</p>
   </div>
 </div>

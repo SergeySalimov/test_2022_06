@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonService } from '@core/services';
 import { Observable } from 'rxjs';
-import { MessageType, MessageTypeEnum, TextFieldInterface } from '@core/interfaces';
-import textField from '@textField';
+import { MessageType, MessageTypeEnum } from '@core/interfaces';
 
 @Component({
   selector: 'app-modal-window',
@@ -12,7 +11,6 @@ import textField from '@textField';
 })
 export class ModalWindowComponent {
   message$: Observable<MessageType> = this.commonService.message$;
-  textField: TextFieldInterface = textField;
   messageTypeEnum: typeof MessageTypeEnum = MessageTypeEnum;
   constructor(private readonly commonService: CommonService) {}
   hideModal(): void {

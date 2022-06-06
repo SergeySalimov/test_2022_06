@@ -3,7 +3,7 @@ export enum RouteEnum {
   CARD = 'card',
 }
 
-export type CardRouteType = 'short' | 'full' | 'cardId';
+export type CardRouteType = 'short' | 'full' | 'cardId' | 'for-soft-reload';
 export type TodoRouteType = 'short' | 'full';
 
 export class AppRoutes {
@@ -17,6 +17,8 @@ export class AppRoutes {
         return `/${RouteEnum.CARD}`;
       case 'cardId':
         return `${RouteEnum.CARD}/:cardId`;
+      case 'for-soft-reload':
+        return `/${RouteEnum.CARD}/`;
       case 'short':
       default:
         return RouteEnum.CARD;

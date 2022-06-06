@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,10 +9,14 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '@shared/shared.module';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { TranslateConfigInterface } from '@core/interfaces';
+import { LANGUAGES_DATA } from '@core/constants';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };
+
+export const translateConfigToken: InjectionToken<TranslateConfigInterface> = new InjectionToken('translate-config');
 
 @NgModule({
   declarations: [
@@ -36,6 +40,7 @@ const maskConfig: Partial<IConfig> = {
       useClass: LoaderInterceptor,
       multi: true,
     },
+    { provide: translateConfigToken, useValue: LANGUAGES_DATA },
   ],
   bootstrap: [AppComponent],
 })

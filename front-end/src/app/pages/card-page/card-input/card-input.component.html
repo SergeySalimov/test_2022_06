@@ -47,27 +47,27 @@
     >
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>{{ config.name }}</label>
+    <label>{{ getInputLabel(config) }}</label>
     <ng-container *ngFor="let error of errorMap">
-    <span *ngIf="isErrorOnInput(formControlForInput, error.type)" class="error-text">
-    <small>{{ error.text }}</small>
-  </span>
+      <span *ngIf="isErrorOnInput(formControlForInput, error.type)" class="error-text">
+        <small>{{ error.translateCode | translate }}</small>
+      </span>
     </ng-container>
   </div>
 </ng-container>
 <ng-template #readOnlyMode>
-  <p *ngIf="$any(textField.card)[config.keyForValue] as inputName">
+  <p>
     <ng-container [ngSwitch]="config.inputType">
       <span *ngSwitchCase="inputType.PHONE">
-        {{ inputName }} : {{ getMaskedInputValue(formControlForInput.value, phoneMask) }}
+        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput.value, phoneMask) }}
       </span>
       <span *ngSwitchCase="inputType.ZIPCODE">
-        {{ inputName }} : {{ getMaskedInputValue(formControlForInput.value, zipcodeMask) }}
+        {{ getInputLabel(config) }} : {{ getMaskedInputValue(formControlForInput.value, zipcodeMask) }}
       </span>
       <span *ngSwitchCase="inputType.DATE_TIME">
-        {{ inputName }} : {{ formControlForInput.value | date: dateTimeFormat }}
+        {{ getInputLabel(config) }} : {{ formControlForInput.value | date: dateTimeFormat }}
       </span>
-      <span *ngSwitchDefault truncate>{{ inputName }} : {{ formControlForInput.value }}</span>
+      <span *ngSwitchDefault truncate>{{ getInputLabel(config) }} : {{ formControlForInput.value }}</span>
     </ng-container>
   </p>
 </ng-template>

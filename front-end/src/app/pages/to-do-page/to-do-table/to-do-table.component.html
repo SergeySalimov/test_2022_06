@@ -6,6 +6,7 @@
     <tr
       *ngFor="let todoItem of ($any(data.todoList)); let i = index; trackBy: trackByFunction"
       [routerLink]="getCardRoute(todoItem.id)"
+      [queryParams]="{ editMode: false }"
     >
       <td>{{ todoItem['createdAt'] | date:dateTimeFormat }}</td>
       <td>
@@ -19,7 +20,7 @@
     </tr>
   </table>
   <ng-template #noData>
-    <span class="no-data">{{ textField.todo.noDataInTable }}</span>
+    <span class="no-data">{{ 'todo.noDataInTable' | translate }}</span>
   </ng-template>
 </ng-container>
 

@@ -1,0 +1,8 @@
+<label>
+  {{ 'common.chooseLanguage' | translate }}
+  <select [(ngModel)]="selected" (change)="translateService.changeLanguage(selected)">
+    <option *ngFor="let lang of translateConfig.languages">
+      {{ lang }}
+    </option>
+  </select>
+</label>

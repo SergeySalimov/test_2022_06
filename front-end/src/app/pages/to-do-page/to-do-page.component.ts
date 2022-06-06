@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import textField from '@textField';
-import { TextFieldInterface } from '@core/interfaces';
 import { ToDoService } from '@core/services';
 
 @Component({
@@ -10,10 +8,7 @@ import { ToDoService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoPageComponent implements OnInit {
-  textField: TextFieldInterface = textField;
-  constructor(private readonly todoService: ToDoService) {
-  }
-
+  constructor(private readonly todoService: ToDoService) {}
   ngOnInit(): void {
     this.todoService.getAllTodos();
   }

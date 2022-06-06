@@ -33,7 +33,7 @@ export interface InputConfigInterface {
 
 export interface InputErrorConfigInterface {
   type: ErrorTypeEnum,
-  text: string,
+  translateCode: string,
 }
 
 export type PossibleInputType = string | number | Date | null;

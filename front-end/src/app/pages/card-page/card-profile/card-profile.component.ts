@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { InputConfigInterface, PossibleInputType, TextFieldInterface, TodoListItem } from '@core/interfaces';
-import textField from '@textField';
+import { InputConfigInterface, PossibleInputType, TodoListItem } from '@core/interfaces';
 import { AppRoutes, ToDoService } from '@core/services';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-profile',
@@ -17,12 +17,15 @@ export class CardProfileComponent implements OnChanges {
   @Input() inputsConfigForRight!: Array<InputConfigInterface>;
 
   cardForm!: FormGroup;
-  textField: TextFieldInterface = textField;
-  editMode = false;
-  route: typeof AppRoutes = AppRoutes;
+  appRoutes: typeof AppRoutes = AppRoutes;
   formSubmitted = false;
 
-  constructor(private readonly todoService: ToDoService, private readonly cdr: ChangeDetectorRef) {}
+  constructor(
+    private readonly todoService: ToDoService,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['todoItem'].firstChange && 'todoItem' in changes && changes['todoItem'].currentValue) {
@@ -34,13 +37,23 @@ export class CardProfileComponent implements OnChanges {
     return todo[config.keyForValue] ?? null;
   }
 
+  getEditMode(): boolean {
+    return this.route.snapshot.queryParams['editMode'] === 'true';
+  }
+
   getFormControl(controlName: string): FormControl {
     return this.cardForm?.controls[controlName] as FormControl;
   }
 
   cancelEditing(): void {
     this.cardForm.patchValue(this.todoItem!);
-    this.editMode = false;
+    this.changeEditMode(false)
+  }
+
+  changeEditMode(editMode: boolean): void {
+    this.router.navigate(
+      [],
+      { queryParams: { editMode }, relativeTo: this.route, queryParamsHandling: 'merge', });
   }
 
   onSubmitForm(): void {
@@ -56,10 +69,10 @@ export class CardProfileComponent implements OnChanges {
     ).subscribe({
       next: (data: TodoListItem) => {
         this.todoItem = data;
-        this.editMode = false;
+        this.changeEditMode(false);
         this.cdr.detectChanges();
       },
-      error: () => this.editMode = true,
+      error: () => this.changeEditMode(true),
     });
   }
 

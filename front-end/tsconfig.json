@@ -6,8 +6,10 @@
     "outDir": "./dist/out-tsc",
     "paths": {
       "@textField": ["src/assets/textField.json"],
+      "@locale/*": ["src/assets/locale/*"],
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
       "@core/services": ["src/app/core/services/index.ts"],
+      "@core/abstract-classes": ["src/app/core/services/index.ts"],
       "@core/constants": ["src/app/core/constants/index.ts"],
       "@shared/*": ["src/app/shared/*"],
       "@shared/utils": ["src/app/shared/utils/index.ts"],

@@ -2,7 +2,7 @@
   <ng-container *ngIf="todoItem; else noCard">
     <form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
       <h2 class="header col-12">
-        {{ textField.card.cardHeaderText }}# <small>{{ todoItem.id }}</small>
+        {{ 'card.cardHeaderText' | translate}}# <small>{{ todoItem.id }}</small>
       </h2>
       <h4 truncate class="sub-header col-12">{{ todoItem.description }}</h4>
       <div class="col-6">
@@ -11,7 +11,7 @@
             [config]="config"
             [formControlForInput]="getFormControl(config.keyForValue)"
             [formSubmitted]="formSubmitted"
-            [editMode]="editMode"
+            [editMode]="getEditMode()"
           ></app-card-input>
         </ng-container>
       </div>
@@ -21,26 +21,24 @@
             [config]="config"
             [formControlForInput]="getFormControl(config.keyForValue)"
             [formSubmitted]="formSubmitted"
-            [editMode]="editMode"
+            [editMode]="getEditMode()"
           ></app-card-input>
         </ng-container>
       </div>
       <div class="col-12"></div>
-      <ng-container *ngIf="editMode">
+      <ng-container *ngIf="getEditMode()">
       <div class="col-6 action-button">
-        <button type="submit" class="app-success">
-          {{ textField.common.save }}
-        </button>
+        <button type="submit" class="app-success">{{ 'common.save' | translate }}</button>
       </div>
       <div class="col-6 action-button">
-        <button class="app-danger" (click)="cancelEditing()">{{ textField.common.cancel }}</button>
+        <button class="app-danger" (click)="cancelEditing()">{{ 'common.cancel' | translate }}</button>
       </div>
       </ng-container>
     </form>
   </ng-container>
   <ng-template #noCard>
-    <span class="no-data">{{ textField.card.noCardText }}</span>
+    <span class="no-data">{{ 'card.noCardText' | translate }}</span>
   </ng-template>
-  <button class="button-close" [routerLink]="route.TODO('full')"></button>
-  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="editMode = true"></button>
+  <button class="button-close" [routerLink]="appRoutes.TODO('full')"></button>
+  <button *ngIf="todoItem && !getEditMode()" class="button-edit" (click)="changeEditMode(true)"></button>
 </div>

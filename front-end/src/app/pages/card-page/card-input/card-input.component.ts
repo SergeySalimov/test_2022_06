@@ -5,13 +5,12 @@ import { dateTimeFormatToken, phoneMaskFormatToken, zipcodeMaskFormatToken } fro
 import { MaskInterface } from '@core/constants';
 import { inputErrorMap } from '../card-page.config';
 import { MaskPipe } from 'ngx-mask';
-import { TranslatePipe } from '@shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-card-input',
   templateUrl: './card-input.component.html',
   styleUrls: ['./card-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardInputComponent {
   @Input() config!: InputConfigInterface;
@@ -26,15 +25,10 @@ export class CardInputComponent {
     @Inject(zipcodeMaskFormatToken) public zipcodeMask: MaskInterface,
     @Inject(dateTimeFormatToken) public dateTimeFormat: string,
     private readonly maskPipe: MaskPipe,
-    private readonly translatePipe: TranslatePipe,
     ) {}
 
   getMaskedInputValue(value: string | null, mask: MaskInterface): string {
     return value ? `${mask.prefix} ${this.maskPipe.transform(value, mask.data)}` : '';
-  }
-
-  getInputLabel(config: InputConfigInterface): string {
-    return this.translatePipe.transform(`card.${config.keyForValue}`);
   }
 
   isErrorOnInput(formControl: FormControl, errorCode: ErrorTypeEnum): boolean {

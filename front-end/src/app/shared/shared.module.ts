@@ -18,10 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ModalWindowComponent } from './components/modal-window/modal-window.component';
 import { FixWidthDirective } from './directives/fix-width.directive';
-import { TranslatePipe } from '@shared/pipes/translate.pipe';
 import { ChangeLanguagesComponent } from './components/change-languages/change-languages.component';
-import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 export const phoneMaskFormatToken: InjectionToken<MaskInterface> = new InjectionToken('phone-mask-format');
@@ -33,7 +32,6 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     FixWidthDirective,
     LoaderComponent,
     ModalWindowComponent,
-    TranslatePipe,
     ChangeLanguagesComponent,
   ],
   imports: [
@@ -59,7 +57,6 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     LoaderComponent,
     ModalWindowComponent,
     TranslateModule,
-    TranslatePipe,
     ChangeLanguagesComponent,
   ],
   providers: [
@@ -73,7 +70,6 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     },
     { provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT_NGX },
     MaskPipe,
-    TranslatePipe,
   ],
 })
 export class SharedModule {}

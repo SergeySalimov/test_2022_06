@@ -1,8 +1,11 @@
 <ng-container *ngIf="{ todoList: (todoList$ | async) ?? [] } as data">
   <table *ngIf="$any(data.todoList.length) > 0; else noData" class="todo-table">
     <tr>
-      <th *ngFor="let header of tableHeader">{{ header }}</th>
+      <th>{{ 'todo.tableDate' | translate }}</th>
+      <th>{{ 'todo.tableDescription' | translate }}</th>
+      <th>{{ 'todo.tableAction' | translate }}</th>
     </tr>
+
     <tr
       *ngFor="let todoItem of ($any(data.todoList)); let i = index; trackBy: trackByFunction"
       [routerLink]="getCardRoute(todoItem.id)"

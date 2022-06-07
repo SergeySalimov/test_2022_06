@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { TodoListItem } from '@core/interfaces';
 import { dateTimeFormatToken } from '@shared/shared.module';
 import { trackById } from '@shared/utils';
-import { TranslatePipe } from '@shared/pipes/translate.pipe';
 
 @Component({
   selector: 'app-to-do-table',
@@ -14,18 +13,11 @@ import { TranslatePipe } from '@shared/pipes/translate.pipe';
 })
 export class ToDoTableComponent {
   todoList$: Observable<Array<TodoListItem>> = this.todoService.todoList$;
-
   trackByFunction: TrackByFunction<any> = trackById;
-  tableHeader: string[] = [
-    this.translatePipe.transform('todo.tableDate'),
-    this.translatePipe.transform('todo.tableDescription'),
-    this.translatePipe.transform('todo.tableAction'),
-  ];
 
   constructor(
     @Inject(dateTimeFormatToken) public dateTimeFormat: string,
     private readonly todoService: ToDoService,
-    private readonly translatePipe: TranslatePipe,
   ) {}
 
   getCardRoute(id: string): string {

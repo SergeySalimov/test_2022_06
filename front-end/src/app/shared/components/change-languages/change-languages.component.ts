@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { TranslateService } from '@core/services';
 import { LanguageEnum } from '@core/constants';
 import { translateConfigToken } from '@app/app.module';
 import { TranslateConfigInterface } from '@core/interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-languages',
@@ -14,6 +14,6 @@ export class ChangeLanguagesComponent {
   selected: LanguageEnum = this.translateConfig.default;
   constructor(
     @Inject(translateConfigToken) public readonly translateConfig: TranslateConfigInterface,
-    public readonly translateService: TranslateService,
+    public readonly translate: TranslateService,
     ) {}
 }

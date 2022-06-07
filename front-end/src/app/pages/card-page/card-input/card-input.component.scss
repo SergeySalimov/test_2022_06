@@ -8,6 +8,10 @@
 input, textarea, .bar {
   width: 80%;
   display: block;
+
+  .date-time-picker {
+    width: 60%;
+  }
 }
 
 input, textarea {
@@ -55,6 +59,32 @@ mat-datepicker-toggle {
   position: absolute;
   right: 15%;
   top: 0;
+}
+
+@media screen and (max-width: $largeDeviceBreakpoint) {
+  mat-datepicker-toggle {
+    right: 10%;
+  }
+
+  .date-time-picker {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: $mediumDeviceBreakpoint) {
+  mat-datepicker-toggle {
+    right: 15%;
+  }
+
+  .date-time-picker {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .date-time-picker {
+    font-size: 1rem;
+  }
 }
 
 input:focus ~ .bar:before, textarea:focus ~ .bar:before {

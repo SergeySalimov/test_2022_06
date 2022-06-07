@@ -1,18 +1,4 @@
-<label>
-  {{ 'common.chooseLanguage' | translate }}
-  <select #langSelect (change)="translate.use(langSelect.value)">
-    <option
-      *ngFor="let lang of translate.getLangs()"
-      [value]="lang"
-      [selected]="lang === translate.currentLang"
-    >
-      {{ lang }}
-    </option>
-  </select>
-</label>
-
-
-<!--<app-change-languages></app-change-languages>-->
+<app-change-languages></app-change-languages>
 <router-outlet></router-outlet>
 <app-loader></app-loader>
 <app-modal-window></app-modal-window>

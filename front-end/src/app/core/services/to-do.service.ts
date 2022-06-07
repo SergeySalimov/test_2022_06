@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, take } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { TodoListItem } from '@core/interfaces';
 import { HttpClient } from '@angular/common/http';
 
@@ -41,17 +41,8 @@ export class ToDoService {
     });
   }
 
-  getItemByIdFromCurrent(id: string): TodoListItem|null {
-    const todos: TodoListItem[] = this._todoList$.getValue();
-    const indexOfTodos: number = todos.findIndex(todo => todo.id === id);
-
-    return indexOfTodos >=0 ? todos[indexOfTodos] : null;
-  }
-
   getItemById(id: string): Observable<TodoListItem | null> {
-    const cachedTodo: TodoListItem|null = this.getItemByIdFromCurrent(id);
-
-    return cachedTodo ? of(cachedTodo) : this.http.get<TodoListItem|null>(`api/cards/${id}`);
+    return this.http.get<TodoListItem|null>(`api/cards/${id}`);
   }
 
   updateCurrentTodos(todo: TodoListItem): void {

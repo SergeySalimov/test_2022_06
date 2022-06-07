@@ -13,11 +13,16 @@ export class AppComponent implements OnInit {
   title = 'redirect-project';
   constructor(
     private readonly todoService: ToDoService,
-    private readonly translateService: TranslateService,
+    private readonly translate: TranslateService,
     @Inject(translateConfigToken) private readonly translateConfig: TranslateConfigInterface,
-    ) {}
+  ) {
+    translate.addLangs(translateConfig.languages);
+    translate.setDefaultLang(translateConfig.default);
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang?.match(/en|ru/) ? browserLang : translateConfig.default);
+  }
   ngOnInit(): void {
     this.todoService.getAllTodos();
-    this.translateService.use(this.translateConfig.default);
   }
 }

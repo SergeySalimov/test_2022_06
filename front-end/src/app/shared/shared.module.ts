@@ -21,6 +21,7 @@ import { FixWidthDirective } from './directives/fix-width.directive';
 import { TranslatePipe } from '@shared/pipes/translate.pipe';
 import { ChangeLanguagesComponent } from './components/change-languages/change-languages.component';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 export const phoneMaskFormatToken: InjectionToken<MaskInterface> = new InjectionToken('phone-mask-format');
@@ -44,6 +45,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     MatDatepickerModule,
     MatFormFieldModule,
     NgxMaskModule,
+    TranslateModule.forChild(),
   ],
   exports: [
     TruncateDirective,
@@ -56,6 +58,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     NgxMaskModule,
     LoaderComponent,
     ModalWindowComponent,
+    TranslateModule,
     TranslatePipe,
     ChangeLanguagesComponent,
   ],

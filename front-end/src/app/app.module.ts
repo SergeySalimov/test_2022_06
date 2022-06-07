@@ -49,7 +49,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
       useDefaultLang: false,
     }),
     SharedModule,
-  ], providers: [
+  ],
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,

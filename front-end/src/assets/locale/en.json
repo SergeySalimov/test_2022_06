@@ -6,6 +6,9 @@
     "noData": "no data",
     "chooseLanguage": "Choose language"
   },
+  "header": {
+    "logoText": "HOME"
+  },
   "errors": {
     "serverErrorTitle": "A server error occurred !",
     "inputErrors": {

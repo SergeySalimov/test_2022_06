@@ -6,6 +6,9 @@
     "noData": "нет данных",
     "chooseLanguage": "Выберите язык"
   },
+  "header": {
+    "logoText": "НА ГЛАВНУЮ"
+  },
   "errors": {
     "serverErrorTitle": "Произошла ошибка на сервере !",
     "inputErrors": {

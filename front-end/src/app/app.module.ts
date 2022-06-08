@@ -46,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
           provide: MissingTranslationHandler,
           useClass: MissingTranslationService,
         },
-      useDefaultLang: false,
+      useDefaultLang: true,
     }),
     SharedModule,
   ],

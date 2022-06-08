@@ -1,0 +1,55 @@
+@import "src/styles";
+
+:host {
+  .header {
+    overflow: hidden;
+    background-color: $appLightGreen;
+    padding: 0.5rem 8rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logo {
+    white-space: nowrap;
+  }
+
+  .header-center, .header-left, .header-right {
+    display: block;
+    text-align: center;
+  }
+
+  .header a {
+    color: $appBlack;
+    text-align: center;
+    padding: 0.75rem;
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    border-radius: 5px;
+  }
+
+  .header a.logo {
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+
+  .header a.active {
+    background-color: $appBlue;
+    color: $appWhite;
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .header {
+      padding: 1.5rem 3rem;
+    }
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .header {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  }
+}

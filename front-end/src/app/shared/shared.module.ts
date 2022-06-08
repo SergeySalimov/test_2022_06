@@ -21,6 +21,8 @@ import { FixWidthDirective } from './directives/fix-width.directive';
 import { ChangeLanguagesComponent } from './components/change-languages/change-languages.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { RouterModule } from '@angular/router';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 export const phoneMaskFormatToken: InjectionToken<MaskInterface> = new InjectionToken('phone-mask-format');
@@ -33,10 +35,12 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     LoaderComponent,
     ModalWindowComponent,
     ChangeLanguagesComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
@@ -58,6 +62,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     ModalWindowComponent,
     TranslateModule,
     ChangeLanguagesComponent,
+    HeaderComponent,
   ],
   providers: [
     { provide: dateTimeFormatToken, useValue: DATE_TIME_FORMAT },

@@ -5,6 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "paths": {
+      "@common/interfaces": ["../common/interfaces/index.ts"],
       "@app/*": ["src/app/*"],
       "@textField": ["src/assets/textField.json"],
       "@locale/*": ["src/assets/locale/*"],

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoTableComponent } from './to-do-table.component';
-import { ToDoService } from '../../../core/services/to-do.service';
-import { dateTimeFormatToken } from '../../../shared/shared.module';
-import { mockTodoService } from '../../../shared/test-shared/mock.service';
+import { ToDoService } from '@core/services';
+import { dateTimeFormatToken } from '@shared/shared.module';
+import { mockTodoService } from '@shared/test-shared/mock.service';
 
 describe('ToDoTableComponent', () => {
   let component: ToDoTableComponent;
@@ -35,10 +35,10 @@ describe('ToDoTableComponent', () => {
       expect(component.onDeleteItem).toBeDefined();
     });
 
-    it('should call removeTodoItem with index', () => {
-      component.onDeleteItem(33);
-
-      expect(mockTodoService.removeTodoItem).toHaveBeenCalledOnceWith(33);
-    });
+    // it('should call removeTodoItem with index', () => {
+    //   component.onDeleteItem(33);
+    //
+    //   expect(mockTodoService.removeTodoItem).toHaveBeenCalledOnceWith(33);
+    // });
   });
 });

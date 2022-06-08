@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject, TrackByFunction } from '@angular/core';
 import { AppRoutes, ToDoService } from '@core/services';
 import { Observable } from 'rxjs';
-import { TodoListItem } from '@core/interfaces';
 import { dateTimeFormatToken } from '@shared/shared.module';
 import { trackById } from '@shared/utils';
+import { TodoListItemDto } from '@common/interfaces';
 
 @Component({
   selector: 'app-to-do-table',
@@ -12,7 +12,7 @@ import { trackById } from '@shared/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoTableComponent {
-  todoList$: Observable<Array<TodoListItem>> = this.todoService.todoList$;
+  todoList$: Observable<Array<TodoListItemDto>> = this.todoService.todoList$;
   trackByFunction: TrackByFunction<any> = trackById;
 
   constructor(

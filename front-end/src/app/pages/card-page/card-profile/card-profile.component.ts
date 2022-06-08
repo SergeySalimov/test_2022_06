@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { InputConfigInterface, PossibleInputType, TodoListItem } from '@core/interfaces';
+import { InputConfigInterface, PossibleInputType } from '@core/interfaces';
 import { AppRoutes, ToDoService } from '@core/services';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TodoListItemDto } from '@common/interfaces';
 
 @Component({
   selector: 'app-card-profile',
@@ -12,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardProfileComponent implements OnChanges {
-  @Input() todoItem!: TodoListItem | null;
+  @Input() todoItem!: TodoListItemDto | null;
   @Input() inputsConfigForLeft!: Array<InputConfigInterface>;
   @Input() inputsConfigForRight!: Array<InputConfigInterface>;
 
@@ -33,7 +34,7 @@ export class CardProfileComponent implements OnChanges {
     }
   }
 
-  getTodoValue(todo: TodoListItem, config: InputConfigInterface): PossibleInputType {
+  getTodoValue(todo: TodoListItemDto, config: InputConfigInterface): PossibleInputType {
     return todo[config.keyForValue] ?? null;
   }
 
@@ -63,12 +64,13 @@ export class CardProfileComponent implements OnChanges {
       return;
     }
 
-    const formValue: Partial<TodoListItem> = this.cardForm.getRawValue();
-    this.todoService.updateTodoItem({ ...this.todoItem, ...formValue } as TodoListItem).pipe(
+    const formValue: Partial<TodoListItemDto> = this.cardForm.getRawValue();
+    this.todoService.updateTodoItem({ ...this.todoItem, ...formValue } as TodoListItemDto).pipe(
       take(1),
     ).subscribe({
-      next: (data: TodoListItem) => {
+      next: (data: TodoListItemDto) => {
         this.todoItem = data;
+        //ToDo probably need to be removed
         this.todoService.updateCurrentTodos(data);
         this.changeEditMode(false);
         this.cdr.markForCheck();
@@ -92,7 +94,7 @@ export class CardProfileComponent implements OnChanges {
 
     this.cardForm = new FormGroup(
       [...this.inputsConfigForLeft, ...this.inputsConfigForRight]
-        .reduce((acc: Record<keyof TodoListItem, FormControl>, config: InputConfigInterface) => ({
+        .reduce((acc: Record<keyof TodoListItemDto, FormControl>, config: InputConfigInterface) => ({
           ...acc,
           [config.keyForValue]: new FormControl(
             {
@@ -101,7 +103,7 @@ export class CardProfileComponent implements OnChanges {
             },
             config.validators ?? null
           ),
-        }), {} as Record<keyof TodoListItem, FormControl>)
+        }), {} as Record<keyof TodoListItemDto, FormControl>)
     );
   }
 }

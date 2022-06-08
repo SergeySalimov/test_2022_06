@@ -1,5 +1,5 @@
-import { TodoListItem } from './to-do-page.interface';
 import { ValidatorFn } from '@angular/forms';
+import { TodoListItemDto } from '@common/interfaces';
 
 export enum InputPositionEnum {
   LEFT = 'left',
@@ -24,7 +24,7 @@ export enum ErrorTypeEnum {
 
 export interface InputConfigInterface {
   name: string;
-  keyForValue: keyof TodoListItem;
+  keyForValue: keyof TodoListItemDto;
   editable: boolean;
   position: InputPositionEnum;
   inputType?: InputTypeEnum;

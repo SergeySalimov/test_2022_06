@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ToDoService } from '@core/services';
-import { InputPositionEnum, TodoListItem } from '@core/interfaces';
+import { InputPositionEnum } from '@core/interfaces';
 import { inputConfig } from './card-page.config';
+import { TodoListItemDto } from '@common/interfaces';
 
 @Component({
   selector: 'app-card-page',
@@ -11,7 +12,7 @@ import { inputConfig } from './card-page.config';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardPageComponent {
-  cardData$: Observable<TodoListItem | null> = this.todoService.getItemById(this.route.snapshot.params['cardId']);
+  cardData$: Observable<TodoListItemDto | null> = this.todoService.getItemById(this.route.snapshot.params['cardId']);
 
   inputForLeft = inputConfig.filter(config => config.position === InputPositionEnum.LEFT);
   inputForRight = inputConfig.filter(config => config.position === InputPositionEnum.RIGHT);

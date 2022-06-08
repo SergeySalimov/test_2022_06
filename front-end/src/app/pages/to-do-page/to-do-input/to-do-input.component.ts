@@ -13,6 +13,10 @@ export class ToDoInputComponent {
   constructor(private readonly todoService: ToDoService) {}
 
   onAddTodo(): void {
+    if (!this.newToDo) {
+      return;
+    }
+
     this.todoService.addTodoItem(this.newToDo);
     this.newToDo = '';
   }

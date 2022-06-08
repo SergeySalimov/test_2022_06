@@ -1,41 +1,35 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TodoListItemDto } from '@common/interfaces';
+
+const crypto = require('crypto');
 
 @Injectable()
 export class CardsService {
-    todoItems: TodoListItemDto[] = [{
-        id: this.makeId(),
-        createdAt: new Date(),
-        description: 'test',
-    }];
-
-    makeId(): string {
-        let id = '';
-        let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toLowerCase();
-        for ( let i = 0; i < 12; i++ ) {
-            id += characters.charAt(Math.floor(Math.random() * 36));
-        }
-
-        return id;
-    }
+    todoItems: TodoListItemDto[] = [];
 
     getAll(): TodoListItemDto[] {
         return this.todoItems;
     }
 
-    getOne(id: string): TodoListItemDto|void {
-        const indexOfTodo: number = this.todoItems.findIndex(todo => todo.id === id)
-
-        if (indexOfTodo === -1) {
-            throw new HttpException('Element was not found', HttpStatus.NOT_FOUND);
-        }
-
-        return this.todoItems[indexOfTodo];
+    getOne(id: string): TodoListItemDto {
+        return this.todoItems.find(todo => todo.id === id);
     }
 
-    createCard(card: TodoListItemDto): TodoListItemDto[] {
-        this.todoItems.push({ ...card, id: this.makeId() });
+    createCard(description: string): TodoListItemDto[] {
+        this.todoItems.push({ description, createdAt: new Date(), id: crypto.randomUUID() });
 
         return this.todoItems;
+    }
+
+    updateCard(card: TodoListItemDto): TodoListItemDto {
+        const indexOfTodo: number = this.todoItems.findIndex(todo => todo.id === card.id);
+
+        return indexOfTodo === -1 ? null : this.todoItems[indexOfTodo] = { ...card }, card;
+    }
+
+    deleteCard(id: string): TodoListItemDto[] {
+        const indexOfTodo: number = this.todoItems.findIndex(todo => todo.id === id);
+
+        return indexOfTodo === -1 ? null : this.todoItems.splice(indexOfTodo, 1), this.todoItems;
     }
 }

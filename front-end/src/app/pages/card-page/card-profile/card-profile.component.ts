@@ -70,8 +70,6 @@ export class CardProfileComponent implements OnChanges {
     ).subscribe({
       next: (data: TodoListItemDto) => {
         this.todoItem = data;
-        //ToDo probably need to be removed
-        this.todoService.updateCurrentTodos(data);
         this.changeEditMode(false);
         this.cdr.markForCheck();
       },

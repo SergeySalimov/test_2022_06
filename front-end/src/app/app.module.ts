@@ -18,7 +18,6 @@ const maskConfig: Partial<IConfig> = {
   validation: false,
 };
 
-//Todo delete
 export const translateConfigToken: InjectionToken<TranslateConfigInterface> = new InjectionToken('translate-config');
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {

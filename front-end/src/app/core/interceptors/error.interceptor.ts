@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { CommonService } from '@core/services';
-import { MessageTypeEnum } from '@core/interfaces';
+import { IErrorInterface, MessageTypeEnum } from '@core/interfaces';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -11,8 +11,8 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
-        catchError((error: HttpErrorResponse) => {
-          let text = `Error Code: ${error.status}, message: ${error.error ?? error.message}`;
+        catchError((error: HttpErrorResponse & IErrorInterface) => {
+          let text = `Error Code: ${error.error?.status ?? error.status}, message: ${error.error?.message ?? error.message}`;
           this.commonService.addMessage({ text, type: MessageTypeEnum.SERVER_ERROR });
           return throwError(() => error);
         })

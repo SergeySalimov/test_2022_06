@@ -13,7 +13,7 @@ export class ToDoService {
   constructor(private readonly http: HttpClient) {}
 
   getAllTodos(): void {
-    this.http.get<Array<TodoListItemDto>>('cards').pipe(
+    this.http.get<Array<TodoListItemDto>>('api/cards').pipe(
       take(1),
     ).subscribe((data: TodoListItemDto[]) => {
       this._todoList$.next(data);
@@ -21,12 +21,7 @@ export class ToDoService {
   }
 
   addTodoItem(description: string): void {
-    if (!description) {
-      return;
-    }
-
-    const newTodo: TodoListItemDto = { description, createdAt: new Date() };
-    this.http.post<Array<TodoListItemDto>>('/api/cards', newTodo).pipe(
+    this.http.post<Array<TodoListItemDto>>('api/cards', { description }).pipe(
       take(1),
     ).subscribe((data: TodoListItemDto[]) => {
       this._todoList$.next(data);
@@ -34,7 +29,7 @@ export class ToDoService {
   }
 
   removeTodoItem(id: string): void {
-    this.http.delete<Array<TodoListItemDto>>(`/api/cards/${id}`).pipe(
+    this.http.delete<Array<TodoListItemDto>>(`api/cards/${id}`).pipe(
       take(1),
     ).subscribe((data: TodoListItemDto[]) => {
       this._todoList$.next(data);
@@ -42,23 +37,10 @@ export class ToDoService {
   }
 
   getItemById(id: string): Observable<TodoListItemDto | null> {
-    return this.http.get<TodoListItemDto|null>(`/api/cards/${id}`);
-  }
-
-  updateCurrentTodos(todo: TodoListItemDto): void {
-    const todos: TodoListItemDto[] = this._todoList$.getValue();
-    const indexOfTodos: number = todos.findIndex(item => item.id === todo.id);
-
-    if (indexOfTodos === -1) {
-      return;
-    }
-
-    todos[indexOfTodos] = todo;
-
-    this._todoList$.next(todos);
+    return this.http.get<TodoListItemDto|null>(`api/cards/${id}`);
   }
 
   updateTodoItem(data: TodoListItemDto): Observable<TodoListItemDto> {
-    return this.http.put<TodoListItemDto>(`/api/cards/${data.id}`, data);
+    return this.http.put<TodoListItemDto>(`api/cards`, data);
   }
 }

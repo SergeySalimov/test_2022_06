@@ -1,7 +1,7 @@
 <div class="container">
   <ng-container *ngIf="todoItem; else noCard">
     <form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
-      <h2 class="header col-12">
+      <h2 class="header col-12" truncate>
         {{ 'card.cardHeaderText' | translate}}# <small>{{ todoItem.id }}</small>
       </h2>
       <h4 truncate class="sub-header col-12">{{ todoItem.description }}</h4>

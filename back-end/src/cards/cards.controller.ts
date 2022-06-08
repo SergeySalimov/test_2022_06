@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { TodoListItemDto } from '@common/interfaces';
 import { CardsService } from './cards.service';
+import { NotFoundInterceptor } from '../core/interceptors/not-found.interceptor';
 
-@Controller('cards')
+@Controller('api/cards')
 export class CardsController {
     constructor(private readonly cardsService: CardsService) {}
 
@@ -12,22 +13,26 @@ export class CardsController {
     }
 
     @Get(':id')
+    @UseInterceptors(NotFoundInterceptor)
     getOne(@Param('id') id: string): TodoListItemDto|void {
         return this.cardsService.getOne(id);
     }
 
     @Post()
-    createCard(@Body() card: TodoListItemDto): string {
-        return 'postCard: ' + card.description;
+    @HttpCode(HttpStatus.CREATED)
+    createCard(@Body() { description }): TodoListItemDto[] {
+        return this.cardsService.createCard(description);
     }
 
-    @Put(':id')
-    patchCard(@Param('id') id: string): string {
-        return 'patchCard by id: ' + id;
+    @Put()
+    @UseInterceptors(NotFoundInterceptor)
+    updateCard(@Body() card: TodoListItemDto): TodoListItemDto {
+        return this.cardsService.updateCard(card);
     }
 
     @Delete(':id')
-    deleteCard(@Param('id') id: string): string {
-        return 'deleteCard by id: das ' + id;
+    @UseInterceptors(NotFoundInterceptor)
+    deleteCard(@Param('id') id: string): TodoListItemDto[] {
+        return this.cardsService.deleteCard(id);
     }
 }

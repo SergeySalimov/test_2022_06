@@ -7,29 +7,41 @@ const crypto = require('crypto');
 export class CardsService {
     todoItems: TodoListItemDto[] = [];
 
-    getAll(): TodoListItemDto[] {
+    async getAll(): Promise<TodoListItemDto[]> {
         return this.todoItems;
     }
 
-    getOne(id: string): TodoListItemDto {
+    async getOne(id: string): Promise<TodoListItemDto> {
         return this.todoItems.find(todo => todo.id === id);
     }
 
-    createCard(description: string): TodoListItemDto[] {
+    async createCard(description: string): Promise<TodoListItemDto[]> {
         this.todoItems.push({ description, createdAt: new Date(), id: crypto.randomUUID() });
 
         return this.todoItems;
     }
 
-    updateCard(card: TodoListItemDto): TodoListItemDto {
+    async updateCard(card: TodoListItemDto): Promise<TodoListItemDto> {
         const indexOfTodo: number = this.todoItems.findIndex(todo => todo.id === card.id);
 
-        return indexOfTodo === -1 ? null : this.todoItems[indexOfTodo] = { ...card }, card;
+        if (indexOfTodo === -1) {
+            return null;
+        }
+
+        this.todoItems[indexOfTodo] = { ...card };
+
+        return this.todoItems[indexOfTodo];
     }
 
-    deleteCard(id: string): TodoListItemDto[] {
+    async deleteCard(id: string): Promise<TodoListItemDto[]> {
         const indexOfTodo: number = this.todoItems.findIndex(todo => todo.id === id);
 
-        return indexOfTodo === -1 ? null : this.todoItems.splice(indexOfTodo, 1), this.todoItems;
+        if (indexOfTodo === -1) {
+            return null;
+        }
+
+        this.todoItems.splice(indexOfTodo, 1);
+
+        return this.todoItems;
     }
 }

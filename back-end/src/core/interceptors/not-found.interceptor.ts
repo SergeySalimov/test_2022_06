@@ -7,7 +7,7 @@ export class NotFoundInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 
       return next.handle().pipe(
-          map((card: TodoListItemDto | undefined) => {
+          map((card: TodoListItemDto | TodoListItemDto[] | null | undefined) => {
               if (!card) {
                   throw new HttpException('Element was not found', HttpStatus.NOT_FOUND);
               }

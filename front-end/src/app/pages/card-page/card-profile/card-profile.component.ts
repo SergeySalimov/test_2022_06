@@ -3,7 +3,6 @@ import { InputConfigInterface, PossibleInputType } from '@core/interfaces';
 import { AppRoutes, ToDoService } from '@core/services';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
 import { TodoListItemDto } from '@common/interfaces';
 
 @Component({
@@ -20,13 +19,9 @@ export class CardProfileComponent implements OnChanges {
   cardForm!: FormGroup;
   appRoutes: typeof AppRoutes = AppRoutes;
   formSubmitted = false;
+  editMode = false;
 
-  constructor(
-    private readonly todoService: ToDoService,
-    private readonly cdr: ChangeDetectorRef,
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-  ) {}
+  constructor(private readonly todoService: ToDoService, private readonly cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('todoItem' in changes && changes['todoItem'].currentValue) {
@@ -38,23 +33,13 @@ export class CardProfileComponent implements OnChanges {
     return todo[config.keyForValue] ?? null;
   }
 
-  getEditMode(): boolean {
-    return this.route.snapshot.queryParams['editMode'] === 'true';
-  }
-
   getFormControl(controlName: string): FormControl {
     return this.cardForm?.controls[controlName] as FormControl;
   }
 
   cancelEditing(): void {
     this.cardForm.patchValue(this.todoItem!);
-    this.changeEditMode(false)
-  }
-
-  changeEditMode(editMode: boolean): void {
-    this.router.navigate(
-      [],
-      { queryParams: { editMode }, relativeTo: this.route });
+    this.editMode = false;
   }
 
   onSubmitForm(): void {
@@ -70,10 +55,10 @@ export class CardProfileComponent implements OnChanges {
     ).subscribe({
       next: (data: TodoListItemDto) => {
         this.todoItem = data;
-        this.changeEditMode(false);
+        this.editMode = false;
         this.cdr.markForCheck();
       },
-      error: () => this.changeEditMode(true),
+      error: () => this.editMode = true,
     });
   }
 

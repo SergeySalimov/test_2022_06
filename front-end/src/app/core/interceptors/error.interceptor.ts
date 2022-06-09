@@ -3,17 +3,31 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { catchError, Observable, throwError } from 'rxjs';
 import { CommonService } from '@core/services';
 import { IErrorInterface, MessageTypeEnum } from '@core/interfaces';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private readonly commonService: CommonService) {}
+  constructor(private readonly commonService: CommonService, private readonly translate: TranslateService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse & IErrorInterface) => {
-          let text = `Error Code: ${error.error?.status ?? error.status}, message: ${error.error?.message ?? error.message}`;
-          this.commonService.addMessage({ text, type: MessageTypeEnum.SERVER_ERROR });
+          const errorCode = `${error.error?.status ?? error.status}`;
+          let text = this.translate.instant('errors.serverErrors.text');
+          let message = '';
+
+          if (errorCode === '404') {
+            message += this.translate.instant('errors.serverErrors.NotFoundMessage') + ' ';
+          }
+
+          message += this.translate.instant('errors.serverErrors.defaultMessage');
+
+          this.commonService.addMessage({
+            text: text.replace('$1', errorCode).replace('$2', message),
+            type: MessageTypeEnum.SERVER_ERROR,
+          });
+
           return throwError(() => error);
         })
       );

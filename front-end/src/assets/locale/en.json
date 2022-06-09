@@ -10,7 +10,12 @@
     "logoText": "HOME"
   },
   "errors": {
-    "serverErrorTitle": "A server error occurred !",
+    "serverErrors": {
+      "title": "A server error occurred !",
+      "text": "Error code: $1. Message: $2",
+      "NotFoundMessage": "Something goes wrong on server.",
+      "defaultMessage": "Please contact our support service."
+    },
     "inputErrors": {
       "required": "This field is required",
       "email": "Email is invalid",

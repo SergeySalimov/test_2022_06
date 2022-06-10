@@ -1,4 +1,4 @@
-@import "../../../../styles";
+@import "src/styles";
 
 :host {
   width: 90%;
@@ -46,7 +46,20 @@
     color: $appWhite;
   }
 
-  $tableWidths: 25%, 65%, 10%;
+  @mixin status-indicator {
+    font-size: 1.5rem;
+  }
+
+  $indicator-colors: $appGreen, $appYellow, $appRed;
+  $i: 0; @each $color in $indicator-colors {
+  .status-indicator-#{$i} {
+    color: $color;
+    @include status-indicator;
+  }
+  $i: $i + 1;
+}
+
+  $tableWidths: 25%, 55%, 6%, 14%;
   $i: 0; @each $tableWidth in $tableWidths {
     $i: $i + 1;
     .todo-table th:nth-child(#{$i}) {
@@ -59,13 +72,34 @@
     width: 100%;
   }
 
-  // actions block
+  // status block
   .todo-table td:nth-child(3) {
     text-align: center;
+  }
 
-    .delete-todo-button {
-      font-size: 1.5rem;
-      width: 4rem;
+  // action block
+  .todo-table td:nth-child(4) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @mixin buttons {
+    font-size: 1.5rem;
+    width: 2.8rem;
+    margin-right: 0.2rem;
+  }
+
+  .delete-todo-button {
+    @include buttons;
+  }
+
+  .follow-todo-button {
+    @include buttons;
+
+    &.active {
+      color: $appWhite;
+      background-color: $appBlue;
     }
   }
 }

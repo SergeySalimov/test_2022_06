@@ -29,6 +29,8 @@
     "noDataInTable": "No added todos",
     "tableDate": "Date",
     "tableDescription": "Description",
+    "poll": "Status",
+    "pollExpiredPlaceholder": "Status expired",
     "tableAction": "Actions"
   },
   "card": {

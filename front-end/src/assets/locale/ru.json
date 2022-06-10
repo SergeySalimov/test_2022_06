@@ -29,6 +29,8 @@
     "noDataInTable": "Нет добавленных элементов",
     "tableDate": "Дата",
     "tableDescription": "Описание",
+    "poll": "Статус",
+    "pollExpiredPlaceholder": "Истек срок",
     "tableAction": "Действия"
   },
   "card": {

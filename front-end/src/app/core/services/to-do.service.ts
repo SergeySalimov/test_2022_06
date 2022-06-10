@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { TodoListItemDto } from '@common/interfaces';
+import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
+import { NO_LOADER_HEADER } from '@core/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,11 @@ export class ToDoService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos(): void {
-    this.http.get<Array<TodoListItemDto>>('api/cards').pipe(
+  getAllTodos(noLoader: boolean = false): void {
+    this.http.get<Array<TodoListItemDto>>(
+      'api/cards',
+      { ...(noLoader && { headers: NO_LOADER_HEADER }) },
+    ).pipe(
       take(1),
     ).subscribe((data: TodoListItemDto[]) => {
       this._todoList$.next(data);
@@ -28,19 +32,30 @@ export class ToDoService {
     });
   }
 
-  removeTodoItem(id: string): void {
-    this.http.delete<Array<TodoListItemDto>>(`api/cards/${id}`).pipe(
+  removeTodoItem(id: string): Observable<Array<TodoListItemDto>> {
+    return this.http.delete<Array<TodoListItemDto>>(`api/cards/${id}`).pipe(
       take(1),
-    ).subscribe((data: TodoListItemDto[]) => {
-      this._todoList$.next(data);
-    });
+      tap((data: TodoListItemDto[]) => this._todoList$.next(data))
+    );
   }
 
   getItemById(id: string): Observable<TodoListItemDto | null> {
-    return this.http.get<TodoListItemDto|null>(`api/cards/${id}`);
+    return this.http.get<TodoListItemDto | null>(`api/cards/${id}`);
   }
 
   updateTodoItem(data: TodoListItemDto): Observable<TodoListItemDto> {
     return this.http.put<TodoListItemDto>(`api/cards`, data);
+  }
+
+  checkStatus(cardIds: string[]): Observable<PollStatusListDto[]> {
+    return this.http.post<PollStatusListDto[]>(
+      'api/cards/poll-status',
+      { cardIds },
+      { headers: NO_LOADER_HEADER },
+    );
+  }
+
+  updateTodosWithoutServer(todos: TodoListItemDto[]): void {
+    this._todoList$.next(todos);
   }
 }

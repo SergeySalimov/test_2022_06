@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
 import { CardsService } from '../services/cards.service';
-import { NotFoundInterceptor } from '../../core/interceptors';
+import { CheckAndParseIdInterceptor, NotFoundInterceptor } from '../../core/interceptors';
+import mongoose from 'mongoose';
 
 @Controller('api/cards')
 export class CardsController {
@@ -13,14 +14,14 @@ export class CardsController {
     }
 
     @Get(':id')
-    @UseInterceptors(NotFoundInterceptor)
-    async getOne(@Param('id') id: string): Promise<TodoListItemDto> {
+    @UseInterceptors(CheckAndParseIdInterceptor, NotFoundInterceptor)
+    async getOne(@Param('id') id: mongoose.Types.ObjectId): Promise<TodoListItemDto> {
         return await this.cardsService.getOne(id);
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async createCard(@Body('description') description: string): Promise<TodoListItemDto[]> {
+    async createCard(@Body('description') description: string): Promise<TodoListItemDto> {
         return this.cardsService.createCard(description);
     }
 
@@ -36,8 +37,8 @@ export class CardsController {
     }
 
     @Delete(':id')
-    @UseInterceptors(NotFoundInterceptor)
-    async deleteCard(@Param('id') id: string): Promise<TodoListItemDto[]> {
+    @UseInterceptors(CheckAndParseIdInterceptor, NotFoundInterceptor)
+    async deleteCard(@Param('id') id: mongoose.Types.ObjectId): Promise<TodoListItemDto> {
         return this.cardsService.deleteCard(id);
     }
 }

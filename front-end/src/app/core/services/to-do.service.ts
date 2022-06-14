@@ -13,33 +13,44 @@ export class ToDoService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos(noLoader: boolean = false): void {
-    this.http.get<Array<TodoListItemDto>>(
+  getAllTodos(noLoader: boolean = false): Observable<TodoListItemDto[]> {
+    return this.http.get<TodoListItemDto[]>(
       'api/cards',
-      { ...(noLoader && { headers: NO_LOADER_HEADER }) },
+      noLoader ? { headers: NO_LOADER_HEADER } : {},
     ).pipe(
       take(1),
-    ).subscribe((data: TodoListItemDto[]) => {
-      this._todoList$.next(data);
-    });
-  }
-
-  addTodoItem(description: string): void {
-    this.http.post<Array<TodoListItemDto>>('api/cards', { description }).pipe(
-      take(1),
-    ).subscribe((data: TodoListItemDto[]) => {
-      this._todoList$.next(data);
-    });
-  }
-
-  removeTodoItem(id: string): Observable<Array<TodoListItemDto>> {
-    return this.http.delete<Array<TodoListItemDto>>(`api/cards/${id}`).pipe(
-      take(1),
-      tap((data: TodoListItemDto[]) => this._todoList$.next(data))
+      tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
     );
   }
 
-  getItemById(id: string): Observable<TodoListItemDto | null> {
+  addTodoItem(description: string): Observable<TodoListItemDto> {
+    return this.http.post<TodoListItemDto>('api/cards', { description }).pipe(
+      take(1),
+      tap((data: TodoListItemDto) => {
+        const todos: TodoListItemDto[] = this._todoList$.getValue();
+        todos.push(data);
+        this.updateTodosWithoutServer(todos);
+      }),
+    );
+  }
+
+  removeTodoItem(id: string): Observable<TodoListItemDto> {
+    return this.http.delete<TodoListItemDto>(`api/cards/${id}`).pipe(
+      take(1),
+      tap(() => {
+        const todos: TodoListItemDto[] = this._todoList$.getValue();
+        const indexOfDeletedItem: number = todos.findIndex(item => item.id === id);
+
+        if (indexOfDeletedItem !== -1) {
+          todos.splice(indexOfDeletedItem, 1);
+        }
+
+        this.updateTodosWithoutServer(todos);
+      })
+    );
+  }
+
+  getItemById(id: string): Observable<TodoListItemDto|null> {
     return this.http.get<TodoListItemDto | null>(`api/cards/${id}`);
   }
 

@@ -17,7 +17,7 @@ export class ToDoInputComponent {
       return;
     }
 
-    this.todoService.addTodoItem(this.newToDo);
+    this.todoService.addTodoItem(this.newToDo).subscribe();
     this.newToDo = '';
   }
 }

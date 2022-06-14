@@ -14,6 +14,7 @@
       "title": "A server error occurred !",
       "text": "Error code: $1. Message: $2",
       "NotFoundMessage": "Something goes wrong on server.",
+      "BadRequestMessage": "You have sent a bad request.",
       "defaultMessage": "Please contact our support service."
     },
     "inputErrors": {

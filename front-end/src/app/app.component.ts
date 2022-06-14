@@ -20,6 +20,6 @@ export class AppComponent implements OnInit {
     translate.setDefaultLang(translateConfig.default);
   }
   ngOnInit(): void {
-    this.todoService.getAllTodos();
+    this.todoService.getAllTodos().subscribe();
   }
 }

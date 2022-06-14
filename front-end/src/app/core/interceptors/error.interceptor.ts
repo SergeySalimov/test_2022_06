@@ -17,8 +17,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           let text = this.translate.instant('errors.serverErrors.text');
           let message = '';
 
-          if (errorCode === '404') {
-            message += this.translate.instant('errors.serverErrors.NotFoundMessage') + ' ';
+          switch (errorCode) {
+            case '404':
+              message += this.translate.instant('errors.serverErrors.NotFoundMessage') + ' ';
+              break;
+            case '400':
+              message += this.translate.instant('errors.serverErrors.BadRequestMessage') + ' ';
+              break;
+            default:
+              message += '!!! ';
           }
 
           message += this.translate.instant('errors.serverErrors.defaultMessage');

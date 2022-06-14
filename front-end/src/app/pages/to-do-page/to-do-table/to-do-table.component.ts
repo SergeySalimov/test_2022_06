@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, TrackByFunction } from '@an
 import { AppRoutes, ToDoService } from '@core/services';
 import { interval, Observable, Subscription, switchMap, withLatestFrom } from 'rxjs';
 import { dateTimeFormatToken } from '@shared/shared.module';
-import { trackById } from '@shared/utils';
+import { trackById, Unsubscribe } from '@shared/utils';
 import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
 import { PollStatusEnum } from '@app/core/constants/poll.enum';
 import { PING_POLL_STATUS_INTERVAL } from '@core/constants';
@@ -13,6 +13,7 @@ import { PING_POLL_STATUS_INTERVAL } from '@core/constants';
   styleUrls: ['./to-do-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@Unsubscribe()
 export class ToDoTableComponent {
   todoList$: Observable<Array<TodoListItemDto>> = this.todoService.todoList$;
   trackByFunction: TrackByFunction<any> = trackById;

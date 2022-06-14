@@ -8,30 +8,32 @@ import { TodoListItem, TodoListItemDocument } from '../schemas/todo-list-item.sc
 
 @Injectable()
 export class CardsService {
-    constructor(@InjectModel(TodoListItem.name) private todoListItemModel: Model<TodoListItemDocument>) {
-    }
+    constructor(@InjectModel(TodoListItem.name) private todoListItemModel: Model<TodoListItemDocument>) {}
 
     async getAll(): Promise<TodoListItemDto[]> {
-        return this.todoListItemModel.aggregate([
-            { $addFields: { id: { $toString: '$_id' } } },
-            { $unset: ['__v', '_id'] }
-        ]);
+        // return this.todoListItemModel.aggregate([
+        //     { $addFields: { id: { $toString: '$_id' } } },
+        //     { $unset: ['__v', '_id'] }
+        // ]);
+        const todos: TodoListItem[] = await this.todoListItemModel.find({});
+
+        return todos.map(this.mapToDto);
     }
 
-    async getOne(id: string): Promise<TodoListItemDto> {
+    async getOne(id: mongoose.Types.ObjectId): Promise<TodoListItemDto> {
         const todoItem: TodoListItem = await this.todoListItemModel.findById(id);
 
-        return this.mapToDto(todoItem);
+        return todoItem ? this.mapToDto(todoItem) : null;
     }
 
-    async createCard(description: string): Promise<TodoListItemDto[]> {
-        await new this.todoListItemModel({
+    async createCard(description: string): Promise<TodoListItemDto> {
+        const todoItem: TodoListItem = await new this.todoListItemModel({
             description,
             createdAt: new Date(),
             pollStatus: PollStatusEnum.NEW,
         }).save();
 
-        return this.getAll();
+        return this.mapToDto(todoItem);
     }
 
     async updateCard(todoListItemDto: TodoListItemDto): Promise<TodoListItemDto> {
@@ -40,10 +42,10 @@ export class CardsService {
         return this.mapToDto(todoItem);
     }
 
-    async deleteCard(id: string): Promise<TodoListItemDto[]> {
-        await this.todoListItemModel.findByIdAndRemove(id);
+    async deleteCard(id: mongoose.Types.ObjectId): Promise<TodoListItemDto> {
+        const todoItem: TodoListItem = await this.todoListItemModel.findByIdAndRemove(id);
 
-        return this.getAll();
+        return this.mapToDto(todoItem);
     }
 
     @Cron(CronExpression.EVERY_5_SECONDS)
@@ -54,22 +56,13 @@ export class CardsService {
 
         // elements to set changed status
         await this.todoListItemModel.updateMany(
-            {
-                createdAt: {
-                    $gte: expiredLimit,
-                    $lt: changedLimit
-                },
-                pollStatus: PollStatusEnum.NEW
-            },
+            { createdAt: { $gte: expiredLimit, $lt: changedLimit }, pollStatus: PollStatusEnum.NEW },
             { $set: { pollStatus: PollStatusEnum.CHANGED } }
         );
 
         // elements to set expired status
         await this.todoListItemModel.updateMany(
-            {
-                createdAt: { $lt: expiredLimit },
-                pollStatus: [PollStatusEnum.NEW, PollStatusEnum.CHANGED]
-            },
+            { createdAt: { $lt: expiredLimit }, pollStatus: [PollStatusEnum.NEW, PollStatusEnum.CHANGED] },
             { $set: { pollStatus: PollStatusEnum.EXPIRED } }
         );
     }
@@ -78,14 +71,14 @@ export class CardsService {
         const ids: mongoose.Types.ObjectId[] = cardIds.map(id => new mongoose.Types.ObjectId(id));
 
         return this.todoListItemModel.aggregate([
-            { '$match': { '_id': { '$in': ids } } },
+            { $match: { '_id': { '$in': ids } } },
             { $project: { pollStatus: 1, '_id': 0, id: { $toString: '$_id' } } }
         ]);
     }
 
     mapToDto(todoListItem: TodoListItem): TodoListItemDto {
         return {
-            id: (todoListItem as any)?._id,
+            id: (todoListItem as any)._id.toString(),
             createdAt: todoListItem.createdAt,
             pollStatus: todoListItem.pollStatus,
             description: todoListItem.description,

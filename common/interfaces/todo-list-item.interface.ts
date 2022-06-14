@@ -1,8 +1,8 @@
 export interface TodoListItemDto {
-    createdAt: Date;
     description: string;
-    pollStatus?: number;
+    createdAt: Date;
     id: string;
+    pollStatus: number;
     name?: string;
     surname?: string;
     patronymic?: string;

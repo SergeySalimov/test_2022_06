@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CardsService } from './cards.service';
 import { TodoListItemDto } from '@common/interfaces';
-
-const crypto = require('crypto');
+import { PollStatusEnum } from '../constants/poll.constant';
 
 const mockDate = new Date('2222/2/22');
 const mockId = 'mockId';
-const todoListItem1: TodoListItemDto = { id: 'mockId1', createdAt: mockDate, description: 'mockDescription1' };
-const todoListItem2: TodoListItemDto = { id: 'mockId2', createdAt: mockDate, description: 'mockDescription2' };
+const todoListItem1: TodoListItemDto = { id: 'mockId1', createdAt: mockDate, description: 'mockDescription1', pollStatus: PollStatusEnum.NEW };
+const todoListItem2: TodoListItemDto = { id: 'mockId2', createdAt: mockDate, description: 'mockDescription2', pollStatus: PollStatusEnum.NEW };
 const todoItems: TodoListItemDto[] = [todoListItem1, todoListItem2];
 
 describe('CardsService', () => {
@@ -20,7 +19,6 @@ describe('CardsService', () => {
 
         service = testingModule.get<CardsService>(CardsService);
         jest.spyOn(global, 'Date').mockImplementation(() => mockDate as any); // to make new Date() returns everytime the same date
-        jest.spyOn(crypto, 'randomUUID').mockImplementation(() => mockId as any); // the same for crypto.randomUUID()
     });
 
     it('should be defined', () => {

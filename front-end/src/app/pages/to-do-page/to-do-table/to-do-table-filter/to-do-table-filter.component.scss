@@ -1,0 +1,9 @@
+@import "src/styles";
+
+:host {
+  @include table-header-basic();
+
+  .todo-table th {
+    @include table-header($appWhite, $appBlue);
+  }
+}

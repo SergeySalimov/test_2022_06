@@ -39,13 +39,13 @@ export class CardsService {
     async updateCard(todoListItemDto: TodoListItemDto): Promise<TodoListItemDto> {
         const todoItem: TodoListItem = await this.todoListItemModel.findByIdAndUpdate(todoListItemDto.id, todoListItemDto);
 
-        return this.mapToDto(todoItem);
+        return todoItem ? this.mapToDto(todoItem) : null;
     }
 
     async deleteCard(id: mongoose.Types.ObjectId): Promise<TodoListItemDto> {
         const todoItem: TodoListItem = await this.todoListItemModel.findByIdAndRemove(id);
 
-        return this.mapToDto(todoItem);
+        return todoItem ? this.mapToDto(todoItem) : null;
     }
 
     @Cron(CronExpression.EVERY_5_SECONDS)

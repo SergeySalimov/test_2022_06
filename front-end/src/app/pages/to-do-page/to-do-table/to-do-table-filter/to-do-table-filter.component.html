@@ -1,10 +1,20 @@
-<table class="todo-table">
-  <tr class="filters-for-table">
-    <th>{{ 'todo.tableDate' | translate }}</th>
-    <th>{{ 'todo.tableDescription' | translate }}</th>
-    <th>{{ 'todo.poll' | translate }}</th>
-    <th>
-      <button><span>C</span></button>
-    </th>
-  </tr>
-</table>
+<ng-container *ngIf="{ todos: (todos$ | async) ?? [] } as data">
+  <table class="todo-table">
+    <tr class="filters-for-table">
+      <th>{{ 'todo.tableDate' | translate }}</th>
+      <th>{{ 'todo.tableDescription' | translate }}</th>
+      <th>{{ 'todo.poll' | translate }}</th>
+      <th>
+        <button class="clear-filter">
+          <span><strong>C</strong></span>
+        </button>
+        <button class="follow-all" (click)="onFollowAll($event, data.todos)">
+          <span><strong>&#9851;</strong></span>
+        </button>
+        <button class="stop-follow-all" (click)="onStopFollowAll($event)">
+          <span><strong>&#9851;</strong></span>
+        </button>
+      </th>
+    </tr>
+  </table>
+</ng-container>

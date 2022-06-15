@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, TrackByFunction } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  TrackByFunction
+} from '@angular/core';
 import { interval, Observable, Subscription, switchMap, tap, withLatestFrom } from 'rxjs';
 import { PollStatusEnum } from '@app/core/constants/poll.enum';
 import { AppRoutes, ToDoService } from '@core/services';
@@ -25,11 +33,13 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
     @Inject(dateTimeFormatToken) public dateTimeFormat: string,
     private readonly todoService: ToDoService,
     private readonly todoPageService: ToDoPageService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.todoPageService.followedTodos$.subscribe((data: string[]) => {
       this.followedTodos = [...data];
+      this.cdr.markForCheck();
 
       if (this.followedTodos.length === 0 && this.intervalSubscription) {
         this.stopPingServer();
@@ -81,6 +91,15 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
+  startFollowItems(): void {
+    this.intervalSubscription = interval(PING_POLL_STATUS_INTERVAL).pipe(
+      switchMap(() => this.todoService.checkStatus(this.followedTodos)),
+      withLatestFrom(this.todoList$),
+    ).subscribe(([data, todos]: [PollStatusListDto[], TodoListItemDto[]]) => {
+      this.refreshPollStatus(data, todos);
+    });
+  }
+
   onFollowItem(e: MouseEvent, id: string): void {
     e.stopPropagation();
     this.todoPageService.changeFollowStatus(id);
@@ -89,12 +108,7 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.intervalSubscription = interval(PING_POLL_STATUS_INTERVAL).pipe(
-      switchMap(() => this.todoService.checkStatus(this.followedTodos)),
-      withLatestFrom(this.todoList$),
-    ).subscribe(([data, todos]: [PollStatusListDto[], TodoListItemDto[]]) => {
-      this.refreshPollStatus(data, todos);
-    });
+    this.startFollowItems();
   }
 
   ngOnDestroy(): void {

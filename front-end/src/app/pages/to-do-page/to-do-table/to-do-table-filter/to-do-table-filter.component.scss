@@ -6,4 +6,20 @@
   .todo-table th {
     @include table-header($appWhite, $appBlue);
   }
+
+  .clear-filter, .follow-all, .stop-follow-all {
+    @include action-buttons();
+  }
+
+  .follow-all, .stop-follow-all {
+    color: $appWhite;
+  }
+
+  .follow-all {
+    background-color: $appGreen;
+  }
+
+  .stop-follow-all {
+    background-color: $appRed;
+  }
 }

@@ -6,6 +6,14 @@ export class ToDoPageService {
   private _followedTodos$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   followedTodos$: Observable<string[]> = this._followedTodos$.asObservable();
 
+  startFollowAll(ids: string[]): void {
+    this._followedTodos$.next(ids);
+  }
+
+  stopFollowAll(): void {
+    this._followedTodos$.next([]);
+  }
+
   removeFollowedFromList(expiredTodoId: string): void {
     const followedTodos: string[] = this._followedTodos$.getValue();
     const index: number = followedTodos.indexOf(expiredTodoId);

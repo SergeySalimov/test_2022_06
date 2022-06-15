@@ -11,6 +11,7 @@ import {
   ToDoTableFilterComponent,
   ToDoTableHeaderComponent
 } from '@app/pages/to-do-page/to-do-table';
+import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,9 @@ import {
   ],
   exports: [
     ToDoPageComponent,
+  ],
+  providers: [
+    ToDoPageService,
   ],
 })
 export class ToDoPageModule {

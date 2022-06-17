@@ -13,7 +13,9 @@
         [formControl]="formControlForInput"
         [class.app-disabled]="!config.editable"
         [class.not-empty]="formControlForInput.value"
+        (click)="picker.open()"
         class="date-time-picker"
+        readonly
       >
       <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #picker [showSeconds]="true"></ngx-mat-datetime-picker>

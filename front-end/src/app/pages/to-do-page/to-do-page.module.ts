@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { ToDoPageComponent } from './to-do-page.component';
 import { ToDoPageRoutingModule } from './to-do-page-routing.module';
@@ -11,11 +11,11 @@ import {
   ToDoTableFilterComponent,
   ToDoTableHeaderComponent
 } from '@app/pages/to-do-page/to-do-table';
-import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
 
 @NgModule({
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ToDoPageRoutingModule,
     FormsModule,
     SharedModule,
@@ -30,9 +30,6 @@ import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
   ],
   exports: [
     ToDoPageComponent,
-  ],
-  providers: [
-    ToDoPageService,
   ],
 })
 export class ToDoPageModule {

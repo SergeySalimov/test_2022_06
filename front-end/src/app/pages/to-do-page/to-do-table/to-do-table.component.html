@@ -1,11 +1,21 @@
-<ng-container *ngIf="((todoList$ | async) ?? []).length > 0; else noData" class="todo-table">
-  <app-to-do-table-filter
-    (startFollowAllEmit)="tableBody.startFollowItems()"
-  ></app-to-do-table-filter>
-  <app-to-do-table-header></app-to-do-table-header>
-  <app-to-do-table-body #tableBody></app-to-do-table-body>
+<ng-container *ngIf="{
+  todos: (todos$ | async) ?? [],
+  statusEnum: (statusEnum$ | async) ?? [],
+  filters: (filters$ | async) ?? clearFilter
+  } as data">
+  <ng-container *ngIf="showTodos$ | async; else noData" class="todo-table">
+    <app-to-do-table-filter
+      [todos]="data.todos"
+      [statusEnum]="data.statusEnum"
+      [filters]="data.filters"
+      (startFollowAllEmit)="onStartFollowAll($event)"
+      (stopFollowAllEmit)="onStopFollowAll()"
+      (changeFiltersEmit)="onChangeFilters($event)"
+    ></app-to-do-table-filter>
+    <app-to-do-table-header></app-to-do-table-header>
+    <app-to-do-table-body #tableBody></app-to-do-table-body>
+  </ng-container>
+  <ng-template #noData>
+    <span class="no-data">{{ 'todo.noDataInTable' | translate }}</span>
+  </ng-template>
 </ng-container>
-<ng-template #noData>
-  <span class="no-data">{{ 'todo.noDataInTable' | translate }}</span>
-</ng-template>
-

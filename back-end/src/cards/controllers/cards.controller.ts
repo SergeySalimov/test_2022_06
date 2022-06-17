@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
-import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { CardsService } from '../services/cards.service';
 import { CheckAndParseIdInterceptor, NotFoundInterceptor } from '../../core/interceptors';
 import mongoose from 'mongoose';
@@ -11,6 +11,11 @@ export class CardsController {
     @Get()
     async getAll(): Promise<TodoListItemDto[]> {
         return await this.cardsService.getAll();
+    }
+
+    @Get('/status-enum')
+    async getStatusEnum(): Promise<StatusEnumDto[]> {
+        return this.cardsService.getStatusEnum();
     }
 
     @Get(':id')
@@ -30,6 +35,10 @@ export class CardsController {
         return this.cardsService.getPollStatus(cardIds);
     }
 
+    @Post('/partial')
+    async getFiltered(@Body('filters') filters: IFilter): Promise<TodoListItemDto[]> {
+        return this.cardsService.getFiltered(filters);
+    }
     @Put()
     @UseInterceptors(NotFoundInterceptor)
     async updateCard(@Body() card: TodoListItemDto): Promise<TodoListItemDto> {

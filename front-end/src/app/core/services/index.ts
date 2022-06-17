@@ -2,3 +2,5 @@ export * from './common.service';
 export * from './to-do.service';
 export * from './routing.helper';
 export * from './missing-translation.service';
+export * from './follow-todos.service';
+export * from './filter-todos.service';

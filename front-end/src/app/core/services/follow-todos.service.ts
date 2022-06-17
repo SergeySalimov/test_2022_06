@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
-export class ToDoPageService {
+@Injectable({
+  providedIn: 'root'
+})
+export class FollowTodosService {
   private _followedTodos$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   followedTodos$: Observable<string[]> = this._followedTodos$.asObservable();
 

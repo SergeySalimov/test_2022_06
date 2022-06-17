@@ -32,7 +32,16 @@
     "tableDescription": "Описание",
     "poll": "Статус",
     "pollExpiredPlaceholder": "Истек срок",
-    "tableAction": "Действия"
+    "tableAction": "Действия",
+    "from": "С",
+    "till": "По",
+    "descriptionFilter": "Фильтр по описанию",
+    "all": "все",
+    "status": {
+      "NEW" : "новый",
+      "CHANGED" : "измененный",
+      "EXPIRED" : "истекший"
+    }
   },
   "card": {
     "cardHeaderText": "Карточка",

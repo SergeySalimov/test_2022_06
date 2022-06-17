@@ -7,16 +7,16 @@ const mockDate = new Date(2022, 2, 22);
 const mockDescription = 'mockDescription';
 
 const resultBeforeRemoveIndex2: Array<TodoListItemDto> = [
-  { description: 'mock0', createdAt: mockDate, id: '0' },
-  { description: 'mock1', createdAt: mockDate, id: '1' },
-  { description: 'mock2', createdAt: mockDate, id: '2' },
-  { description: 'mock3', createdAt: mockDate, id: '3' },
+  { description: 'mock0', createdAt: mockDate, id: '0', pollStatus: 2 },
+  { description: 'mock1', createdAt: mockDate, id: '1', pollStatus: 2 },
+  { description: 'mock2', createdAt: mockDate, id: '2', pollStatus: 2 },
+  { description: 'mock3', createdAt: mockDate, id: '3', pollStatus: 2 },
 ];
 
 const expectedResult: Array<TodoListItemDto> = [
-  { description: 'mock0', createdAt: mockDate, id: '0' },
-  { description: 'mock1', createdAt: mockDate, id: '1' },
-  { description: 'mock3', createdAt: mockDate, id: '3' },
+  { description: 'mock0', createdAt: mockDate, id: '0', pollStatus: 2 },
+  { description: 'mock1', createdAt: mockDate, id: '1', pollStatus: 2 },
+  { description: 'mock3', createdAt: mockDate, id: '3', pollStatus: 2 },
 ];
 
 describe('ToDoService', () => {
@@ -55,6 +55,7 @@ describe('ToDoService', () => {
           description: mockDescription,
           createdAt: mockDate,
           id: 'mock',
+          pollStatus: 0,
         }]);
         done();
       });

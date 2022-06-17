@@ -32,7 +32,16 @@
     "tableDescription": "Description",
     "poll": "Status",
     "pollExpiredPlaceholder": "Status expired",
-    "tableAction": "Actions"
+    "tableAction": "Actions",
+    "from": "From",
+    "till": "Till",
+    "descriptionFilter": "Description filter",
+    "all": "all",
+    "status": {
+      "NEW" : "new",
+      "CHANGED" : "changed",
+      "EXPIRED" : "expired"
+    }
   },
   "card": {
     "cardHeaderText": "Card",

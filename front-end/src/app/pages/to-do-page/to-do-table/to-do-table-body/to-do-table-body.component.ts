@@ -7,14 +7,13 @@ import {
   OnInit,
   TrackByFunction
 } from '@angular/core';
-import { interval, Observable, Subscription, switchMap, tap, withLatestFrom } from 'rxjs';
-import { PollStatusEnum } from '@app/core/constants/poll.enum';
-import { AppRoutes, ToDoService } from '@core/services';
+import { combineLatest, interval, map, Observable, Subscription, switchMap, tap, withLatestFrom } from 'rxjs';
+import { AppRoutes, FilterTodosService, ToDoService } from '@core/services';
 import { PING_POLL_STATUS_INTERVAL } from '@core/constants';
 import { trackById } from '@shared/utils';
 import { dateTimeFormatToken } from '@shared/shared.module';
-import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
-import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
+import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { FollowTodosService } from '@app/core/services/follow-todos.service';
 
 @Component({
   selector: 'app-to-do-table-body',
@@ -23,21 +22,35 @@ import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoTableBodyComponent implements OnInit, OnDestroy {
-  todoList$: Observable<TodoListItemDto[]> = this.todoService.todoList$;
+  todoList$: Observable<TodoListItemDto[]> = combineLatest([
+    this.todoService.todoList$,
+    this.filterTodosService.filters$,
+  ]).pipe(
+    map(([todos, filters]: [TodoListItemDto[], IFilter]) => todos.filter(todo =>
+      filters.status === 'null' || filters.status === null ? true : todo.pollStatus === +filters.status),
+      ),
+  );
+
   followedTodos: string[] = [];
   trackByFunction: TrackByFunction<any> = trackById;
+  statusEnum!: StatusEnumDto[];
   private intervalSubscription!: Subscription;
   private followedSubscription!: Subscription;
 
   constructor(
     @Inject(dateTimeFormatToken) public dateTimeFormat: string,
     private readonly todoService: ToDoService,
-    private readonly todoPageService: ToDoPageService,
+    private readonly followTodosService: FollowTodosService,
+    private readonly filterTodosService: FilterTodosService,
     private readonly cdr: ChangeDetectorRef,
   ) {}
 
+  get lastStatusEnumValue(): number {
+    return this.todoService.statusEnum$.getValue().slice(-1)[0]?.value;
+  }
+
   ngOnInit(): void {
-    this.todoPageService.followedTodos$.subscribe((data: string[]) => {
+    this.followedSubscription = this.followTodosService.followedTodos$.subscribe((data: string[]) => {
       this.followedTodos = [...data];
       this.cdr.markForCheck();
 
@@ -56,7 +69,7 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
   }
 
   isTodoExpired(todo: TodoListItemDto): boolean {
-    return todo.pollStatus === PollStatusEnum.EXPIRED;
+    return todo.pollStatus === this.lastStatusEnumValue;
   }
 
   stopPingServer(): void {
@@ -74,8 +87,8 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
 
       changed = true;
       todo.pollStatus = todoStatus.pollStatus;
-      if (todo.pollStatus === PollStatusEnum.EXPIRED) {
-        this.todoPageService.removeFollowedFromList(todo.id);
+      if (todo.pollStatus === this.lastStatusEnumValue) {
+        this.followTodosService.removeFollowedFromList(todo.id);
       }
     }
 
@@ -87,7 +100,7 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
   onDeleteItem(e: MouseEvent, id: string): void {
     e.stopPropagation();
     this.todoService.removeTodoItem(id).pipe(
-      tap(() => this.todoPageService.removeFollowedFromList(id)),
+      tap(() => this.followTodosService.removeFollowedFromList(id)),
     ).subscribe();
   }
 
@@ -102,9 +115,9 @@ export class ToDoTableBodyComponent implements OnInit, OnDestroy {
 
   onFollowItem(e: MouseEvent, id: string): void {
     e.stopPropagation();
-    this.todoPageService.changeFollowStatus(id);
+    this.followTodosService.changeFollowStatus(id);
 
-    if (!this.todoPageService.isFollowedExists() || (this.intervalSubscription && !this.intervalSubscription.closed)) {
+    if (!this.followTodosService.isFollowedExists() || (this.intervalSubscription && !this.intervalSubscription.closed)) {
       return;
     }
 

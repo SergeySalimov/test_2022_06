@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { ToDoPageService } from '@app/pages/to-do-page/to-do-page.service';
-import { ToDoService } from '@core/services';
-import { Observable } from 'rxjs';
-import { TodoListItemDto } from '@common/interfaces';
-import { PollStatusEnum } from '@app/core/constants/poll.enum';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { CLEAR_FILTER } from '@core/services';
+import { debounceTime, distinctUntilChanged, map, Subscription, tap } from 'rxjs';
+import { IFilter, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-to-do-table-filter',
@@ -11,28 +10,79 @@ import { PollStatusEnum } from '@app/core/constants/poll.enum';
   styleUrls: ['./to-do-table-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToDoTableFilterComponent {
-  @Output() startFollowAllEmit: EventEmitter<void> = new EventEmitter<void>();
+export class ToDoTableFilterComponent implements OnInit, OnDestroy {
+  @Input() statusEnum!: StatusEnumDto[];
+  @Input() filters!: IFilter;
+  @Input() todos!: TodoListItemDto[];
+  @Output() startFollowAllEmit: EventEmitter<TodoListItemDto[]> = new EventEmitter<TodoListItemDto[]>();
+  @Output() stopFollowAllEmit: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changeFiltersEmit: EventEmitter<IFilter> = new EventEmitter<IFilter>();
 
-  todos$: Observable<TodoListItemDto[]> = this.todoService.todoList$;
+  filterForm: FormGroup = new FormGroup({
+    dateFrom: new FormControl(),
+    dateTill: new FormControl(),
+    description: new FormControl(),
+    status: new FormControl(),
+  });
 
-  constructor(
-    private readonly todoService: ToDoService,
-    private readonly todoPageService: ToDoPageService,
-    ) {}
+  formSubscription!: Subscription;
+
+  get dateFromControl(): FormControl {
+    return this.filterForm.get('dateFrom') as FormControl;
+  }
+
+  get dateTillControl(): FormControl {
+    return this.filterForm.get('dateTill') as FormControl;
+  }
+
+  get descriptionControl(): FormControl {
+    return this.filterForm.get('description') as FormControl;
+  }
+
+  get statusControl(): FormControl {
+    return this.filterForm.get('status') as FormControl;
+  }
+
+  get lastStatusEnumValue(): number {
+    return this.statusEnum.slice(-1)[0].value;
+  }
+
+  ngOnInit(): void {
+    this.filterForm.patchValue(this.filters);
+
+    this.formSubscription = this.filterForm.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      map(formData => ({
+        ...formData,
+        dateFrom: formData.dateFrom ? new Date(formData.dateFrom) : null,
+        dateTill: formData.dateTill ? new Date(formData.dateTill) : null,
+        status: formData.status === 'null' || formData.status === null ? null : formData.status,
+      })),
+      tap(filters => this.onChangeFilters(filters)),
+    ).subscribe();
+  }
+
+  onChangeFilters(filters: IFilter): void {
+    this.changeFiltersEmit.emit(filters);
+  }
 
   onFollowAll(e: MouseEvent, todos: TodoListItemDto[]): void {
     e.stopPropagation();
-    const ids: string[] = todos
-      .filter(todo => todo.pollStatus !== PollStatusEnum.EXPIRED)
-      .map(todo => todo.id);
-
-    this.todoPageService.startFollowAll(ids);
-    this.startFollowAllEmit.emit();
+    this.startFollowAllEmit.emit(todos);
   }
 
   onStopFollowAll(e: MouseEvent): void {
     e.stopPropagation();
-    this.todoPageService.stopFollowAll();
+    this.stopFollowAllEmit.emit();
+  }
+
+  onClearFilter(e: MouseEvent): void {
+    e.stopPropagation();
+    this.filterForm.patchValue(CLEAR_FILTER);
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 }

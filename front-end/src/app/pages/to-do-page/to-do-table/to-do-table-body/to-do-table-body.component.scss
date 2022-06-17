@@ -20,7 +20,7 @@
     font-size: 1.5rem;
   }
 
-  $indicator-colors: $appGreen, $appYellow, $appRed;
+  $indicator-colors: $appGreen, $appYellow, $appRed, $appBlue, $appBlack;
   $i: 0;
   @each $color in $indicator-colors {
     .status-indicator-#{$i} {

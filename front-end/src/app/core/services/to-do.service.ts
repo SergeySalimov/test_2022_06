@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, share, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { PollStatusListDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { NO_LOADER_HEADER } from '@core/constants';
 
 @Injectable({
@@ -10,16 +10,30 @@ import { NO_LOADER_HEADER } from '@core/constants';
 export class ToDoService {
   private _todoList$: BehaviorSubject<Array<TodoListItemDto>> = new BehaviorSubject<Array<TodoListItemDto>>([]);
   public todoList$: Observable<Array<TodoListItemDto>> = this._todoList$.asObservable();
+  public statusEnum$: BehaviorSubject<StatusEnumDto[]> = new BehaviorSubject<StatusEnumDto[]>([]);
 
   constructor(private readonly http: HttpClient) {}
 
   getAllTodos(noLoader: boolean = false): Observable<TodoListItemDto[]> {
     return this.http.get<TodoListItemDto[]>(
       'api/cards',
+      noLoader ? { headers: NO_LOADER_HEADER } : {}
+    ).pipe(
+      take(1),
+      tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
+      share(),
+    );
+  }
+
+  getPartialTodos(filters: IFilter, noLoader: boolean = false): Observable<TodoListItemDto[]> {
+    return this.http.post<TodoListItemDto[]>(
+      'api/cards/partial',
+      { filters },
       noLoader ? { headers: NO_LOADER_HEADER } : {},
     ).pipe(
       take(1),
       tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
+      share(),
     );
   }
 
@@ -63,6 +77,13 @@ export class ToDoService {
       'api/cards/poll-status',
       { cardIds },
       { headers: NO_LOADER_HEADER },
+    );
+  }
+
+  getStatusEnum(): Observable<StatusEnumDto[]> {
+    return this.http.get<StatusEnumDto[]>('api/cards/status-enum').pipe(
+      take(1),
+      tap(statusEnum => this.statusEnum$.next(statusEnum)),
     );
   }
 

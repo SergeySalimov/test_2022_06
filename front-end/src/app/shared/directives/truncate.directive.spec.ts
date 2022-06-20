@@ -31,7 +31,6 @@ describe('TruncateDirective', () => {
 
     const debugElement: DebugElement = fixture.debugElement.query(By.directive(TruncateDirective));
     directive = debugElement.injector.get(TruncateDirective);
-
   });
 
   afterEach(() => {
@@ -42,27 +41,22 @@ describe('TruncateDirective', () => {
     expect(directive).toBeDefined();
   });
 
-  // describe('constructor', () => {
-  //   it('should assign on directives.el element with directives applied', () => {
-  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
-  //     expect(directive.el).toEqual(targetEl);
-  //   });
-  //
-  //   it('should assign on directives.tableRowEl parent tr', () => {
-  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.parent')).nativeElement;
-  //     expect(directive.tableRowEl).toEqual(targetEl);
-  //   });
-  //
-  //   it('should apply all styles on target element', () => {
-  //     const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
-  //     const { textOverflow, whiteSpace, overflow, display } = targetEl.style;
-  //
-  //     expect(textOverflow).toEqual('ellipsis');
-  //     expect(whiteSpace).toEqual('nowrap');
-  //     expect(overflow).toEqual('hidden');
-  //     expect(display).toEqual('block');
-  //   });
-  // });
+  describe('constructor', () => {
+    it('should assign on directives.el element with directives applied', () => {
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+      expect(directive.el).toEqual(targetEl);
+    });
+
+    it('should apply all styles on target element', () => {
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
+      const { textOverflow, whiteSpace, overflow, display } = targetEl.style;
+
+      expect(textOverflow).toEqual('ellipsis');
+      expect(whiteSpace).toEqual('nowrap');
+      expect(overflow).toEqual('hidden');
+      expect(display).toEqual('block');
+    });
+  });
 
   describe('ngAfterViewInit', () => {
     it('should be defined', () => {
@@ -70,7 +64,7 @@ describe('TruncateDirective', () => {
     });
 
     it('should call set 1 to scrollTop value', () => {
-      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
+      const targetEl: HTMLElement = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
       spyOn<any>(directive['renderer'], 'setProperty');
 
       directive.ngAfterViewInit();
@@ -92,7 +86,7 @@ describe('TruncateDirective', () => {
     let parentEl: HTMLElement;
 
     beforeEach(() => {
-      targetEl = fixture.debugElement.query(By.css('.span-with-directives')).nativeElement;
+      targetEl = fixture.debugElement.query(By.css('.span-with-directive')).nativeElement;
       parentEl = fixture.debugElement.query(By.css('.parent')).nativeElement;
     });
 
@@ -121,17 +115,6 @@ describe('TruncateDirective', () => {
       const titleOnTargetElement = targetEl.attributes.getNamedItem('title');
 
       expect(titleOnTargetElement).toBeFalsy();
-    });
-
-    it('should set width for child element depending on parent width', () => {
-      spyOn<any>(directive['renderer'], 'setStyle');
-
-      directive.setTooltipFixWidth();
-
-      const parentWidth = parentEl.offsetWidth;
-      const expectedWidthForEl: string = `${Math.floor(parentWidth * 65 / 100) - 24}px`;
-
-      expect(directive['renderer'].setStyle).toHaveBeenCalledWith(targetEl, 'width', expectedWidthForEl);
     });
   });
 });

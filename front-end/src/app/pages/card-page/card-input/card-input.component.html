@@ -1,5 +1,5 @@
 <ng-container *ngIf="editMode; else readOnlyMode">
-  <div class="input-group" [ngSwitch]="config.inputType">
+  <div class="input-group" [ngSwitch]="config?.inputType">
     <textarea
       *ngSwitchCase="inputType.TEXT_AREA"
       [formControl]="formControlForInput"
@@ -43,13 +43,13 @@
     <input
       *ngSwitchDefault
       [formControl]="formControlForInput"
-      [type]="$any(config).inputType"
+      [type]="$any(config)?.inputType"
       [class.not-empty]="formControlForInput.value"
       [class.app-disabled]="!config.editable"
     >
     <span class="highlight"></span>
     <span class="bar"></span>
-    <label>{{ 'card.' + config.keyForValue | translate }}</label>
+    <label>{{ 'card.' + config?.keyForValue | translate }}</label>
     <ng-container *ngFor="let error of errorMap">
       <span *ngIf="isErrorOnInput(formControlForInput, error.type)" class="error-text">
         <small>{{ error.translateCode | translate }}</small>
@@ -59,17 +59,17 @@
 </ng-container>
 <ng-template #readOnlyMode>
   <p>
-    <ng-container [ngSwitch]="config.inputType">
+    <ng-container [ngSwitch]="config?.inputType">
       <span *ngSwitchCase="inputType.PHONE">
-        {{ 'card.' + config.keyForValue | translate }} : {{ getMaskedInputValue(formControlForInput?.value, phoneMask) }}
+        {{ 'card.' + config?.keyForValue | translate }} : {{ getMaskedInputValue(formControlForInput?.value, phoneMask) }}
       </span>
       <span *ngSwitchCase="inputType.ZIPCODE">
-        {{ 'card.' + config.keyForValue | translate }} : {{ getMaskedInputValue(formControlForInput?.value, zipcodeMask) }}
+        {{ 'card.' + config?.keyForValue | translate }} : {{ getMaskedInputValue(formControlForInput?.value, zipcodeMask) }}
       </span>
       <span *ngSwitchCase="inputType.DATE_TIME">
-        {{ 'card.' + config.keyForValue | translate }} : {{ formControlForInput?.value | date: dateTimeFormat }}
+        {{ 'card.' + config?.keyForValue | translate }} : {{ formControlForInput?.value | date: dateTimeFormat }}
       </span>
-      <span *ngSwitchDefault truncate>{{ 'card.' + config.keyForValue | translate }} : {{ formControlForInput?.value }}</span>
+      <span *ngSwitchDefault truncate>{{ 'card.' + config?.keyForValue | translate }} : {{ formControlForInput?.value }}</span>
     </ng-container>
   </p>
 </ng-template>

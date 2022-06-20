@@ -49,20 +49,6 @@ describe('ToDoService', () => {
       expect(service.addTodoItem).toBeDefined();
     });
 
-    xit('should add new value', (done: DoneFn) => {
-      service.addTodoItem(mockDescription);
-
-      service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-        expect(result).toEqual([{
-          description: mockDescription,
-          createdAt: mockDate,
-          id: 'mock',
-          pollStatus: 0,
-        }]);
-        done();
-      });
-    });
-
     it('should not add new value if it is a falsy value', (done: DoneFn) => {
       service.addTodoItem(null as any);
 

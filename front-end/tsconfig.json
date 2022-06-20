@@ -15,6 +15,7 @@
       "@core/constants": ["src/app/core/constants/index.ts"],
       "@core/interceptors": ["src/app/core/interceptors/index.ts"],
       "@shared/*": ["src/app/shared/*"],
+      "@configs/*": ["src/app/configs/*"],
       "@shared/utils": ["src/app/shared/utils/index.ts"],
     },
     "forceConsistentCasingInFileNames": true,

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoTableComponent } from './to-do-table.component';
-import { ToDoService } from '@core/services';
-import { dateTimeFormatToken } from '@shared/shared.module';
-import { mockTodoService } from '@shared/test-shared/mock.service';
+import { FilterTodosService, FollowTodosService, ToDoService } from '@core/services';
+import { FilterTodosServiceStub, FollowTodosServiceStub, ToDoServiceStub } from '@shared/test-shared/mock.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ToDoTableComponent', () => {
   let component: ToDoTableComponent;
@@ -11,10 +11,12 @@ describe('ToDoTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       declarations: [ToDoTableComponent],
       providers: [
-        { provide: ToDoService, useValue: mockTodoService },
-        { provide: dateTimeFormatToken, useValue: 'MOCK_DATE_TIME_FORMAT' },
+        { provide: ToDoService, useClass: ToDoServiceStub },
+        { provide: FollowTodosService, useClass: FollowTodosServiceStub },
+        { provide: FilterTodosService, useClass: FilterTodosServiceStub },
       ],
     })
       .compileComponents();

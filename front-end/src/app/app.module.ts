@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '@shared/shared.module';
 import { ErrorInterceptor, LoaderInterceptor } from '@core/interceptors';
 import { TranslateConfigInterface } from '@core/interfaces';
 import { LANGUAGES_DATA } from '@core/constants';
@@ -47,7 +46,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
         },
       useDefaultLang: true,
     }),
-    SharedModule,
   ],
   providers: [
     {

@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ToDoService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';
-import { translateConfigToken } from '@app/app.module';
-import { TranslateConfigInterface } from '@core/interfaces';
+import { DEFAULT_LANGUAGE, LANGUAGES } from '@core/constants';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +13,9 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly todoService: ToDoService,
     private readonly translate: TranslateService,
-    @Inject(translateConfigToken) private readonly translateConfig: TranslateConfigInterface,
   ) {
-    translate.addLangs(translateConfig.languages);
-    translate.setDefaultLang(translateConfig.default);
+    translate.addLangs(LANGUAGES);
+    translate.setDefaultLang(DEFAULT_LANGUAGE);
   }
   ngOnInit(): void {
     this.todoService.getAllTodos().subscribe();

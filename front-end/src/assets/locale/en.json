@@ -1,0 +1,60 @@
+{
+  "common": {
+    "add": "add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "noData": "no data",
+    "chooseLanguage": "Choose language"
+  },
+  "header": {
+    "logoText": "HOME"
+  },
+  "errors": {
+    "serverErrors": {
+      "title": "A server error occurred !",
+      "text": "Error code: $1. Message: $2",
+      "NotFoundMessage": "Something goes wrong on server.",
+      "BadRequestMessage": "You have sent a bad request.",
+      "defaultMessage": "Please contact our support service."
+    },
+    "inputErrors": {
+      "required": "This field is required",
+      "email": "Email is invalid",
+      "maxLength": "Maximum length is exceeded"
+    }
+  },
+  "todo": {
+    "logo": "To do app",
+    "inputPlaceholder": "Please enter new todo item",
+    "addToDo": "Add todo",
+    "noDataInTable": "No added todos",
+    "tableDate": "Date",
+    "tableDescription": "Description",
+    "poll": "Status",
+    "pollExpiredPlaceholder": "Status expired",
+    "tableAction": "Actions",
+    "from": "From",
+    "till": "Till",
+    "descriptionFilter": "Description filter",
+    "all": "all",
+    "status": {
+      "NEW" : "new",
+      "CHANGED" : "changed",
+      "EXPIRED" : "expired"
+    }
+  },
+  "card": {
+    "cardHeaderText": "Card",
+    "noCardText": "Sorry, no card found",
+    "createdAt": "Created at",
+    "surname": "Surname",
+    "name": "Name",
+    "patronymic": "Patronymic",
+    "city": "City",
+    "phone": "Phone",
+    "zipCode": "Zip code",
+    "email": "E-mail",
+    "address": "Address",
+    "notes": "Notes"
+  }
+}

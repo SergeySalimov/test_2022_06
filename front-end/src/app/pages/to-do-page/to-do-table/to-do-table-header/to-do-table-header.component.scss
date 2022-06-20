@@ -1,0 +1,9 @@
+@import "src/styles";
+
+:host {
+  @include table-header-basic();
+
+  th {
+    @include table-header($appWhite, $appGreen);
+  }
+}

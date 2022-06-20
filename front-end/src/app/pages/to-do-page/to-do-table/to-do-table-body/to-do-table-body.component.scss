@@ -1,0 +1,60 @@
+@import "src/styles";
+
+:host {
+  @include table-header-basic;
+
+  .todo-table td, .todo-table th {
+    border: 1px solid $appGray;
+    padding: 0.5rem;
+  }
+
+  .todo-table tr:nth-child(even) {
+    background-color: $appLightGray;
+  }
+
+  .todo-table tr:hover {
+    background-color: $appGray;
+  }
+
+  @mixin status-indicator {
+    font-size: 1.5rem;
+  }
+
+  $indicator-colors: $appGreen, $appYellow, $appRed, $appBlue, $appBlack;
+  $i: 0;
+  @each $color in $indicator-colors {
+    .status-indicator-#{$i} {
+      color: $color;
+      @include status-indicator;
+    }
+    $i: $i + 1;
+  }
+
+  // description block
+  .todo-table td:nth-child(2) span {
+    width: 100%;
+  }
+
+  // status block
+  .todo-table td:nth-child(3) {
+    text-align: center;
+  }
+
+  // action block
+  .todo-table td:nth-child(4) {
+    text-align: center;
+  }
+
+  .delete-todo-button {
+    @include action-buttons;
+  }
+
+  .follow-todo-button {
+    @include action-buttons;
+
+    &.active {
+      color: $appWhite;
+      background-color: $appBlue;
+    }
+  }
+}

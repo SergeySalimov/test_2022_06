@@ -1,0 +1,60 @@
+{
+  "common": {
+    "add": "добавить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "noData": "нет данных",
+    "chooseLanguage": "Выберите язык"
+  },
+  "header": {
+    "logoText": "НА ГЛАВНУЮ"
+  },
+  "errors": {
+    "serverErrors": {
+      "title": "Произошла ошибка на сервере !",
+      "text": "Код ошибки: $1. Cообщение: $2",
+      "NotFoundMessage": "Что-то пошло не так на сервере.",
+      "BadRequestMessage": "Вы отправили неправильный запрос.",
+      "defaultMessage": "Пожалуйста свяжитесь с нашей службой поддержки."
+    },
+    "inputErrors": {
+      "required": "Обязательное поле",
+      "email": "Не валидная почта",
+      "maxLength": "Слишком много символов"
+    }
+  },
+  "todo": {
+    "logo": "Список",
+    "inputPlaceholder": "Пожалуйста введите новый элемент списка",
+    "addToDo": "Добавить элемент",
+    "noDataInTable": "Нет добавленных элементов",
+    "tableDate": "Дата",
+    "tableDescription": "Описание",
+    "poll": "Статус",
+    "pollExpiredPlaceholder": "Истек срок",
+    "tableAction": "Действия",
+    "from": "С",
+    "till": "По",
+    "descriptionFilter": "Фильтр по описанию",
+    "all": "все",
+    "status": {
+      "NEW" : "новый",
+      "CHANGED" : "измененный",
+      "EXPIRED" : "истекший"
+    }
+  },
+  "card": {
+    "cardHeaderText": "Карточка",
+    "noCardText": "Извините, карта не найдена",
+    "createdAt": "Создано",
+    "surname": "Фамилия",
+    "name": "Имя",
+    "patronymic": "Отчество",
+    "city": "Город",
+    "phone": "Телефон",
+    "zipCode": "Индекс",
+    "email": "Эл. почта",
+    "address": "Адрес",
+    "notes": "Заметки"
+  }
+}

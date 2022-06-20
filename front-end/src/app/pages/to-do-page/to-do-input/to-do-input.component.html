@@ -1,0 +1,12 @@
+<div class="container">
+  <label for="input-to-do" class="input-to-do-label">{{ 'todo.addToDo' | translate }}</label>
+  <input
+    [(ngModel)]="newToDo"
+    [placeholder]="'todo.inputPlaceholder' | translate"
+    (keydown.enter)="onAddTodo()"
+    type="text"
+    id="input-to-do"
+    class="input-to-do"
+  >
+  <button [disabled]="!newToDo" (click)="onAddTodo()" class="add-button">{{ 'common.add' | translate }}</button>
+</div>

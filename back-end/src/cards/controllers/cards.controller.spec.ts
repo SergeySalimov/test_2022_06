@@ -3,12 +3,23 @@ import { CardsController } from './cards.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CardsService } from '../services/cards.service';
 import { TodoListItemDto } from '@common/interfaces';
-import { NotFoundInterceptor } from '../../core/interceptors';
+import { CheckAndParseIdInterceptor, NotFoundInterceptor } from '../../core/interceptors';
+import { PollStatusEnum } from '../constants/poll.constant';
 
 const mockDate: Date = new Date('2222/2/22');
 const mockId = 'mockId';
-const todoListItem1: TodoListItemDto = { id: 'mockId1', createdAt: mockDate, description: 'mockDescription1' };
-const todoListItem2: TodoListItemDto = { id: 'mockId2', createdAt: mockDate, description: 'mockDescription2' };
+const todoListItem1: TodoListItemDto = {
+    id: 'mockId1',
+    createdAt: mockDate,
+    description: 'mockDescription1',
+    pollStatus: PollStatusEnum.NEW
+};
+const todoListItem2: TodoListItemDto = {
+    id: 'mockId2',
+    createdAt: mockDate,
+    description: 'mockDescription2',
+    pollStatus: PollStatusEnum.NEW
+};
 
 describe('CardsController', () => {
     let testingModule: TestingModule;
@@ -21,6 +32,7 @@ describe('CardsController', () => {
             providers: [
                 { provide: CardsService, useValue: {} },
                 { provide: APP_INTERCEPTOR, useClass: NotFoundInterceptor },
+                { provide: APP_INTERCEPTOR, useClass: CheckAndParseIdInterceptor },
             ],
         }).compile();
 
@@ -60,13 +72,13 @@ describe('CardsController', () => {
         });
 
         it('should call cardsService getOne', async () => {
-            await controller.getOne(mockId);
+            await controller.getOne(mockId as any);
 
             expect(cardsService.getOne).toHaveBeenCalledWith(mockId);
         });
 
         it('should return todo item', async () => {
-            const result = await controller.getOne(mockId);
+            const result = await controller.getOne(mockId as any);
 
             expect(result).toEqual(todoListItem1);
         });
@@ -122,13 +134,13 @@ describe('CardsController', () => {
         });
 
         it('should call cardsService deleteCard', async () => {
-            await controller.deleteCard(mockId);
+            await controller.deleteCard(mockId as any);
 
             expect(cardsService.deleteCard).toHaveBeenCalledWith(mockId);
         });
 
         it('should return all todo items', async () => {
-            const result = await controller.deleteCard(mockId);
+            const result = await controller.deleteCard(mockId as any);
 
             expect(result).toEqual(todoListItems);
         });

@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, share, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, share, Subscription, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { NO_LOADER_HEADER } from '@core/constants';
+
+export const CLEAR_FILTER: IFilter = {
+  dateFrom: null,
+  dateTill: null,
+  description: null,
+  status: null,
+};
 
 @Injectable({
   providedIn: 'root',
@@ -11,25 +18,17 @@ export class ToDoService {
   private _todoList$: BehaviorSubject<Array<TodoListItemDto>> = new BehaviorSubject<Array<TodoListItemDto>>([]);
   public todoList$: Observable<Array<TodoListItemDto>> = this._todoList$.asObservable();
   public statusEnum$: BehaviorSubject<StatusEnumDto[]> = new BehaviorSubject<StatusEnumDto[]>([]);
+  private _filters$: BehaviorSubject<IFilter> = new BehaviorSubject<IFilter>(CLEAR_FILTER);
+  filters$: Observable<IFilter> = this._filters$.asObservable();
+
+  getAllSubscription!: Subscription;
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos(noLoader: boolean = false): Observable<TodoListItemDto[]> {
-    return this.http.get<TodoListItemDto[]>(
-      'api/cards',
-      noLoader ? { headers: NO_LOADER_HEADER } : {}
-    ).pipe(
-      take(1),
-      tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
-      share(),
-    );
-  }
-
-  getPartialTodos(filters: IFilter, noLoader: boolean = false): Observable<TodoListItemDto[]> {
+  getAllTodos(filters: IFilter): Observable<TodoListItemDto[]> {
     return this.http.post<TodoListItemDto[]>(
-      'api/cards/partial',
+      'api/cards/get-all',
       { filters },
-      noLoader ? { headers: NO_LOADER_HEADER } : {},
     ).pipe(
       take(1),
       tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
@@ -87,7 +86,22 @@ export class ToDoService {
     );
   }
 
+  getExpiredStatusValue(): number|null {
+    const statusEnums: StatusEnumDto[] = this.statusEnum$.getValue();
+    const expiredEnum: StatusEnumDto|undefined = statusEnums.find(item => /EXPIRED/i.test(item.key));
+
+    return expiredEnum ? expiredEnum.value : null;
+  }
+
   updateTodosWithoutServer(todos: TodoListItemDto[]): void {
     this._todoList$.next(todos);
+  }
+
+  changeFilters(filters: IFilter): void {
+    this._filters$.next(filters);
+    if (this.getAllSubscription && !this.getAllSubscription.closed) {
+      this.getAllSubscription.unsubscribe();
+    }
+    this.getAllSubscription = this.getAllTodos(filters).subscribe();
   }
 }

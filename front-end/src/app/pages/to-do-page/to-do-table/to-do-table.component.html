@@ -1,19 +1,25 @@
-<ng-container *ngIf="{
+<ng-container class="todo-table" *ngIf="{
   todos: (todos$ | async) ?? [],
+  todosFiltered: (todoListFiltered$ | async) ?? [],
   statusEnum: (statusEnum$ | async) ?? [],
-  filters: (filters$ | async) ?? clearFilter
+  filters: (filters$ | async) ?? clearFilter,
+  followedTodos: (followedTodos$ | async) ?? []
   } as data">
-  <ng-container *ngIf="showTodos$ | async; else noData" class="todo-table">
-    <app-to-do-table-filter
-      [todos]="data.todos"
-      [statusEnum]="data.statusEnum"
-      [filters]="data.filters"
-      (startFollowAllEmit)="onStartFollowAll($event)"
-      (stopFollowAllEmit)="onStopFollowAll()"
-      (changeFiltersEmit)="onChangeFilters($event)"
-    ></app-to-do-table-filter>
+  <app-to-do-table-filter
+    [statusEnum]="data.statusEnum"
+    [filters]="data.filters"
+    (onChangeFollowAll)="onChangeFollowAll(data.todos, $event)"
+    (onChangeFilters)="onChangeFilters($event)"
+  ></app-to-do-table-filter>
+  <ng-container *ngIf="data.todos.length > 0; else noData">
     <app-to-do-table-header></app-to-do-table-header>
-    <app-to-do-table-body #tableBody></app-to-do-table-body>
+    <app-to-do-table-body
+      [todosFiltered]="data.todosFiltered"
+      [expiredStatusValue]="expiredStatusValue"
+      [followedTodos]="data.followedTodos"
+      (onFollowItem)="onFollowItem($event)"
+      (onDeleteItem)="onDeleteItem($event)"
+    ></app-to-do-table-body>
   </ng-container>
   <ng-template #noData>
     <span class="no-data">{{ 'todo.noDataInTable' | translate }}</span>

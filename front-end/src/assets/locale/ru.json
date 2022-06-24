@@ -27,7 +27,7 @@
     "logo": "Список",
     "inputPlaceholder": "Пожалуйста введите новый элемент списка",
     "addToDo": "Добавить элемент",
-    "noDataInTable": "Нет добавленных элементов",
+    "noDataInTable": "Нет элементов",
     "tableDate": "Дата",
     "tableDescription": "Описание",
     "poll": "Статус",

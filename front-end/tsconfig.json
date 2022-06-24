@@ -11,6 +11,7 @@
       "@locale/*": ["src/assets/locale/*"],
       "@core/interfaces": ["src/app/core/interfaces/index.ts"],
       "@core/services": ["src/app/core/services/index.ts"],
+      "@core/resolvers": ["src/app/core/resolvers/index.ts"],
       "@core/abstract-classes": ["src/app/core/services/index.ts"],
       "@core/constants": ["src/app/core/constants/index.ts"],
       "@core/interceptors": ["src/app/core/interceptors/index.ts"],

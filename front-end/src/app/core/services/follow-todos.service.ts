@@ -8,11 +8,11 @@ export class FollowTodosService {
   private _followedTodos$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   followedTodos$: Observable<string[]> = this._followedTodos$.asObservable();
 
-  startFollowAll(ids: string[]): void {
+  addIdsToFollow(ids: string[]): void {
     this._followedTodos$.next(ids);
   }
 
-  stopFollowAll(): void {
+  clearFollowIds(): void {
     this._followedTodos$.next([]);
   }
 
@@ -32,7 +32,6 @@ export class FollowTodosService {
     const index: number = followedTodos.indexOf(id);
 
     index === -1 ? followedTodos.push(id) : followedTodos.splice(index, 1);
-
     this._followedTodos$.next(followedTodos);
   }
 

@@ -10,6 +10,6 @@ import { ToDoService } from '@core/services';
 export class StatusEnumResolver implements Resolve<StatusEnumDto[]> {
   constructor(private readonly todoService: ToDoService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<StatusEnumDto[]> {
-    return this.todoService.getStatusEnum();
+    return this.todoService.statusEnum$;
   }
 }

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CLEAR_FILTER } from '@core/services';
 import { combineLatest, debounceTime, distinctUntilChanged, map, skip, startWith, Subscription } from 'rxjs';
 import { IFilter, StatusEnumDto } from '@common/interfaces';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FollowType } from '@app/pages/to-do-page/to-do-table/to-do-table.interface';
+import { FollowType } from '@app/pages/to-do-page/to-do-page.interface';
+import { CLEAR_FILTER } from '@core/constants';
 
 @Component({
   selector: 'app-to-do-table-filter',
@@ -59,7 +59,10 @@ export class ToDoTableFilterComponent implements OnInit, OnDestroy {
         startWith(this.filters.dateTill),
         distinctUntilChanged(),
       ),
-      this.statusControl.valueChanges.pipe(startWith(this.filters.status)),
+      this.statusControl.valueChanges.pipe(
+        startWith(this.filters.status),
+        distinctUntilChanged(),
+        ),
     ]).pipe(
       skip(1),
       map(([description, dateFrom, dateTill, status]) => ({
@@ -78,6 +81,10 @@ export class ToDoTableFilterComponent implements OnInit, OnDestroy {
   }
 
   onClearFilter(): void {
+    if (Object.values(this.filterForm.getRawValue()).every(filter => filter === null)) {
+      return;
+    }
+
     this.filterForm.patchValue(CLEAR_FILTER);
   }
 

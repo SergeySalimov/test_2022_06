@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CLEAR_FILTER, ToDoService } from '@core/services';
+import { ToDoService } from '@core/services';
 import { TodoListItemDto } from '@common/interfaces';
+import { CLEAR_FILTER } from '@core/constants';
 
 @Injectable({
   providedIn: 'root'

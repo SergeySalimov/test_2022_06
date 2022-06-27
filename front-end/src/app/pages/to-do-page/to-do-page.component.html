@@ -1,4 +1,16 @@
 <h2>{{ 'todo.logo' | translate }}</h2>
-<app-to-do-input></app-to-do-input>
+<app-to-do-input
+  (onAddTodo)="onAddTodo($event)"
+></app-to-do-input>
 <hr class="divider"/>
-<app-to-do-table></app-to-do-table>
+<app-to-do-table
+  [filters]="$any(filters$ | async)"
+  [todosFiltered]="$any(todoListFiltered$ | async)"
+  [followedTodos]="$any(followedTodos$ | async)"
+  [statusEnum]="$any(statusEnum$ | async)"
+  [expiredStatusValue]="expiredStatusValue"
+  (onChangeFallowAll)="onChangeFollowAll($event)"
+  (onChangeFilters)="onChangeFilters($event)"
+  (onFollowItem)="onFollowItem($event)"
+  (onDeleteItem)="onDeleteItem($event)"
+></app-to-do-table>

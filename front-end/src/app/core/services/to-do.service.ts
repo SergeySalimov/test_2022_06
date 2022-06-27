@@ -1,107 +1,54 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, share, Subscription, take, tap } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { NO_LOADER_HEADER } from '@core/constants';
-
-export const CLEAR_FILTER: IFilter = {
-  dateFrom: null,
-  dateTill: null,
-  description: null,
-  status: null,
-};
 
 @Injectable({
   providedIn: 'root',
 })
 export class ToDoService {
-  private _todoList$: BehaviorSubject<Array<TodoListItemDto>> = new BehaviorSubject<Array<TodoListItemDto>>([]);
-  public todoList$: Observable<Array<TodoListItemDto>> = this._todoList$.asObservable();
-  public statusEnum$: BehaviorSubject<StatusEnumDto[]> = new BehaviorSubject<StatusEnumDto[]>([]);
-  private _filters$: BehaviorSubject<IFilter> = new BehaviorSubject<IFilter>(CLEAR_FILTER);
-  filters$: Observable<IFilter> = this._filters$.asObservable();
+  public statusEnum$: Observable<StatusEnumDto[]> = this.getStatusEnum().pipe(
+    shareReplay({ refCount: true, bufferSize: 1 }),
+  );
 
-  getAllSubscription!: Subscription;
+  static readonly baseURL = 'api/cards';
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos(filters: IFilter): Observable<TodoListItemDto[]> {
+  getAllTodos(filters: IFilter, noLoader = false): Observable<TodoListItemDto[]> {
     return this.http.post<TodoListItemDto[]>(
-      'api/cards/get-all',
+      `${ToDoService.baseURL}/get-all`,
       { filters },
-    ).pipe(
-      take(1),
-      tap((data: TodoListItemDto[]) => this.updateTodosWithoutServer(data)),
-      share(),
-    );
+      noLoader ? { headers: NO_LOADER_HEADER } : {},
+      );
   }
 
   addTodoItem(description: string): Observable<TodoListItemDto> {
-    return this.http.post<TodoListItemDto>('api/cards', { description }).pipe(
-      take(1),
-      tap((data: TodoListItemDto) => {
-        const todos: TodoListItemDto[] = this._todoList$.getValue();
-        todos.push(data);
-        this.updateTodosWithoutServer(todos);
-      }),
-    );
+    return this.http.post<TodoListItemDto>(ToDoService.baseURL, { description });
   }
 
   removeTodoItem(id: string): Observable<TodoListItemDto> {
-    return this.http.delete<TodoListItemDto>(`api/cards/${id}`).pipe(
-      take(1),
-      tap(() => {
-        const todos: TodoListItemDto[] = this._todoList$.getValue();
-        const indexOfDeletedItem: number = todos.findIndex(item => item.id === id);
-
-        if (indexOfDeletedItem !== -1) {
-          todos.splice(indexOfDeletedItem, 1);
-        }
-
-        this.updateTodosWithoutServer(todos);
-      })
-    );
+    return this.http.delete<TodoListItemDto>(`${ToDoService.baseURL}/${id}`);
   }
 
-  getItemById(id: string): Observable<TodoListItemDto|null> {
-    return this.http.get<TodoListItemDto | null>(`api/cards/${id}`);
+  getItemById(id: string): Observable<TodoListItemDto | null> {
+    return this.http.get<TodoListItemDto | null>(`${ToDoService.baseURL}/${id}`);
   }
 
   updateTodoItem(data: TodoListItemDto): Observable<TodoListItemDto> {
-    return this.http.put<TodoListItemDto>(`api/cards`, data);
+    return this.http.put<TodoListItemDto>(ToDoService.baseURL, data);
   }
 
   checkStatus(cardIds: string[]): Observable<PollStatusListDto[]> {
     return this.http.post<PollStatusListDto[]>(
-      'api/cards/poll-status',
+      `${ToDoService.baseURL}/poll-status`,
       { cardIds },
       { headers: NO_LOADER_HEADER },
     );
   }
 
   getStatusEnum(): Observable<StatusEnumDto[]> {
-    return this.http.get<StatusEnumDto[]>('api/cards/status-enum').pipe(
-      take(1),
-      tap(statusEnum => this.statusEnum$.next(statusEnum)),
-    );
-  }
-
-  getExpiredStatusValue(): number|null {
-    const statusEnums: StatusEnumDto[] = this.statusEnum$.getValue();
-    const expiredEnum: StatusEnumDto|undefined = statusEnums.find(item => /EXPIRED/i.test(item.key));
-
-    return expiredEnum ? expiredEnum.value : null;
-  }
-
-  updateTodosWithoutServer(todos: TodoListItemDto[]): void {
-    this._todoList$.next(todos);
-  }
-
-  changeFilters(filters: IFilter): void {
-    this._filters$.next(filters);
-    if (this.getAllSubscription && !this.getAllSubscription.closed) {
-      this.getAllSubscription.unsubscribe();
-    }
-    this.getAllSubscription = this.getAllTodos(filters).subscribe();
+    return this.http.get<StatusEnumDto[]>(`${ToDoService.baseURL}/status-enum`);
   }
 }

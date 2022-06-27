@@ -2,16 +2,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AppRoutes } from '@core/services';
 import { PageWrapperComponent } from '@app/pages/page-wrapper/page-wrapper.component';
-import { StatusEnumResolver, ToDoResolver } from '@core/resolvers';
 
 const pagesRoutes: Routes = [
   {
     path: '',
     component: PageWrapperComponent,
-    resolve: {
-      todos: ToDoResolver,
-      statusEnum: StatusEnumResolver,
-    },
     children: [
       {
         path: '',

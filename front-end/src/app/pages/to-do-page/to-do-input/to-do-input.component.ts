@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ToDoService } from '@core/services';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-to-do-input',
@@ -8,16 +7,15 @@ import { ToDoService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToDoInputComponent {
+  @Output() onAddTodo: EventEmitter<string> = new EventEmitter<string>();
   newToDo = '';
 
-  constructor(private readonly todoService: ToDoService) {}
-
-  onAddTodo(): void {
+  addTodo(): void {
     if (!this.newToDo) {
       return;
     }
 
-    this.todoService.addTodoItem(this.newToDo).subscribe();
+    this.onAddTodo.emit(this.newToDo);
     this.newToDo = '';
   }
 }

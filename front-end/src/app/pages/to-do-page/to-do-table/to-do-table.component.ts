@@ -14,6 +14,7 @@ export class ToDoTableComponent {
   @Input() statusEnum!: StatusEnumDto[];
   @Input() expiredStatusValue!: number;
   @Input() followedTodos!: string[];
+  @Input() noItemToFollow!: boolean;
   @Output() onChangeFallowAll: EventEmitter<FollowType> = new EventEmitter<FollowType>();
   @Output() onChangeFilters: EventEmitter<IFilter> = new EventEmitter<IFilter>();
   @Output() onFollowItem: EventEmitter<string> = new EventEmitter<string>();
@@ -23,6 +24,7 @@ export class ToDoTableComponent {
   changeFollowAll(type: FollowType): void {
     this.onChangeFallowAll.emit(type);
   }
+
   followItem(id: string): void {
     this.onFollowItem.emit(id);
   }

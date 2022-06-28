@@ -14,6 +14,7 @@ import { CLEAR_FILTER } from '@core/constants';
 export class ToDoTableFilterComponent implements OnInit, OnDestroy {
   @Input() statusEnum!: StatusEnumDto[];
   @Input() filters!: IFilter;
+  @Input() noItemToFollow!: boolean;
   @Output() onChangeFollowAll: EventEmitter<FollowType> = new EventEmitter<FollowType>();
   @Output() onChangeFilters: EventEmitter<IFilter> = new EventEmitter<IFilter>();
 

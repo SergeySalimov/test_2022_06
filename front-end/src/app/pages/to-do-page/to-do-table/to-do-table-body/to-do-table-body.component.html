@@ -1,6 +1,6 @@
 <table class="todo-table">
   <tr
-    *ngFor="let todoItem of todoList$ | async; let i = index; trackBy: trackByFunction"
+    *ngFor="let todoItem of todosFiltered; let i = index; trackBy: trackByFunction"
     [routerLink]="getCardRoute(todoItem.id)"
   >
     <td>{{ todoItem['createdAt'] | date:dateTimeFormat }}</td>
@@ -16,14 +16,14 @@
     </span>
     </td>
     <td>
-      <button class="delete-todo-button" (click)="onDeleteItem($event, todoItem.id)">
+      <button class="delete-todo-button" (click)="deleteItem($event, todoItem.id)">
         <strong>X</strong>
       </button>
       <button
         [class.active]="isTodoFollowed(todoItem.id)"
         [disabled]="isTodoExpired(todoItem)"
         [title]="isTodoExpired(todoItem) ? ('todo.pollExpiredPlaceholder' | translate) : ''"
-        (click)="onFollowItem($event, todoItem.id)"
+        (click)="followItem($event, todoItem.id)"
         class="follow-todo-button"
       >
         <span class="follow-label"><strong>&#9851;</strong></span>

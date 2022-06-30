@@ -46,12 +46,12 @@ describe('ToDoInputComponent', () => {
     });
 
     it('should be defined', () => {
-      expect(component.onAddTodo).toBeDefined();
+      expect(component.addTodo).toBeDefined();
     });
 
     it('should call addTodoItem', () => {
       component.newToDo = 'some todo present';
-      component.onAddTodo();
+      component.addTodo();
 
       expect(addTodoItemSpy).toHaveBeenCalled();
     });
@@ -59,7 +59,7 @@ describe('ToDoInputComponent', () => {
     it('should set newToDo to empty string', () => {
       component.newToDo = 'test todo';
 
-      component.onAddTodo();
+      component.addTodo();
 
       expect(component.newToDo).toEqual('');
     });

@@ -3,10 +3,10 @@
   <input
     [(ngModel)]="newToDo"
     [placeholder]="'todo.inputPlaceholder' | translate"
-    (keydown.enter)="onAddTodo()"
+    (keydown.enter)="addTodo()"
     type="text"
     id="input-to-do"
     class="input-to-do"
   >
-  <button [disabled]="!newToDo" (click)="onAddTodo()" class="add-button">{{ 'common.add' | translate }}</button>
+  <button [disabled]="!newToDo" (click)="addTodo()" class="add-button">{{ 'common.add' | translate }}</button>
 </div>

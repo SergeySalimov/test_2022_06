@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CLEAR_FILTER } from '@core/services';
-import { debounceTime, distinctUntilChanged, map, Subscription, tap } from 'rxjs';
-import { IFilter, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { combineLatest, debounceTime, distinctUntilChanged, map, skip, startWith, Subscription } from 'rxjs';
+import { IFilter, StatusEnumDto } from '@common/interfaces';
 import { FormControl, FormGroup } from '@angular/forms';
+import { FollowType } from '@app/pages/to-do-page/to-do-page.interface';
+import { CLEAR_FILTER } from '@core/constants';
 
 @Component({
   selector: 'app-to-do-table-filter',
@@ -13,10 +14,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ToDoTableFilterComponent implements OnInit, OnDestroy {
   @Input() statusEnum!: StatusEnumDto[];
   @Input() filters!: IFilter;
-  @Input() todos!: TodoListItemDto[];
-  @Output() startFollowAllEmit: EventEmitter<TodoListItemDto[]> = new EventEmitter<TodoListItemDto[]>();
-  @Output() stopFollowAllEmit: EventEmitter<void> = new EventEmitter<void>();
-  @Output() changeFiltersEmit: EventEmitter<IFilter> = new EventEmitter<IFilter>();
+  @Output() onChangeFollowAll: EventEmitter<FollowType> = new EventEmitter<FollowType>();
+  @Output() onChangeFilters: EventEmitter<IFilter> = new EventEmitter<IFilter>();
 
   filterForm: FormGroup = new FormGroup({
     dateFrom: new FormControl(),
@@ -43,42 +42,49 @@ export class ToDoTableFilterComponent implements OnInit, OnDestroy {
     return this.filterForm.get('status') as FormControl;
   }
 
-  get lastStatusEnumValue(): number {
-    return this.statusEnum.slice(-1)[0].value;
-  }
-
   ngOnInit(): void {
     this.filterForm.patchValue(this.filters);
 
-    this.formSubscription = this.filterForm.valueChanges.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      map(formData => ({
-        ...formData,
-        dateFrom: formData.dateFrom ? new Date(formData.dateFrom) : null,
-        dateTill: formData.dateTill ? new Date(formData.dateTill) : null,
-        status: formData.status === 'null' || formData.status === null ? null : formData.status,
+    this.formSubscription = combineLatest([
+      this.descriptionControl.valueChanges.pipe(
+        startWith(this.filters.description),
+        debounceTime(400),
+        distinctUntilChanged(),
+      ),
+      this.dateFromControl.valueChanges.pipe(
+        startWith(this.filters.dateFrom),
+        distinctUntilChanged(),
+        ),
+      this.dateTillControl.valueChanges.pipe(
+        startWith(this.filters.dateTill),
+        distinctUntilChanged(),
+      ),
+      this.statusControl.valueChanges.pipe(
+        startWith(this.filters.status),
+        distinctUntilChanged(),
+        ),
+    ]).pipe(
+      skip(1),
+      map(([description, dateFrom, dateTill, status]) => ({
+        description,
+        dateFrom: dateFrom ? dateFrom.toString() : null,
+        dateTill: dateTill ? dateTill.toString() : null,
+        status: status === 'null' ? null : status,
       })),
-      tap(filters => this.onChangeFilters(filters)),
-    ).subscribe();
+    ).subscribe((filters: IFilter) => {
+      this.onChangeFilters.emit(filters);
+    });
+  };
+
+  changeFollow(type: FollowType): void {
+    this.onChangeFollowAll.emit(type);
   }
 
-  onChangeFilters(filters: IFilter): void {
-    this.changeFiltersEmit.emit(filters);
-  }
+  onClearFilter(): void {
+    if (Object.values(this.filterForm.getRawValue()).every(filter => filter === null)) {
+      return;
+    }
 
-  onFollowAll(e: MouseEvent, todos: TodoListItemDto[]): void {
-    e.stopPropagation();
-    this.startFollowAllEmit.emit(todos);
-  }
-
-  onStopFollowAll(e: MouseEvent): void {
-    e.stopPropagation();
-    this.stopFollowAllEmit.emit();
-  }
-
-  onClearFilter(e: MouseEvent): void {
-    e.stopPropagation();
     this.filterForm.patchValue(CLEAR_FILTER);
   }
 

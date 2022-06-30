@@ -2,6 +2,10 @@
 
 :host {
   @include table-header-basic();
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 90%;
 
   .todo-table th {
     @include table-header($appWhite, $appDarkBlue);

@@ -35,10 +35,11 @@ export class CardsController {
         return this.cardsService.getPollStatus(cardIds);
     }
 
-    @Post('/partial')
+    @Post('/get-all')
     async getFiltered(@Body('filters') filters: IFilter): Promise<TodoListItemDto[]> {
         return this.cardsService.getFiltered(filters);
     }
+
     @Put()
     @UseInterceptors(NotFoundInterceptor)
     async updateCard(@Body() card: TodoListItemDto): Promise<TodoListItemDto> {

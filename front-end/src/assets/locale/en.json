@@ -27,7 +27,7 @@
     "logo": "To do app",
     "inputPlaceholder": "Please enter new todo item",
     "addToDo": "Add todo",
-    "noDataInTable": "No added todos",
+    "noDataInTable": "No todos",
     "tableDate": "Date",
     "tableDescription": "Description",
     "poll": "Status",

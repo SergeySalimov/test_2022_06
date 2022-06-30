@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ToDoService } from '@core/services';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@core/constants';
 
@@ -8,17 +7,10 @@ import { DEFAULT_LANGUAGE, LANGUAGES } from '@core/constants';
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'redirect-project';
-  constructor(
-    private readonly todoService: ToDoService,
-    private readonly translate: TranslateService,
-  ) {
+  constructor(private readonly translate: TranslateService) {
     translate.addLangs(LANGUAGES);
     translate.setDefaultLang(DEFAULT_LANGUAGE);
-  }
-  ngOnInit(): void {
-    this.todoService.getAllTodos().subscribe();
-    this.todoService.getStatusEnum().subscribe();
   }
 }

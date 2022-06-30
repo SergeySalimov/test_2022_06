@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable } from 'rxjs';
 import { ToDoService } from '@core/services';
 import { TodoListItemDto } from '@common/interfaces';
-import { CLEAR_FILTER } from '@core/constants';
+import { CLEAR_FILTER, DEFAULT_SORT } from '@core/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,6 @@ import { CLEAR_FILTER } from '@core/constants';
 export class ToDoResolver implements Resolve<TodoListItemDto[]> {
   constructor(private readonly todoService: ToDoService) {}
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<TodoListItemDto[]> {
-    return this.todoService.getAllTodos(CLEAR_FILTER);
+    return this.todoService.getAllTodos(CLEAR_FILTER, DEFAULT_SORT);
   }
 }

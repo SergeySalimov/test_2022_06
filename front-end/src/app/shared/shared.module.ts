@@ -23,6 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { StopPropagationDirective } from './directives/stop-propagation.directive';
 
 export const dateTimeFormatToken: InjectionToken<string> = new InjectionToken('date-time');
 export const phoneMaskFormatToken: InjectionToken<MaskInterface> = new InjectionToken('phone-mask-format');
@@ -36,6 +37,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     ModalWindowComponent,
     ChangeLanguagesComponent,
     HeaderComponent,
+    StopPropagationDirective,
   ],
   imports: [
     CommonModule,
@@ -63,6 +65,7 @@ export const zipcodeMaskFormatToken: InjectionToken<MaskInterface> = new Injecti
     TranslateModule,
     ChangeLanguagesComponent,
     HeaderComponent,
+    StopPropagationDirective,
   ],
   providers: [
     { provide: dateTimeFormatToken, useValue: DATE_TIME_FORMAT },

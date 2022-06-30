@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CardsService } from './cards.service';
-import { TodoListItemDto } from '@common/interfaces';
+import { ISort, TodoListItemDto } from '@common/interfaces';
 import { PollStatusEnum } from '../constants/poll.constant';
 import { TodoListItem, TodoListItemDocument } from '../schemas/todo-list-item.schema';
 import { Model } from 'mongoose';
@@ -112,15 +112,21 @@ describe('CardsService', () => {
             });
 
             it('should call aggregate with default pipeline when all filters are null', async () => {
-                await service.getFiltered({ description: null, dateFrom: null, dateTill: null, status: null });
+                await service.getFiltered(
+                    { description: null, dateFrom: null, dateTill: null, status: null },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $addFields: { id: { $toString: '$_id' } } },
                     { $unset: ['__v', '_id'] }
                 ]);
             });
 
-            it('should add pipeline for description if description filter exists',async () => {
-                await service.getFiltered({ description: mockDescription, dateFrom: null, dateTill: null, status: null });
+            it('should add pipeline for description if description filter exists', async () => {
+                await service.getFiltered(
+                    { description: mockDescription, dateFrom: null, dateTill: null, status: null },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $match: { 'description': { $regex: mockDescription } } },
                     { $addFields: { id: { $toString: '$_id' } } },
@@ -128,8 +134,11 @@ describe('CardsService', () => {
                 ]);
             });
 
-            it('should add pipeline for date from if dateFrom filter exists',async () => {
-                await service.getFiltered({ description: null, dateFrom: mockDate, dateTill: null, status: null });
+            it('should add pipeline for date from if dateFrom filter exists', async () => {
+                await service.getFiltered(
+                    { description: null, dateFrom: mockDate, dateTill: null, status: null },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $match: { 'createdAt': { $gte: mockDate } } },
                     { $addFields: { id: { $toString: '$_id' } } },
@@ -137,8 +146,11 @@ describe('CardsService', () => {
                 ]);
             });
 
-            it('should add pipeline for date till if dateTill filter exists',async () => {
-                await service.getFiltered({ description: null, dateFrom: null, dateTill: mockDate, status: null });
+            it('should add pipeline for date till if dateTill filter exists', async () => {
+                await service.getFiltered(
+                    { description: null, dateFrom: null, dateTill: mockDate, status: null },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $match: { 'createdAt': { $lte: mockDate } } },
                     { $addFields: { id: { $toString: '$_id' } } },
@@ -146,8 +158,11 @@ describe('CardsService', () => {
                 ]);
             });
 
-            it('should add pipeline for status if status filter exists',async () => {
-                await service.getFiltered({ description: null, dateFrom: null, dateTill: null, status: pollStatus });
+            it('should add pipeline for status if status filter exists', async () => {
+                await service.getFiltered(
+                    { description: null, dateFrom: null, dateTill: null, status: pollStatus },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $match: { 'pollStatus': pollStatus } },
                     { $addFields: { id: { $toString: '$_id' } } },
@@ -155,8 +170,11 @@ describe('CardsService', () => {
                 ]);
             });
 
-            it('should add all pipelines for all active filters',async () => {
-                await service.getFiltered({ description: mockDescription, dateFrom: mockDate, dateTill: null, status: pollStatus });
+            it('should add all pipelines for all active filters', async () => {
+                await service.getFiltered(
+                    { description: mockDescription, dateFrom: mockDate, dateTill: null, status: pollStatus },
+                    {} as ISort,
+                );
                 expect(todoListItemModel.aggregate).toHaveBeenCalledWith([
                     { $match: { 'pollStatus': pollStatus } },
                     { $match: { 'createdAt': { $gte: mockDate } } },
@@ -217,7 +235,7 @@ describe('CardsService', () => {
     describe('create operation', () => {
         function mockUserModel(dto: any) {
             this.data = dto;
-            this.save  = () => {
+            this.save = () => {
                 return this.data;
             };
         }
@@ -237,7 +255,7 @@ describe('CardsService', () => {
             jest.clearAllMocks();
         });
 
-        describe('createCard', ()=> {
+        describe('createCard', () => {
             const description = 'some description';
 
             beforeEach(async () => {

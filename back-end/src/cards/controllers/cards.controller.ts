@@ -1,12 +1,13 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseInterceptors } from '@nestjs/common';
-import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, ISort, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { CardsService } from '../services/cards.service';
 import { CheckAndParseIdInterceptor, NotFoundInterceptor } from '../../core/interceptors';
 import mongoose from 'mongoose';
 
 @Controller('api/cards')
 export class CardsController {
-    constructor(private readonly cardsService: CardsService) {}
+    constructor(private readonly cardsService: CardsService) {
+    }
 
     @Get()
     async getAll(): Promise<TodoListItemDto[]> {
@@ -36,8 +37,11 @@ export class CardsController {
     }
 
     @Post('/get-all')
-    async getFiltered(@Body('filters') filters: IFilter): Promise<TodoListItemDto[]> {
-        return this.cardsService.getFiltered(filters);
+    async getFiltered(
+        @Body('filters') filters: IFilter,
+        @Body('sorting') sort: ISort,
+    ): Promise<TodoListItemDto[]> {
+        return this.cardsService.getFiltered(filters, sort);
     }
 
     @Put()

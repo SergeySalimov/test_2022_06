@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, ISort, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { NO_LOADER_HEADER } from '@core/constants';
 
 @Injectable({
@@ -16,10 +16,10 @@ export class ToDoService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getAllTodos(filters: IFilter, noLoader = false): Observable<TodoListItemDto[]> {
+  getAllTodos(filters: IFilter, sorting: ISort, noLoader = false): Observable<TodoListItemDto[]> {
     return this.http.post<TodoListItemDto[]>(
       `${ToDoService.baseURL}/get-all`,
-      { filters },
+      { filters, sorting },
       noLoader ? { headers: NO_LOADER_HEADER } : {},
       );
   }

@@ -10,8 +10,10 @@
   [statusEnum]="$any(statusEnum$ | async)"
   [noItemToFollow]="noItemToFollow()"
   [expiredStatusValue]="expiredStatusValue"
+  [sorting]="sorting"
   (onChangeFallowAll)="onChangeFollowAll($event)"
   (onChangeFilters)="onChangeFilters($event)"
   (onFollowItem)="onFollowItem($event)"
   (onDeleteItem)="onDeleteItem($event)"
+  (onSortChange)="sortChange($event)"
 ></app-to-do-table>

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Observable, pluck, Subscription, switchMap, take, tap, withLatestFrom } from 'rxjs';
-import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, ISort, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { FollowTodosService, ToDoService } from '@core/services';
 import { ActivatedRoute } from '@angular/router';
-import { CLEAR_FILTER, PING_POLL_STATUS_INTERVAL } from '@core/constants';
+import { CLEAR_FILTER, DEFAULT_SORT, PING_POLL_STATUS_INTERVAL } from '@core/constants';
 import { FollowType } from '@app/pages/to-do-page/to-do-page.interface';
 
 @Component({
@@ -30,6 +30,7 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
   );
 
   filters: IFilter = CLEAR_FILTER;
+  sorting: ISort = DEFAULT_SORT;
   todosListFiltered: TodoListItemDto[] = [];
   expiredStatusValue!: number;
   private intervalSubscription!: Subscription;
@@ -49,21 +50,13 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
       pluck('todos'),
       take(1),
     ).subscribe((todosList: TodoListItemDto[]) => {
-      this.updateTodos(todosList);
+      this.todosListFiltered = [...todosList];
     });
-  }
-
-  updateTodos(todos: TodoListItemDto[]): void {
-    this.todosListFiltered = [...todos];
-    this.cdr.markForCheck();
   }
 
   onAddTodo(description: string): void {
     this.addItemSubscription = this.todoService.addTodoItem(description).pipe(
-      switchMap(() => this.todoService.getAllTodos(this.filters)),
-    ).subscribe((todosList: TodoListItemDto[]) => {
-      this.updateTodos(todosList);
-    });
+    ).subscribe(() => this.refreshTodos());
   }
 
   //Follow Block
@@ -94,14 +87,11 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
     this.startPingServer();
   }
 
-  getNotExpiredIds(): string[] {
+  noItemToFollow(): boolean {
     return this.todosListFiltered
       .filter(todo => todo.pollStatus !== this.expiredStatusValue)
-      .map(todo => todo.id);
-  }
-
-  noItemToFollow(): boolean {
-    return this.getNotExpiredIds().length === 0;
+      .map(todo => todo.id)
+      .length === 0;
   }
 
   onChangeFollowAll(type: FollowType): void {
@@ -111,15 +101,19 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.noItemToFollow()) {
+    const ids: string[] = this.todosListFiltered
+      .filter(todo => todo.pollStatus !== this.expiredStatusValue)
+      .map(todo => todo.id);
+
+    if (ids.length === 0) {
       return;
     }
 
-    this.followTodosService.addIdsToFollow(this.getNotExpiredIds());
+    this.followTodosService.addIdsToFollow(ids);
     this.startPingServer();
   }
 
-  refreshPollStatus(status: PollStatusListDto[]): void {
+  private refreshPollStatus(status: PollStatusListDto[]): void {
     this.todosListFiltered = this.todosListFiltered.map(todo => {
       const index: number = status.findIndex(item => item.id === todo.id);
 
@@ -134,7 +128,7 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
       return {
         ...todo,
         pollStatus: status[index].pollStatus,
-      }
+      };
     });
 
     this.cdr.markForCheck();
@@ -143,24 +137,32 @@ export class ToDoPageComponent implements OnInit, OnDestroy {
   //Filtering block
   onChangeFilters(filters: IFilter): void {
     this.filters = filters;
+    this.refreshTodos();
+  }
 
-    if (this.getAllSubscription && !this.getAllSubscription.closed) {
-      this.getAllSubscription.unsubscribe();
-    }
-
-    this.getAllSubscription = this.todoService.getAllTodos(filters).subscribe((todosList: TodoListItemDto[]) => {
-      this.updateTodos(todosList);
-    });
+  //Sorting block
+  sortChange(sort: ISort): void {
+    this.sorting = sort;
+    this.refreshTodos();
   }
 
   //other
   onDeleteItem(id: string): void {
     this.removeItemSubscription = this.todoService.removeTodoItem(id).pipe(
       tap(deletedTodo => this.followTodosService.removeFollowedFromList(deletedTodo.id)),
-      switchMap(() => this.todoService.getAllTodos(this.filters)),
-    ).subscribe((todosList: TodoListItemDto[]) => {
-      this.updateTodos(todosList);
-    });
+    ).subscribe(() => this.refreshTodos());
+  }
+
+  private refreshTodos(): void {
+    if (this.getAllSubscription && !this.getAllSubscription.closed) {
+      this.getAllSubscription.unsubscribe();
+    }
+
+    this.getAllSubscription = this.todoService.getAllTodos(this.filters, this.sorting)
+      .subscribe((todosList: TodoListItemDto[]) => {
+        this.todosListFiltered = [...todosList];
+        this.cdr.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {

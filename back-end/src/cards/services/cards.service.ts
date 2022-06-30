@@ -46,7 +46,7 @@ export class CardsService {
             pipeline.unshift({ $match: { 'createdAt': { $lte: dateTill } } });
         }
 
-        if (filters.status) {
+        if (filters.status != null) {
             const pollStatus = +filters.status;
             pipeline.unshift({ $match: { 'pollStatus': pollStatus } });
         }

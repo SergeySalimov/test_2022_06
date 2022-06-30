@@ -1,24 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToDoPageComponent } from './to-do-page.component';
+import { PageWrapperComponent } from './page-wrapper.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 
-describe('ToDoPageComponent', () => {
-  let component: ToDoPageComponent;
-  let fixture: ComponentFixture<ToDoPageComponent>;
+describe('PageWrapperComponent', () => {
+  let component: PageWrapperComponent;
+  let fixture: ComponentFixture<PageWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [ToDoPageComponent],
+      imports: [],
+      declarations: [PageWrapperComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ToDoPageComponent);
+    fixture = TestBed.createComponent(PageWrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

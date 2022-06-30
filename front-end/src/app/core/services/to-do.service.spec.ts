@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ToDoService } from './to-do.service';
 import { TodoListItemDto } from '@common/interfaces';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const mockDate = new Date(2022, 2, 22);
 const mockDescription = 'mockDescription';
@@ -24,6 +25,7 @@ describe('ToDoService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [ToDoService],
     });
     service = TestBed.inject(ToDoService);
@@ -45,20 +47,6 @@ describe('ToDoService', () => {
   describe('addTodoItem', () => {
     it('should be defined', () => {
       expect(service.addTodoItem).toBeDefined();
-    });
-
-    it('should add new value', (done: DoneFn) => {
-      service.addTodoItem(mockDescription);
-
-      service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-        expect(result).toEqual([{
-          description: mockDescription,
-          createdAt: mockDate,
-          id: 'mock',
-          pollStatus: 0,
-        }]);
-        done();
-      });
     });
 
     it('should not add new value if it is a falsy value', (done: DoneFn) => {

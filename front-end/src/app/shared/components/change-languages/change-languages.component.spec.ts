@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangeLanguagesComponent } from './change-languages.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 describe('ChangeLanguagesComponent', () => {
   let component: ChangeLanguagesComponent;
@@ -8,9 +10,13 @@ describe('ChangeLanguagesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChangeLanguagesComponent ]
+      imports: [
+        TranslateModule.forRoot(),
+        FormsModule,
+      ],
+      declarations: [ChangeLanguagesComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

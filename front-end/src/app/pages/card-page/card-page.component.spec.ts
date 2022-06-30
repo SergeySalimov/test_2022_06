@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardPageComponent } from './card-page.component';
+import { ToDoService } from '@core/services';
+import { ToDoServiceStub } from '@shared/test-shared/mock.service';
+import { ActivatedRoute } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CardPageComponent', () => {
   let component: CardPageComponent;
@@ -8,7 +12,12 @@ describe('CardPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CardPageComponent]
+      declarations: [CardPageComponent],
+      providers: [
+        { provide: ToDoService, useClass: ToDoServiceStub },
+        { provide: ActivatedRoute, useValue: { snapshot: { params: { ['cardId']: () => 'mockCardId' } } } },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
       .compileComponents();
   });

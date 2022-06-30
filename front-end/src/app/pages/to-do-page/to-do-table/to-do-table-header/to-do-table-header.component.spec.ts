@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToDoTableHeaderComponent } from './to-do-table-header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ToDoTableHeaderComponent', () => {
   let component: ToDoTableHeaderComponent;
@@ -8,9 +9,10 @@ describe('ToDoTableHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToDoTableHeaderComponent ]
+      imports: [TranslateModule.forRoot()],
+      declarations: [ToDoTableHeaderComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

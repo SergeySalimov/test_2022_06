@@ -2,9 +2,15 @@ import { NotFoundInterceptor } from './not-found.interceptor';
 import { TodoListItemDto } from '@common/interfaces';
 import { ExecutionContext, HttpStatus } from '@nestjs/common';
 import { of } from 'rxjs';
+import { PollStatusEnum } from '../../cards/constants/poll.constant';
 
 const mockDate = new Date('2222/2/22');
-const todoListItem1: TodoListItemDto = { id: 'mockId1', createdAt: mockDate, description: 'mockDescription1' };
+const todoListItem1: TodoListItemDto = {
+    id: 'mockId1',
+    createdAt: mockDate,
+    description: 'mockDescription1',
+    pollStatus: PollStatusEnum.NEW
+};
 
 describe('NotFoundInterceptor', () => {
     const interceptor: NotFoundInterceptor = new NotFoundInterceptor();

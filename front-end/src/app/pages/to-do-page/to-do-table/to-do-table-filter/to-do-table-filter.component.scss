@@ -80,4 +80,8 @@
   .stop-follow-all {
     background-color: $appRed;
   }
+
+  .follow-all:disabled, .stop-follow-all:disabled {
+    filter: grayscale(100%);
+  }
 }

@@ -1,0 +1,10 @@
+<div *ngIf="(message$ | async) as message" class="modal">
+  <!-- Modal content -->
+  <div
+    [class.modal-content-error]="message.type === messageTypeEnum.SERVER_ERROR"
+    class="modal-content">
+    <span class="close" (click)="hideModal()">&times;</span>
+    <h2 class="modal-title"><strong>{{ 'errors.serverErrors.title' | translate }}</strong></h2>
+    <p class="modal-text" truncate>{{ message.text }}</p>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+@import "src/styles";
+
+.input-group {
+  position: relative;
+  margin: 1.75rem 0;
+}
+
+input, textarea, .bar {
+  width: 80%;
+  display: block;
+
+  .date-time-picker {
+    width: 60%;
+  }
+}
+
+input, textarea {
+  background: none;
+  color: $appBlack;
+  font-size: 1.5rem;
+  padding: 10px 10px 10px 5px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid $appGray;
+}
+
+input.ng-invalid.ng-dirty, textarea.ng-invalid.ng-dirty {
+  border-bottom: 2px solid $appRed;
+}
+
+input ~ .error-text, textarea ~ .error-text {
+  color: $appRed;
+  font-size: 1rem;
+  position: relative;
+  top: -0.5rem;
+  left: 0.4rem;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+input.not-empty ~ label,
+input:focus ~ label,
+textarea.not-empty ~ label,
+textarea:focus ~ label,
+input[type=phone].focus ~ label,
+input[type=phone].not-empty ~ label {
+  top: -1rem;
+  font-size: 1rem;
+  color: $appDarkGreen;
+}
+
+textarea {
+  resize: none;
+}
+
+mat-datepicker-toggle {
+  position: absolute;
+  right: 15%;
+  top: 0;
+}
+
+@media screen and (max-width: $largeDeviceBreakpoint) {
+  mat-datepicker-toggle {
+    right: 10%;
+  }
+
+  .date-time-picker {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: $mediumDeviceBreakpoint) {
+  mat-datepicker-toggle {
+    right: 15%;
+  }
+
+  .date-time-picker {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .date-time-picker {
+    font-size: 1rem;
+  }
+}
+
+input:focus ~ .bar:before, textarea:focus ~ .bar:before {
+  width: 103%;
+}
+
+input.ng-invalid ~ .bar:before, textarea.ng-invalid ~ .bar:before {
+  background: $appRed;
+}
+
+.input-invalid::after {
+  content: ('required');
+}
+
+input[type="password"] {
+  letter-spacing: 0.3em;
+}
+
+label {
+  color: $appDarkGray;
+  font-size: 1.25rem;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 300ms ease all;
+}
+
+.bar {
+  position: relative;
+}
+
+.bar:before {
+  position: absolute;
+  content: '';
+  height: 2px;
+  width: 0;
+  left: 0;
+  bottom: 0;
+  background: $appGreen;
+  transition: 300ms ease all;
+}

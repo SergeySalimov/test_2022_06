@@ -1,0 +1,33 @@
+<table class="todo-table">
+  <tr
+    *ngFor="let todoItem of todosFiltered; let i = index; trackBy: trackByFunction"
+    [routerLink]="getCardRoute(todoItem.id)"
+  >
+    <td>{{ todoItem['createdAt'] | date:dateTimeFormat }}</td>
+    <td>
+      <span truncate fix-width [widthToFix]="54">{{ todoItem.description }}</span>
+    </td>
+    <td>
+    <span
+      [class]="'status-indicator-'+ todoItem['pollStatus']"
+      [class.animation-flicker]="isTodoFollowed(todoItem.id) && !isTodoExpired(todoItem)"
+    >
+      &#9673;
+    </span>
+    </td>
+    <td stopPropagation>
+      <button class="delete-todo-button" (click)="deleteItem(todoItem.id)">
+        <strong>X</strong>
+      </button>
+      <button
+        [class.active]="isTodoFollowed(todoItem.id)"
+        [disabled]="isTodoExpired(todoItem)"
+        [title]="isTodoExpired(todoItem) ? ('todo.pollExpiredPlaceholder' | translate) : ''"
+        (click)="followItem(todoItem.id)"
+        class="follow-todo-button"
+      >
+        <span class="follow-label"><strong>&#9851;</strong></span>
+      </button>
+    </td>
+  </tr>
+</table>

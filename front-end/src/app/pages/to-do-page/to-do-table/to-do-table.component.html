@@ -1,0 +1,23 @@
+<app-to-do-table-filter
+  [statusEnum]="statusEnum"
+  [filters]="filters"
+  [noItemToFollow]="noItemToFollow"
+  (onChangeFollowAll)="changeFollowAll($event)"
+  (onChangeFilters)="changeFilters($event)"
+></app-to-do-table-filter>
+<ng-container *ngIf="todosFiltered && todosFiltered.length > 0; else noData">
+  <app-to-do-table-header
+    [sorting]="sorting"
+    (onSortChange)="sortChange($event)"
+  ></app-to-do-table-header>
+  <app-to-do-table-body
+    [todosFiltered]="todosFiltered"
+    [expiredStatusValue]="expiredStatusValue"
+    [followedTodos]="followedTodos"
+    (onFollowItem)="followItem($event)"
+    (onDeleteItem)="deleteItem($event)"
+  ></app-to-do-table-body>
+</ng-container>
+<ng-template #noData>
+  <span class="no-data">{{ 'todo.noDataInTable' | translate }}</span>
+</ng-template>

@@ -1,0 +1,11 @@
+<div class="header">
+  <div class="header-left col-4">
+    <a [routerLink]="['/']" class="logo">{{ 'header.logoText' | translate }}</a>
+  </div>
+  <div class="header-center col-4">
+    <h2>{{ currentDateTime$ | async | date: 'HH:mm:ss' }}</h2>
+  </div>
+  <div class="header-right col-4">
+    <app-change-languages></app-change-languages>
+  </div>
+</div>

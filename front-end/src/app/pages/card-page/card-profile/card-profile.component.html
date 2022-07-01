@@ -1,0 +1,44 @@
+<div class="container">
+  <ng-container *ngIf="todoItem; else noCard">
+    <form [formGroup]="cardForm" (submit)="onSubmitForm()" class="row">
+      <h2 class="header col-12" truncate>
+        {{ 'card.cardHeaderText' | translate}}# <small>{{ todoItem.id }}</small>
+      </h2>
+      <h4 truncate class="sub-header col-12">{{ todoItem.description }}</h4>
+      <div class="col-6">
+        <ng-container *ngFor="let config of inputsConfigForLeft">
+          <app-card-input
+            [config]="config"
+            [formControlForInput]="getFormControl(config.keyForValue)"
+            [formSubmitted]="formSubmitted"
+            [editMode]="editMode"
+          ></app-card-input>
+        </ng-container>
+      </div>
+      <div class="col-6">
+        <ng-container *ngFor="let config of inputsConfigForRight">
+          <app-card-input
+            [config]="config"
+            [formControlForInput]="getFormControl(config.keyForValue)"
+            [formSubmitted]="formSubmitted"
+            [editMode]="editMode"
+          ></app-card-input>
+        </ng-container>
+      </div>
+      <div class="col-12"></div>
+      <ng-container *ngIf="editMode">
+      <div class="col-6 action-button">
+        <button type="submit" class="app-success">{{ 'common.save' | translate }}</button>
+      </div>
+      <div class="col-6 action-button">
+        <button class="app-danger" (click)="cancelEditing()">{{ 'common.cancel' | translate }}</button>
+      </div>
+      </ng-container>
+    </form>
+  </ng-container>
+  <ng-template #noCard>
+    <span class="no-data">{{ 'card.noCardText' | translate }}</span>
+  </ng-template>
+  <button class="button-close" [routerLink]="appRoutes.TODO('full')"></button>
+  <button *ngIf="todoItem && !editMode" class="button-edit" (click)="editMode = true"></button>
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "stop": "pkill --signal SIGINT server-for-cards",
+    "dev": "nodemon index.js"
+  },
+  "author": "Sergey Salimov",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "7.18.2",
+    "@babel/preset-env": "7.18.2",
+    "@babel/register": "7.17.7",
+    "body-parser": "^1.20.0",
+    "cors": "2.8.5",
+    "cross-env": "7.0.3",
+    "express": "4.18.1",
+    "ignore-styles": "5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.16"
+  }
+}

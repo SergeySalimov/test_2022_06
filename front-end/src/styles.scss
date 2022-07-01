@@ -1,0 +1,162 @@
+/* You can add global styles to this file, and also import other style files */
+
+$largeDeviceBreakpoint: 980px;
+$mediumDeviceBreakpoint: 768px;
+$smallDeviceBreakpoint: 350px;
+
+$appGray: #ddd;
+$appLightGray: #f2f2f2;
+$appDarkGray: #757575;
+$appLightGreen: #98ee99;
+$appGreen: #04AA6D;
+$appDarkGreen: #005005;
+$appWhite: white;
+$appBlack: black;
+$appBlackWithOpacity04: rgba(0, 0, 0, 0.4);
+$appRed: #9b0000;
+$appLightRed: #ffa4a2;
+$appYellow: #c7b800;
+$appLightYellow: #ffff5a;
+$appDarkBlue: #004ba0;
+$appBlue: #1976d2;
+$appLightBlue: #63a4ff;
+
+.app-success {
+  background-color: $appGreen;
+}
+
+.app-danger {
+  background-color: $appLightRed;
+}
+
+.app-disabled {
+  background-color: $appLightGray;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    top: 300%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10rem;
+    content: "\26A0";
+    color: $appRed;
+  }
+}
+
+/* Grid styles */
+.row {
+  padding-left: 1rem;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+[class*="col-"] {
+  float: left;
+  width: 100%;
+}
+
+@media (min-width: $mediumDeviceBreakpoint) {
+  $gridData: 8.33%, 16.66%, 25%, 33.33%, 41.66%, 50%, 58.33%, 66.66%, 75%, 83, 33%, 91.66%, 100%;
+  $i: 0;
+  @each $gridPercent in $gridData {
+    $i: $i + 1;
+    .col-#{$i} {
+      width: $gridPercent;
+    }
+  }
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.animation-flicker {
+  animation: flickerAnimation 1s infinite;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* MIXINS */
+@mixin table-header-basic {
+  .todo-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    padding-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .todo-table {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    .todo-table {
+      font-size: 8px;
+    }
+  }
+
+  .todo-table td, .todo-table th {
+    border: 1px solid $appGray;
+    padding: 0.5rem;
+  }
+
+  $tableWidths: 24%, 54%, 6%, 16%;
+  $i: 0;
+  @each $tableWidth in $tableWidths {
+    $i: $i + 1;
+    .todo-table th:nth-child(#{$i}),
+    .todo-table td:nth-child(#{$i}) {
+      width: $tableWidth;
+    }
+  }
+}
+
+@mixin table-header($font-color, $background-color) {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: left;
+  background-color: $background-color;
+  color: $font-color;
+}
+
+@mixin action-buttons {
+  font-size: 1.5rem;
+  width: 2.7rem;
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+}
+

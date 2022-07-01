@@ -15,15 +15,15 @@
       &#9673;
     </span>
     </td>
-    <td>
-      <button class="delete-todo-button" (click)="deleteItem($event, todoItem.id)">
+    <td stopPropagation>
+      <button class="delete-todo-button" (click)="deleteItem(todoItem.id)">
         <strong>X</strong>
       </button>
       <button
         [class.active]="isTodoFollowed(todoItem.id)"
         [disabled]="isTodoExpired(todoItem)"
         [title]="isTodoExpired(todoItem) ? ('todo.pollExpiredPlaceholder' | translate) : ''"
-        (click)="followItem($event, todoItem.id)"
+        (click)="followItem(todoItem.id)"
         class="follow-todo-button"
       >
         <span class="follow-label"><strong>&#9851;</strong></span>

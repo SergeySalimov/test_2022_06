@@ -55,10 +55,10 @@
         <button class="clear-filter" (click)="onClearFilter()">
           <span><strong>C</strong></span>
         </button>
-        <button class="follow-all" (click)="changeFollow('start')">
+        <button class="follow-all" (click)="changeFollow('start')" [disabled]="noItemToFollow">
           <span><strong>&#9851;</strong></span>
         </button>
-        <button class="stop-follow-all" (click)="changeFollow('stop')">
+        <button class="stop-follow-all" (click)="changeFollow('stop')" [disabled]="noItemToFollow">
           <span><strong>&#9851;</strong></span>
         </button>
       </th>

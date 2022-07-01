@@ -4,13 +4,16 @@
 ></app-to-do-input>
 <hr class="divider"/>
 <app-to-do-table
-  [filters]="$any(filters$ | async)"
-  [todosFiltered]="$any(todoListFiltered$ | async)"
+  [filters]="filters"
+  [todosFiltered]="todosListFiltered"
   [followedTodos]="$any(followedTodos$ | async)"
   [statusEnum]="$any(statusEnum$ | async)"
+  [noItemToFollow]="noItemToFollow()"
   [expiredStatusValue]="expiredStatusValue"
+  [sorting]="sorting"
   (onChangeFallowAll)="onChangeFollowAll($event)"
   (onChangeFilters)="onChangeFilters($event)"
   (onFollowItem)="onFollowItem($event)"
   (onDeleteItem)="onDeleteItem($event)"
+  (onSortChange)="sortChange($event)"
 ></app-to-do-table>

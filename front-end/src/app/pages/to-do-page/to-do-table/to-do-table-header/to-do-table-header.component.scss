@@ -5,5 +5,23 @@
 
   th {
     @include table-header($appWhite, $appGreen);
+    cursor: default;
+
+    &[class^='sorting-'] {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    &[class^='sorting-']:after {
+      padding-left: 0.2rem;
+    }
+
+    &.sorting-asc:after {
+      content: ' \25B2';
+    }
+
+    &.sorting-desc:after {
+      content: ' \25BC';
+    }
   }
 }

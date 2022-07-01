@@ -48,51 +48,11 @@ describe('ToDoService', () => {
     it('should be defined', () => {
       expect(service.addTodoItem).toBeDefined();
     });
-
-    it('should not add new value if it is a falsy value', (done: DoneFn) => {
-      service.addTodoItem(null as any);
-
-      service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-        expect(result).toEqual([]);
-        done();
-      });
-    });
-
-    it('should not add new value if it is not a string value', (done: DoneFn) => {
-      service.addTodoItem(1111 as any);
-
-      service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-        expect(result).toEqual([]);
-        done();
-      });
-    });
   });
 
   describe('removeTodoItem', () => {
     it('should be defined', () => {
       expect(service.removeTodoItem).toBeDefined();
     });
-
-    // it('should remove todo item by index', (done: DoneFn) => {
-    //   (service as any)._todoList$.next(resultBeforeRemoveIndex2);
-    //
-    //   service.removeTodoItem(2);
-    //
-    //   service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-    //     expect(result).toEqual(expectedResult);
-    //     done();
-    //   });
-    // });
-    //
-    // it('should not remove todo item if index greater than quantity of items', (done: DoneFn) => {
-    //   (service as any)._todoList$.next(resultBeforeRemoveIndex2);
-    //
-    //   service.removeTodoItem(22);
-    //
-    //   service.todoList$.subscribe((result: Array<TodoListItemDto>) => {
-    //     expect(result).toEqual(resultBeforeRemoveIndex2);
-    //     done();
-    //   });
-    // });
   });
 });

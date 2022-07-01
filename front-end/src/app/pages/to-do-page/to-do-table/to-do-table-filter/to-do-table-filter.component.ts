@@ -3,7 +3,7 @@ import { combineLatest, debounceTime, distinctUntilChanged, map, skip, startWith
 import { IFilter, StatusEnumDto } from '@common/interfaces';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FollowType } from '@app/pages/to-do-page/to-do-page.interface';
-import { CLEAR_FILTER } from '@core/constants';
+import { CLEAR_FILTER, DEBOUNCE_BEFORE_REQUEST } from '@core/constants';
 
 @Component({
   selector: 'app-to-do-table-filter',
@@ -48,20 +48,20 @@ export class ToDoTableFilterComponent implements OnInit, OnDestroy {
 
     this.formSubscription = combineLatest([
       this.descriptionControl.valueChanges.pipe(
-        startWith(this.filters.description),
-        debounceTime(400),
+        startWith(this.filters?.description || null),
+        debounceTime(DEBOUNCE_BEFORE_REQUEST),
         distinctUntilChanged(),
       ),
       this.dateFromControl.valueChanges.pipe(
-        startWith(this.filters.dateFrom),
+        startWith(this.filters?.dateFrom || null),
         distinctUntilChanged(),
         ),
       this.dateTillControl.valueChanges.pipe(
-        startWith(this.filters.dateTill),
+        startWith(this.filters?.dateTill || null),
         distinctUntilChanged(),
       ),
       this.statusControl.valueChanges.pipe(
-        startWith(this.filters.status),
+        startWith(this.filters?.status || null),
         distinctUntilChanged(),
         ),
     ]).pipe(
@@ -90,6 +90,6 @@ export class ToDoTableFilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.formSubscription.unsubscribe();
+    this.formSubscription?.unsubscribe();
   }
 }

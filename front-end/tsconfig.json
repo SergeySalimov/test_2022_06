@@ -5,6 +5,9 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "paths": {
+      "moment": [
+        "../node_modules/moment/min/moment.min.js"
+      ],
       "@common/interfaces": ["../common/interfaces/index.ts"],
       "@app/*": ["src/app/*"],
       "@textField": ["src/assets/textField.json"],

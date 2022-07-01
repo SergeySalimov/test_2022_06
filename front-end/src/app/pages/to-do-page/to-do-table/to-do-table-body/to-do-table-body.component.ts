@@ -40,13 +40,11 @@ export class ToDoTableBodyComponent {
     return todo.pollStatus === this.expiredStatusValue;
   }
 
-  deleteItem(e: MouseEvent, id: string): void {
-    e.stopPropagation();
+  deleteItem(id: string): void {
     this.onDeleteItem.emit(id);
   }
 
-  followItem(e: MouseEvent, id: string): void {
-    e.stopPropagation();
+  followItem(id: string): void {
     this.onFollowItem.emit(id);
   }
 }

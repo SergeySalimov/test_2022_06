@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, PipelineStage } from 'mongoose';
-import { IFilter, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
+import { IFilter, ISort, PollStatusListDto, StatusEnumDto, TodoListItemDto } from '@common/interfaces';
 import { INTERVAL_TO_CHANGE_STATUS, PollStatusEnum } from '../constants/poll.constant';
 import { TodoListItem, TodoListItemDocument } from '../schemas/todo-list-item.schema';
 
@@ -26,12 +26,13 @@ export class CardsService {
         return todoItem ? this.mapToDto(todoItem) : null;
     }
 
-    async getFiltered(filters: IFilter): Promise<TodoListItemDto[]> {
+    async getFiltered(filters: IFilter, sort: ISort): Promise<TodoListItemDto[]> {
         const pipeline: PipelineStage[] = [
             { $addFields: { id: { $toString: '$_id' } } },
             { $unset: ['__v', '_id'] }
         ];
 
+        //Filtering BLock
         if (filters.description) {
             pipeline.unshift({ $match: { 'description': { $regex: filters.description } } });
         }
@@ -49,6 +50,16 @@ export class CardsService {
         if (filters.status != null) {
             const pollStatus = +filters.status;
             pipeline.unshift({ $match: { 'pollStatus': pollStatus } });
+        }
+
+        //Sorting Block
+        if (sort.date || sort.description) {
+            pipeline.push({
+                $sort: {
+                    ...(sort.description && { 'description': sort.description === 'asc' ? 1 : -1 }),
+                    ...(sort.date && { 'createdAt': sort.date === 'asc' ? 1 : -1 }),
+                }
+            });
         }
 
         return this.todoListItemModel.aggregate(pipeline);

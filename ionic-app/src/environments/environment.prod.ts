@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  DELAY_FOR_LOADER: 0,
 };

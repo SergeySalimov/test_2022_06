@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center" color="dark">
+      <strong>To do app</strong>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <ion-item [formGroup]="addTodoForm" class="ion-margin-bottom ion-align-items-center sticky-item">
+    <ion-button (click)="addNewTodo()" slot="end" color="dark">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+    <ion-label position="floating">Add new todo</ion-label>
+    <ion-input
+      [formControl]="addTodoControl"
+      (submit)="addNewTodo()"
+      (keydown.enter)="addNewTodo()"
+      type="text"
+    ></ion-input>
+  </ion-item>
+  <ng-container *ngFor="let todo of todos">
+    <ion-item button detail [routerLink]="getCardRoute(todo.id)">
+      <ion-label class="ion-text-wrap">
+        <ion-text color="primary">
+          <h3>{{ todo.createdAt | date: dateFormat }}</h3>
+        </ion-text>
+        <p>{{ todo.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ng-container>
+</ion-content>

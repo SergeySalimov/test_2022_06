@@ -1,0 +1,165 @@
+@import "src/styles";
+
+:host {
+  width: 100%;
+  height: 100%;
+
+  .container {
+    position: relative;
+    margin: 2rem 9rem;
+    padding: 2rem;
+    border: 1px solid $appGray;
+    border-radius: 5px;
+    box-shadow: 0 5px 40px rgba(0,0,0,0.2);
+    height: 80vh;
+    font-size: 1.5rem;
+
+    .row {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .header {
+      margin-bottom: 0;
+      font-size: 3rem;
+    }
+
+    .sub-header {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      opacity: 0.6;
+      font-size: 2rem;
+    }
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .container {
+      margin: 1rem 2rem;
+      padding: 1rem;
+      height: 88vh;
+      font-size: 1.2rem;
+
+      .header {
+        font-size: 2rem;
+      }
+
+      .sub-header {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    .container {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      height: 92vh;
+      font-size: 0.8rem;
+
+      .row {
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .header {
+        font-size: 1.5rem;
+      }
+
+      .sub-header {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  //buttons styles
+  .action-button {
+    display: flex;
+
+    button {
+      width: 85%;
+      font-size: 2rem;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      box-shadow: 0 8px 15px $appLightGray;
+      transition: all 0.3s ease 0s;
+    }
+
+    button:hover:enabled {
+      box-shadow: 0 15px 20px $appGray;
+      transform: translateY(-0.1rem);
+    }
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .action-button {
+      justify-content: center;
+
+      button {
+        width: 75%;
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    button {
+      width: 90%;
+      font-size: 1rem;
+      margin-top: 0.1rem;
+      padding: 0.2rem;
+    }
+  }
+
+  .button-close, .button-edit {
+    position: absolute;
+    top: 1rem;
+    width: 3rem;
+
+    &:before {
+      font-size: 2rem;
+      vertical-align: 20%;
+      color: $appGreen;
+    }
+  }
+
+  @media screen and (max-width: $mediumDeviceBreakpoint) {
+    .button-close, .button-edit {
+      top: 0;
+    }
+
+    button.button-close {
+      right: 1rem;
+    }
+    button.button-edit {
+      right: 4rem;
+    }
+  }
+
+
+  @media screen and (max-width: $smallDeviceBreakpoint) {
+    button.button-close {
+      right: 0;
+    }
+    button.button-edit {
+      right: 3rem;
+    }
+  }
+
+  .button-close {
+    right: 4rem;
+
+    &:before {
+      content: "⇦";
+    }
+  }
+  .button-edit {
+    right: 8rem;
+
+    &:before {
+      content: "\270E";
+    }
+  }
+
+}

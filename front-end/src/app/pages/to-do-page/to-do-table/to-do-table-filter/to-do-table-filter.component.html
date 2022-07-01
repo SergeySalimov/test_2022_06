@@ -1,0 +1,67 @@
+<form [formGroup]="filterForm" (keydown.enter)="$event.preventDefault()">
+  <table class="todo-table">
+    <tr class="filters-for-table">
+      <th class="date-filter">
+        <div class="date-input">
+          <label for="date-from-filter-input" class="input-label col-2">
+            <small>{{ 'todo.from' | translate }}</small>
+          </label>
+          <input
+            [ngxMatDatetimePicker]="pickerFrom"
+            [formControl]="dateFromControl"
+            [max]="dateTillControl.value"
+            (click)="pickerFrom.open()"
+            id="date-from-filter-input"
+            readonly
+          >
+          <mat-datepicker-toggle matSuffix [for]="$any(pickerFrom)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerFrom [showSeconds]="true" class="date-time-picker"></ngx-mat-datetime-picker>
+        </div>
+        <div class="date-input">
+          <label for="date-till-filter-input" class="input-label col-2">
+            <small>{{ 'todo.till' | translate }}</small>
+          </label>
+          <input
+            [ngxMatDatetimePicker]="pickerTill"
+            [formControl]="dateTillControl"
+            (click)="pickerTill.open()"
+            [min]="dateFromControl.value"
+            id="date-till-filter-input"
+            readonly
+          >
+          <mat-datepicker-toggle matSuffix [for]="$any(pickerTill)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerTill [showSeconds]="true" class="date-time-picker"></ngx-mat-datetime-picker>
+        </div>
+      </th>
+      <th>
+        <div class="description-input">
+          <label for="description-filter-input" class="input-label col-2 description-filter-label">
+            {{ 'todo.descriptionFilter' | translate }}
+          </label>
+          <input [formControl]="descriptionControl" id="description-filter-input" type="text">
+        </div>
+      </th>
+      <th>
+        <div class="status-input">
+          <select [formControl]="statusControl">
+            <option [value]="null">{{ 'todo.all' | translate }}</option>
+            <option *ngFor="let status of statusEnum" [value]="status.value">
+              {{ 'todo.status.' + status.key | translate }}
+            </option>
+          </select>
+        </div>
+      </th>
+      <th>
+        <button class="clear-filter" (click)="onClearFilter()">
+          <span><strong>C</strong></span>
+        </button>
+        <button class="follow-all" (click)="changeFollow('start')" [disabled]="noItemToFollow">
+          <span><strong>&#9851;</strong></span>
+        </button>
+        <button class="stop-follow-all" (click)="changeFollow('stop')" [disabled]="noItemToFollow">
+          <span><strong>&#9851;</strong></span>
+        </button>
+      </th>
+    </tr>
+  </table>
+</form>

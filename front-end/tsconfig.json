@@ -1,0 +1,52 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "paths": {
+      "moment": [
+        "../node_modules/moment/min/moment.min.js"
+      ],
+      "@common/interfaces": ["../common/interfaces/index.ts"],
+      "@app/*": ["src/app/*"],
+      "@textField": ["src/assets/textField.json"],
+      "@locale/*": ["src/assets/locale/*"],
+      "@core/interfaces": ["src/app/core/interfaces/index.ts"],
+      "@core/services": ["src/app/core/services/index.ts"],
+      "@core/resolvers": ["src/app/core/resolvers/index.ts"],
+      "@core/abstract-classes": ["src/app/core/services/index.ts"],
+      "@core/constants": ["src/app/core/constants/index.ts"],
+      "@core/interceptors": ["src/app/core/interceptors/index.ts"],
+      "@shared/*": ["src/app/shared/*"],
+      "@configs/*": ["src/app/configs/*"],
+      "@shared/utils": ["src/app/shared/utils/index.ts"],
+    },
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

@@ -1,0 +1,12 @@
+<table class="todo-table">
+  <tr>
+    <th (click)="sortChange('date')" [className]="'sorting-' + sorting?.date">
+      {{ 'todo.tableDate' | translate }}
+    </th>
+    <th (click)="sortChange('description')" [className]="'sorting-' + sorting?.description">
+      {{ 'todo.tableDescription' | translate }}
+    </th>
+    <th>{{ 'todo.poll' | translate }}</th>
+    <th>{{ 'todo.tableAction' | translate }}</th>
+  </tr>
+</table>

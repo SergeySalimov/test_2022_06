@@ -1,0 +1,87 @@
+@import "src/styles";
+
+:host {
+  @include table-header-basic();
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 90%;
+
+  .todo-table th {
+    @include table-header($appWhite, $appDarkBlue);
+  }
+
+  .clear-filter, .follow-all, .stop-follow-all {
+    @include action-buttons();
+  }
+
+  @mixin filter-input {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  .date-filter {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+
+    .date-input {
+      @include filter-input();
+
+      #date-from-filter-input, #date-till-filter-input {
+        width: 70%;
+        height: 1.3rem;
+      }
+
+      .mat-datepicker-toggle {
+        color: $appWhite;
+      }
+    }
+  }
+
+  .description-input {
+    @include filter-input();
+    flex-wrap: wrap;
+
+    #description-filter-input {
+      width: 90%;
+      height: 1.7rem;
+    }
+  }
+
+  .status-input {
+    @include filter-input();
+    justify-content: center;
+
+    select {
+      height: 2.1rem;
+      width: 3.7rem;
+    }
+  }
+
+  .input-label {
+    padding-right: 0.4rem;
+
+    &.description-filter-label {
+      width: 100%;
+    }
+  }
+
+  .follow-all, .stop-follow-all {
+    color: $appWhite;
+  }
+
+  .follow-all {
+    background-color: $appGreen;
+  }
+
+  .stop-follow-all {
+    background-color: $appRed;
+  }
+
+  .follow-all:disabled, .stop-follow-all:disabled {
+    filter: grayscale(100%);
+  }
+}
